@@ -24,7 +24,7 @@
                         <label for="password"> Password: </label>
                         <input type="password" id="password" name="password" minlength="8" required placeholder="Enter your password">
                     </div> 
-                    <button type="submit">Sign in</button>
+                    <input type="submit" class="submit-btn-login" name="submit" value="Submit">
                 </fieldset>
             </form>
         </div>

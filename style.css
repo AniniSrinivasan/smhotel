@@ -1,7 +1,10 @@
-/* for login page */
+* {
+  font-family: "Source Sans Pro", Helvetica, sans-serif;
+}
 
+
+/* for login page */
 .login-body {
-    font-family: "Source Sans Pro", Helvetica, sans-serif;
     font-weight: 300;
     background-image: linear-gradient(45deg, #c676e3 0%, #5f4d93 40%, #5f4d93 85%);
     display: flex;
@@ -38,7 +41,6 @@ h2 {
 
 input::placeholder {
     color: #ccc;
-    font-family: "Source Sans Pro", Helvetica, sans-serif;
 }
 
 fieldset {
@@ -65,7 +67,7 @@ input[type="password"]:focus {
     border: 1px solid #a64ca6;
 }
 
-button {
+.submit-btn-login {
     border-radius: 8px;
     border: 0;
     cursor: pointer;
@@ -77,10 +79,10 @@ button {
     color: #221f1f;
 }
 
-.group {
+/* .group {
     text-align: left;
     margin-bottom: 15px;
-}
+} */
 
 /* for dashboard page */
 
@@ -88,7 +90,6 @@ button {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Source Sans Pro", Helvetica, sans-serif;
     display: flex;
     min-height: 100vh;
     background: #f8f6f6;
@@ -152,6 +153,11 @@ button {
     list-style: none;
 }
 
+.sidebar a {
+  text-decoration: none;
+  color: #101010;
+}
+
 .sidebar li {
     padding: 10px 20px;
     cursor: pointer;
@@ -194,7 +200,7 @@ button {
 
   /* table section style */
 
-  .list-container {
+  .add-container {
     max-width: 1000px; 
     margin: 0 auto;
     padding: 30px;
@@ -203,7 +209,7 @@ button {
     border: 1px solid #ddd;
   }
   
-  .list-container h2 {
+  .add-container h2 {
     color: #5f4d93;
     font-size: 1.4rem;
     font-weight: 700;
@@ -215,7 +221,6 @@ button {
   .base-table {
     width: 100%;
     border-collapse: collapse;
-    font-family: "Source Sans Pro", Helvetica, sans-serif;
     color: #2e2e2e;
     font-size: 0.95rem;
     background-color: #fff;
@@ -254,43 +259,6 @@ button {
     background-color: #f0eafd;
   }
 
-
-/*  edit + delete button */
-.list-container td form {
-  display: flex;
-  gap: 10px;
-  justify-content: flex-start;
-}
-
-.list-container td input[type="submit"] {
-  padding: 10px 28px;        
-  border: none;
-  border-radius: 12px;      
-  font-size: 0.95rem;
-  font-weight: 500;
-  cursor: pointer;
-}
-
-/* edit button */
-.list-container .edit-button-in-list {
-  background-color: #d7cfe8;
-  color: #3b2d75;
-}
-
-.list-container .edit-button-in-list:hover {
-  background-color: #b8a9d9;
-}
-
-/* delete button */
-.list-container .delete-button-in-list {
-  background-color: #f8d7da;
-  color: #7a1c1c;
-}
-
-.list-container .delete-button-in-list:hover {
-  background-color: #f0b6bb;
-}
-
   
 /* base-form template */
 
@@ -310,7 +278,7 @@ button {
   border: 1px solid #ccc;
   border-radius: 6px;
   background-color: #fff;
-  width: 250px;
+  width: 450px;
 }
 
 .submit-btn {
@@ -328,4 +296,139 @@ button {
   color: #fff;
 }
 
+
+/* ----- Add Form----- */
+.add-container {
+  max-width: 1000px;
+  padding: 30px 40px 40px 40px; 
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 12px;
+  border: 1px solid #ddd;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+}
+
+/* reduce heading gap to match Guest List */
+.add-container h1 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  color: #5f4d93;
+  font-weight: 700;
+}
+
+/* .main_content .add-container {
+  margin-top: -55px; 
+}
+ */
+
+
+.add-container fieldset {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  border: none;
+}
+
+/* Name row (3 columns) */
+.add-container .name-group {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+}
+
+.add-container .name-group div {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* Shared field styling */
+.add-container label {
+  font-weight: 600;
+  color: #5f4d93;
+}
+
+.add-container input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  background-color: #fff;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.add-container .submit-btn {
+  background-color: #b8a9d9;
+  border-color: #8e73e1;
+  outline: none;
+}
+
+/* Submit button */
+.add-container button[type="submit"] {
+  background-color: #b8a9d9;
+  color: #222;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  width: 150px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.add-container button[type="submit"]:hover {
+  background-color: #8e73e1;
+  color: #fff;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .add-container .name-group {
+    grid-template-columns: 1fr;
+  }
+}
+
+/*  edit + delete button */
+.add-container td form {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-start;
+}
+
+.add-container td input[type="submit"] {
+  padding: 10px 28px;        
+  border: none;
+  border-radius: 12px;      
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+/* edit button */
+.add-container .edit-button-in-list {
+  background-color: #d7cfe8;
+  color: #3b2d75;
+}
+
+.add-container .edit-button-in-list:hover {
+  background-color: #b8a9d9;
+}
+
+/* delete button */
+.add-container .delete-button-in-list {
+  background-color: #f8d7da;
+  color: #7a1c1c;
+}
+
+.add-container .delete-button-in-list:hover {
+  background-color: #f0b6bb;
+}
+  
+
+
+
+
 /* check why bg in buttons not working in the base-form */
+
+
+

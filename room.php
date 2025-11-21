@@ -33,7 +33,7 @@ if (isset($_POST["delete"])) {
     <div id="navbar-container"></div> <!-- Navbar will be loaded here -->
 
     <div class="main_content">
-        <section class="list-container">
+        <section class="add-container">
             <h2>Room List</h2>
             <h2><?= htmlspecialchars(string: $errormessage) ?></h2>
             <form autocomplete="off" method="post">
@@ -57,10 +57,11 @@ if (isset($_POST["delete"])) {
                     <input type="submit" class="submit-btn" name="add" value="Add">
                 </div>
             </form>
-            <br /> <br /> <br /> <br />
+            </section>
 
+            <br /> <br />
 
-
+            <section class="add-container">
             <table class="base-table">
                 <thead>
                     <tr>

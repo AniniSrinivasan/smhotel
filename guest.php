@@ -37,7 +37,7 @@ if (isset($_POST["delete"])) {
     <div id="navbar-container"></div> <!-- Navbar will be loaded here -->
 
     <div class="main_content">
-        <section class="list-container">
+        <section class="add-container">
             <h2>Guest List</h2>
 
             <h2><?= htmlspecialchars(string: $errormessage) ?></h2>
@@ -79,9 +79,12 @@ if (isset($_POST["delete"])) {
                     <input type="submit" class="submit-btn" name="add" value="Add">
                 </div>
             </form>
-            <br /> <br /> <br /> <br />
 
+            </section>
 
+            <br /> <br />
+
+            <section class="add-container">
             <table class="base-table">
                 <thead>
                     <tr>

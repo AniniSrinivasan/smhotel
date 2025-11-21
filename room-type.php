@@ -32,7 +32,7 @@ if (isset($_POST["delete"])) {
     <div id="navbar-container"></div> <!-- Navbar will be loaded here -->
 
     <div class="main_content">
-        <section class="list-container">
+        <section class="add-container">
             <h2>Room Type List</h2>
 
             <div class="base-form">
@@ -50,9 +50,10 @@ if (isset($_POST["delete"])) {
                         <div class="base-form">
                 </form>
             </div>
+            </section>
 
-            <br /><br /><br /><br />
-
+            <br /><br />
+            <section class="add-container">
             <table class="base-table">
                 <thead>
                     <tr>
