@@ -12,20 +12,51 @@
 </head>
 
 <?php
-
 require_once("functions.php");
+
+$errormessage = "";
+$editingId = null;
+
+// add (inserts a new room)
 if (isset($_POST["add"])) {
-    $hotel_id = $_POST["hotel-id"];
-    $room_type_id = $_POST["room-type-id"];
-    $room_number = $_POST["room-number"];
-    $price = $_POST["room-price"];
-    $errormessage = RoomInsert($room_number, $price, $hotel_id, $room_type_id);
+    $room_type_id = $_POST["room-type-id"] ?? "";
+    $room_number  = $_POST["room-number"]   ?? "";
+    $price        = $_POST["room-price"]    ?? "";
+    $hotel_id     = $_POST["hotel-id"]      ?? "";
+
+    $errormessage = RoomInsert($room_type_id, $room_number, $price, $hotel_id);
 }
-if (isset($_POST["delete"])) {
+
+// delete (removes the room)
+if (isset($_POST["delete"]) && isset($_POST["room-id"])) {
     $id = $_POST["room-id"];
     RoomDelete($id);
+    exit();
+}
+
+// save (updates the existing)
+if (isset($_POST["save"]) && isset($_POST["room-id"])) {
+    $id           = $_POST["room-id"];
+    $hotel_id     = $_POST["hotel-id"]      ?? "";
+    $room_type_id = $_POST["room-type-id"] ?? "";
+    $room_number  = $_POST["room-number"]   ?? "";
+    $price        = $_POST["room-price"]    ?? "";
+
+    RoomUpdate($id, $hotel_id, $room_type_id, $room_number, $price);
+    exit();
+}
+
+// for edit mode
+if (isset($_POST["edit"]) && isset($_POST["room-id"])) {
+    $editingId = $_POST["room-id"];
+}
+
+// cancel edit mode
+if (isset($_POST["cancel"])) {
+    $editingId = null;
 }
 ?>
+
 
 <body onload="loadNavbar()">
 
@@ -34,7 +65,7 @@ if (isset($_POST["delete"])) {
 
     <div class="main_content">
         <section class="add-container">
-            <h2>Room List</h2>
+            <h2>Add Room</h2>
             <h2><?= htmlspecialchars(string: $errormessage) ?></h2>
             <form autocomplete="off" method="post">
                 <div class="base-form">
@@ -62,6 +93,7 @@ if (isset($_POST["delete"])) {
             <br /> <br />
 
             <section class="add-container">
+            <h2>Room List</h2>
             <table class="base-table">
                 <thead>
                     <tr>
@@ -74,7 +106,7 @@ if (isset($_POST["delete"])) {
                     </tr>
                 </thead>
                 <tbody>
-                    <?php RoomList()?>
+                    <?php RoomList($editingId)?>
                 </tbody>
             </table>
         </section>

@@ -12,20 +12,51 @@
 </head>
 
 <?php
-
 require_once("functions.php");
+
+$errormessage = "";
+$editingId = null;
+
+
 if (isset($_POST["add"])) {
-    $branch = $_POST["branch"];
-    $address = $_POST["address"];
-    $city = $_POST["city"];
+    $branch   = $_POST["branch"];
+    $address  = $_POST["address"];
+    $city     = $_POST["city"];
     $postcode = $_POST["postcode"];
-    $email = $_POST["email"];
-    $phone = $_POST["tel-no"];
+    $email    = $_POST["email"];
+    $phone    = $_POST["tel-no"];
+
     $errormessage = HotelInsert($branch, $address, $city, $postcode, $email, $phone);
 }
-if (isset($_POST["delete"])) {
+
+
+if (isset($_POST["delete"]) && isset($_POST["hotel-id"])) {
     $id = $_POST["hotel-id"];
     HotelDelete($id);
+    exit();
+}
+
+// save (updates the existing)
+if (isset($_POST["save"]) && isset($_POST["hotel-id"])) {
+    $id       = $_POST["hotel-id"];
+    $city     = $_POST["city"]     ?? "";
+    $postcode = $_POST["postcode"] ?? "";
+    $address  = $_POST["address"]  ?? "";
+    $email    = $_POST["email"]    ?? "";
+    $phone    = $_POST["tel-no"]   ?? "";
+
+    HotelUpdate($id, $city, $address, $postcode, $email, $phone);
+    exit();
+}
+
+// for edit mode
+if (isset($_POST["edit"]) && isset($_POST["hotel-id"])) {
+    $editingId = $_POST["hotel-id"];
+}
+
+// Cancel edit mode
+if (isset($_POST["cancel"])) {
+    $editingId = null;
 }
 ?>
 
@@ -36,7 +67,7 @@ if (isset($_POST["delete"])) {
 
     <div class="main_content">
         <section class="add-container">
-            <h2>Hotel List</h2>
+            <h2>Add Hotel</h2>
 
             <h2><?= htmlspecialchars(string: $errormessage) ?></h2>
             <form autocomplete="off" method="post">
@@ -74,6 +105,7 @@ if (isset($_POST["delete"])) {
             <br /> <br /> 
 
             <section class="add-container">
+            <h2>Hotel List</h2>
             <table class="base-table">
                 <thead>
                     <tr>
@@ -87,7 +119,7 @@ if (isset($_POST["delete"])) {
                     </tr>
                 </thead>
                 <tbody>
-                    <?php HotelList()?>
+                    <?php HotelList($editingId)?>
                 </tbody>
             </table>
         </section>

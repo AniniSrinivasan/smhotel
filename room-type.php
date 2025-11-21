@@ -14,15 +14,41 @@
 <?php
 
 require_once("functions.php");
-if (isset($_POST["add"])) {
-    $type = $_POST["room-type-name"];
-    $description = $_POST["room-type-desc"];
-    RoomTypeInsert($type, $description);
-}
 
-if (isset($_POST["delete"])) {
-    $id = $_POST["room-type-id"];
-    RoomTypeDelete($id);
+$action_message = "";
+$action_error_message = "";
+$editingId = null;
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    if (isset($_POST["add"])) {
+        $type = $_POST["room-type-name"];
+        $description = $_POST["room-type-desc"];
+        RoomTypeInsert($type, $description, $action_message, $action_error_message);
+    }
+
+    if (isset($_POST['delete']) && isset($_POST['room-type-id'])) {
+        $id = $_POST['room-type-id'];
+        RoomTypeDelete($id);
+    }
+
+    // save (updates the existing)
+    if (isset($_POST['save']) && isset($_POST['room-type-id'])) {
+        $id = $_POST['room-type-id'];
+        $type = $_POST['room-type-name'] ?? '';
+        $description = $_POST['room-type-desc'] ?? '';
+        RoomTypeUpdate($id, $type, $description);
+    }
+
+    // for edit mode
+    if (isset($_POST['edit']) && isset($_POST['room-type-id'])) {
+        $editingId = $_POST['room-type-id'];
+    }
+
+    // cancel the edit mode
+    if (isset($_POST['cancel'])) {
+        $editingId = null;
+    }
 }
 
 ?>
@@ -31,9 +57,13 @@ if (isset($_POST["delete"])) {
 
     <div id="navbar-container"></div> <!-- Navbar will be loaded here -->
 
+    <div id="message"><h3><?= $action_message?></h3></div>
+    <div id="error-message"><?= $action_error_message?></div>
+
     <div class="main_content">
         <section class="add-container">
-            <h2>Room Type List</h2>
+            <h2>Add Room Type</h2>
+           
 
             <div class="base-form">
                 <form autocomplete="off" method="post">
@@ -50,10 +80,13 @@ if (isset($_POST["delete"])) {
                         <div class="base-form">
                 </form>
             </div>
-            </section>
+        </section>
 
-            <br /><br />
-            <section class="add-container">
+        <br /><br />
+        
+
+        <section class="add-container">
+        <h2>Room Type List</h2>
             <table class="base-table">
                 <thead>
                     <tr>
@@ -64,9 +97,7 @@ if (isset($_POST["delete"])) {
                     </tr>
                 </thead>
                 <tbody>
-                    <?php
-                    RoomTypeList();
-                    ?>
+                    <?php RoomTypeList($editingId); ?>
                 </tbody>
             </table>
         </section>

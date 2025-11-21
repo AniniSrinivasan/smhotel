@@ -12,25 +12,59 @@
 </head>
 
 <?php
-
 require_once("functions.php");
+
+$errormessage = "";
+$editingId = null;
+
+// add (inserts a new guest)
 if (isset($_POST["add"])) {
-    $fname = $_POST["fname"];
-    $mname = $_POST["mname"];
-    $lname = $_POST["lname"];
-    $address = $_POST["address"];
-    $city = $_POST["city"];
-    $postcode = $_POST["postcode"];
-    $email = $_POST["email"];
-    $phone = $_POST["ph-no"];
+    $fname    = $_POST["fname"]    ?? "";
+    $mname    = $_POST["mname"]    ?? "";
+    $lname    = $_POST["lname"]    ?? "";
+    $address  = $_POST["address"]  ?? "";
+    $city     = $_POST["city"]     ?? "";
+    $postcode = $_POST["postcode"] ?? "";
+    $email    = $_POST["email"]    ?? "";
+    $phone    = $_POST["phone"]    ?? "";
+
     $errormessage = GuestAdd($fname, $mname, $lname, $address, $city, $postcode, $email, $phone);
 }
-if (isset($_POST["delete"])) {
+
+// delete (removes the guest)
+if (isset($_POST["delete"]) && isset($_POST["guest-id"])) {
     $id = $_POST["guest-id"];
     GuestDelete($id);
+    exit();
 }
 
+// save (updates the existing)
+if (isset($_POST["save"]) && isset($_POST["guest-id"])) {
+    $id       = $_POST["guest-id"];
+    $fname    = $_POST["fname"]    ?? "";
+    $mname    = $_POST["mname"]    ?? "";
+    $lname    = $_POST["lname"]    ?? "";
+    $address  = $_POST["address"]  ?? "";
+    $city     = $_POST["city"]     ?? "";
+    $postcode = $_POST["postcode"] ?? "";
+    $email    = $_POST["email"]    ?? "";
+    $phone    = $_POST["phone"]    ?? "";
+
+    GuestUpdate($id, $fname, $mname, $lname, $address, $city, $postcode, $email, $phone);
+    exit();
+}
+
+// for edit mode
+if (isset($_POST["edit"]) && isset($_POST["guest-id"])) {
+    $editingId = $_POST["guest-id"];
+}
+
+// Cancel edit mode
+if (isset($_POST["cancel"])) {
+    $editingId = null;
+}
 ?>
+
 
 <body onload="loadNavbar()">
 
@@ -38,7 +72,7 @@ if (isset($_POST["delete"])) {
 
     <div class="main_content">
         <section class="add-container">
-            <h2>Guest List</h2>
+            <h2>Add Guest</h2>
 
             <h2><?= htmlspecialchars(string: $errormessage) ?></h2>
 
@@ -85,6 +119,7 @@ if (isset($_POST["delete"])) {
             <br /> <br />
 
             <section class="add-container">
+            <h2>Guest List</h2>
             <table class="base-table">
                 <thead>
                     <tr>
@@ -99,7 +134,7 @@ if (isset($_POST["delete"])) {
                     </tr>
                 </thead>
                 <tbody>
-                    <?php GuestList() ?>
+                    <?php GuestList($editingId) ?>
                 </tbody>
             </table>
         </section>

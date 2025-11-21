@@ -13,17 +13,49 @@
 
 <?php
 require_once("functions.php");
-if (isset($_POST["add"])) {
-    $room_id = $_POST["room-id"];
-    $guest_id = $_POST["guest-id"];
-    $num_guest = $_POST["num-guest"];
-    $dateIn  = $_POST['date-in'];
-    $dateOut = $_POST['date-out'];    
-    $errormessage = BookingInsert($room_id, $guest_id, $num_guest, $dateIn, $dateOut);
-}
-if (isset($_POST["delete"])) {
-    $id = $_POST["booking-id"];
-    BookingDelete($id);
+
+$errormessage = "";
+$editingId = null;
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    if (isset($_POST['add'])) {
+        $room_id = $_POST['room-id'] ?? '';
+        $guest_id = $_POST['guest-id'] ?? '';
+        $num_guest = $_POST['num-guest'] ?? '';
+        $dateIn = $_POST['date-in'] ?? '';
+        $dateOut = $_POST['date-out'] ?? '';
+         BookingInsert($room_id, $guest_id, $num_guest, $dateIn, $dateOut);
+    }
+
+    if (isset($_POST['delete']) && isset($_POST['booking-id'])) {
+        $id = $_POST['booking-id'];
+        BookingDelete($id);   // assuming you already have this
+        exit;
+    }
+
+    // save (updates the existing)
+    if (isset($_POST['save']) && isset($_POST['booking-id'])) {
+        $booking_id = $_POST['booking-id'];
+        $room_id = $_POST['room-id'] ?? '';
+        $guest_id = $_POST['guest-id'] ?? '';
+        $num_guest = $_POST['num-guest'] ?? '';
+        $dateIn = $_POST['date-in'] ?? '';
+        $dateOut = $_POST['date-out'] ?? '';
+
+        BookingUpdate($booking_id, $room_id, $guest_id, $num_guest, $dateIn, $dateOut);
+        exit;
+    }
+
+    // for edit mode
+    if (isset($_POST['edit']) && isset($_POST['booking-id'])) {
+        $editingId = $_POST['booking-id'];
+    }
+
+    // Cancel edit mode
+    if (isset($_POST['cancel'])) {
+        $editingId = null;
+    }
 }
 ?>
 
@@ -34,7 +66,7 @@ if (isset($_POST["delete"])) {
 
     <div class="main_content">
         <section class="add-container">
-            <h2>Booking List</h2>
+            <h2>Add Booking</h2>
 
             <h2><?= htmlspecialchars(string: $errormessage) ?></h2>
             <form autocomplete="off" method="post">
@@ -67,6 +99,7 @@ if (isset($_POST["delete"])) {
         <br /> <br />
 
         <section class="add-container">
+        <h2>Booking List</h2>
             <table class="base-table">
                 <thead>
                     <tr>
@@ -80,8 +113,9 @@ if (isset($_POST["delete"])) {
                     </tr>
                 </thead>
                 <tbody>
-                    <?php BookingList() ?>
+                    <?php BookingList($editingId); ?>
                 </tbody>
+
             </table>
         </section>
     </div>
