@@ -1,0 +1,331 @@
+/* for login page */
+
+.login-body {
+    font-family: "Source Sans Pro", Helvetica, sans-serif;
+    font-weight: 300;
+    background-image: linear-gradient(45deg, #c676e3 0%, #5f4d93 40%, #5f4d93 85%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    width: 50%;
+    margin: 0 auto;
+}
+
+.login-container {
+    background: #f5f3f7;
+    border-radius: 8px;
+    padding: 30px 40px;
+    border-radius: 15px;
+    width: 320px;
+    text-align: center;
+}
+
+#logo {
+    width: 30%;
+    height: 30%;
+    border-radius: 100%;
+}
+
+h2 {
+    text-align: center;
+    font-weight: 300;
+    font-size: 2.5em;
+    color: #000000;
+    margin-bottom: 20px;
+    letter-spacing: -0.025em;
+}
+
+input::placeholder {
+    color: #ccc;
+    font-family: "Source Sans Pro", Helvetica, sans-serif;
+}
+
+fieldset {
+    border-radius: 8px;
+}
+
+label {
+    color: #000000;
+    display: block;
+    margin-bottom: 8px;
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 90%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    outline: none;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+    border: 1px solid #a64ca6;
+}
+
+button {
+    border-radius: 8px;
+    border: 0;
+    cursor: pointer;
+    display: inline-block;
+    line-height: 250%;
+    min-width: 50%;
+    text-align: center;
+    background-color: #CBC3CF;
+    color: #221f1f;
+}
+
+.group {
+    text-align: left;
+    margin-bottom: 15px;
+}
+
+/* for dashboard page */
+
+.dashboard-body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Source Sans Pro", Helvetica, sans-serif;
+    display: flex;
+    min-height: 100vh;
+    background: #f8f6f6;
+    color: #333;
+}
+
+/* top bar */
+
+.top-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background-image: linear-gradient(45deg, #c676e3 0%, #5f4d93 40%, #5f4d93 85%);
+    color: #e5dfdf;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    z-index: 1000;
+}
+
+.contact {
+    text-decoration: none;
+    color: #e5dfdf;
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    color: #e5dfdf;
+    gap: 8px;
+}
+
+.profile img {
+    border-radius: 50%;
+    height: 5%;
+    width: 5%;
+}
+
+/* sidebar */
+
+.sidebar {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    width: 220px;
+    height: calc(100vh - 60px);
+    background: #f8f6f6;
+    border-right: 1px solid #ddd;
+    padding-top: 20px;
+    padding-bottom: 56px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.sidebar ul {
+    list-style: none;
+}
+
+.sidebar li {
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 0.95rem;
+}
+
+.footer {
+    cursor: pointer;
+    font-size: 0.95rem;
+}
+
+.sidebar li:hover {
+    background: #eaeaea;
+}
+
+.sidebar .section {
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    color: #5f4d93;
+    margin-top: 10px;
+}
+
+/* main content */
+
+.main-content {
+    margin-top: 60px;
+    margin-left: 220px;
+    padding: 30px;
+    background: #f8f6f6;
+    min-height: calc(100vh - 60px);
+    color: #2e2e2e;
+  }
+  
+  .main-content h1 {
+    color: #5f4d93;
+    font-weight: 700;
+    margin-bottom: 20px;
+  }
+
+  /* table section style */
+
+  .list-container {
+    max-width: 1000px; 
+    margin: 0 auto;
+    padding: 30px;
+    background: #ffffffcc;
+    border-radius: 12px;
+    border: 1px solid #ddd;
+  }
+  
+  .list-container h2 {
+    color: #5f4d93;
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-align: left;
+  }
+  
+  /* base table style */
+  .base-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: "Source Sans Pro", Helvetica, sans-serif;
+    color: #2e2e2e;
+    font-size: 0.95rem;
+    background-color: #fff;
+  }
+  
+  .base-table thead {
+    background-color: #e8e3f4;
+  }
+  
+  .base-table th {
+    text-align: left;
+    font-weight: 600;
+    color: #5f4d93;
+    padding: 12px;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .base-table td {
+    padding: 12px;
+    border-bottom: 1px solid #e0e0e0;
+  }
+
+  .base-table td:last-child {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  
+  .base-table tr:nth-child(even) {
+    background-color: #f8f6fb;
+  }
+  
+  .base-table tr:hover {
+    background-color: #f0eafd;
+  }
+
+
+/*  edit + delete button */
+.list-container td form {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-start;
+}
+
+.list-container td input[type="submit"] {
+  padding: 10px 28px;        
+  border: none;
+  border-radius: 12px;      
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+/* edit button */
+.list-container .edit-button-in-list {
+  background-color: #d7cfe8;
+  color: #3b2d75;
+}
+
+.list-container .edit-button-in-list:hover {
+  background-color: #b8a9d9;
+}
+
+/* delete button */
+.list-container .delete-button-in-list {
+  background-color: #f8d7da;
+  color: #7a1c1c;
+}
+
+.list-container .delete-button-in-list:hover {
+  background-color: #f0b6bb;
+}
+
+  
+/* base-form template */
+
+.base-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.base-form h3 {
+  color: #5f4d93;
+  margin-bottom: 10px;
+}
+
+.base-form input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: #fff;
+  width: 250px;
+}
+
+.submit-btn {
+  margin-top: 15px;
+  background-color: #d7cfe8;
+  color: #3b2d75;
+  padding: 10px 0;
+  border: none;
+  border-radius: 8px;
+  width: 200px;
+}
+
+.submit-btn:hover {
+  background-color: #8e73e1;
+  color: #fff;
+}
+
+/* check why bg in buttons not working in the base-form */
