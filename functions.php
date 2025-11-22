@@ -2,7 +2,29 @@
 
 function createDB()
 {
-    return $db = new SQLite3('hotelSQL.db');
+    $db = new SQLite3('hotelSQL.db');
+    $db->exec("PRAGMA foreign_keys = ON");
+    return $db;
+}
+
+function validateUser($username, $password, &$error)
+{
+
+    $db = createDB();
+    $result = $db->query("SELECT * FROM USER WHERE USERNAME = '$username'");
+    $row = $result->fetchArray(SQLITE3_ASSOC);
+
+    if ($row) {
+        if ($row['USER_PASSWORD'] === $password) {
+            return $row;
+        } else {
+            $error = "Invalid password.";
+            return false;
+        }
+    } else {
+        $error = "User not found.";
+        return false;
+    }
 }
 
 function GetAdminUser()
@@ -160,6 +182,31 @@ function HotelInsert($branch, $address, $city, $postcode, $email, $phone)
     return $error;
 }
 
+function HotelDropdown($fieldName = 'hotel-id', $selectedId = null)
+{
+    $db = createDB();
+
+    $sql = "SELECT HOTEL_ID, HOTEL_NAME, CITY FROM HOTEL ORDER BY HOTEL_NAME";
+    $result = $db->query($sql);
+
+    echo "<select name='{$fieldName}' id='{$fieldName}' required>";
+    echo "<option value=''>-- Select Hotel Name--</option>";
+
+    while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
+        $id = (int) $row['HOTEL_ID'];
+        $name = htmlspecialchars($row['HOTEL_NAME']);
+        $city = htmlspecialchars($row['CITY']);
+
+        $label = "{$name} ({$city})";
+        $selected = ($selectedId == $id) ? "selected" : "";
+
+        echo "<option value='{$id}' {$selected}>{$label}</option>";
+    }
+
+    echo "</select>";
+}
+
+
 function HotelList($editingId = null)
 {
     $db = createDB();
@@ -283,6 +330,28 @@ function RoomTypeInsert($type, $description, &$action_message, &$action_error_me
     }
 }
 
+function RoomTypeDropdown($fieldName = 'room-type-id', $selectedId = null)
+{
+    $db = createDB();
+
+    $sql = "SELECT ROOM_TYPE_ID, ROOM_TYPE_NAME FROM ROOM_TYPE ORDER BY ROOM_TYPE_NAME";
+    $result = $db->query($sql);
+
+    echo "<select name='{$fieldName}' id='{$fieldName}' required>";
+    echo "<option value=''>-- Select Room Type Name--</option>";
+
+    while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
+        $id = (int) $row['ROOM_TYPE_ID'];
+        $name = htmlspecialchars($row['ROOM_TYPE_NAME']);
+
+        $selected = ($selectedId == $id) ? "selected" : "";
+        echo "<option value='{$id}' {$selected}>{$name}</option>";
+    }
+
+    echo "</select>";
+}
+
+
 function RoomTypeList($editingId = null)
 {
     $db = createDB();
@@ -369,11 +438,33 @@ function RoomInsert($room_type_id, $room_number, $price, $hotel_id)
     $db = createDB();
     $insert = $db->exec("INSERT INTO ROOM (ROOM_NO, ROOM_TYPE_ID, PRICE, HOTEL_ID) VALUES ($room_number,$room_type_id,$price,$hotel_id)");
     if ($insert) {
-        header("Location: dashboard.php");
+        header("Location: room.php");
     } else {
         $error = "Error in inserting room " . $db->lastErrorMsg() . "<br>";
     }
     return $error;
+}
+
+function RoomDropdown($fieldName = 'room-id', $selectedId = null)
+{
+    $db = createDB();
+
+    $sql = "SELECT ROOM_ID FROM ROOM ORDER BY ROOM_ID";
+    $result = $db->query($sql);
+
+    echo "<select name='{$fieldName}' id='{$fieldName}' required>";
+    echo "<option value=''>-- Select Room ID --</option>";
+
+    while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
+        $id = (int) $row['ROOM_ID'];
+
+        $label = "{$id}";
+        $selected = ($selectedId == $id) ? "selected" : "";
+
+        echo "<option value='{$id}' {$selected}>{$label}</option>";
+    }
+
+    echo "</select>";
 }
 
 function RoomList($editingId = null)
@@ -385,40 +476,33 @@ function RoomList($editingId = null)
 
     while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
 
-        // edit mode row
         if ($editingId == $row['ROOM_ID']) {
 
             echo "<form method='post'><tr>";
 
-            // hotel id (editable)
             echo "<td>
                     <input type='number' name='hotel-id'
                            value='" . htmlspecialchars($row['HOTEL_ID']) . "' required>
                   </td>";
 
-            // room id (not editable)
             echo "<td>" . $row['ROOM_ID'] . "</td>";
             echo "<input type='hidden' name='room-id' value='" . $row['ROOM_ID'] . "'>";
 
-            // room type id
             echo "<td>
                     <input type='number' name='room-type-id'
                            value='" . htmlspecialchars($row['ROOM_TYPE_ID']) . "' required>
                   </td>";
 
-            // room number
             echo "<td>
                     <input type='number' name='room-number'
                            value='" . htmlspecialchars($row['ROOM_NO']) . "' required>
                   </td>";
 
-            // price
             echo "<td>
                     <input type='number' step='0.01' name='room-price'
                            value='" . htmlspecialchars($row['PRICE']) . "' required>
                   </td>";
 
-            // actions
             echo "<td>
                     <input type='submit' class='submit-btn' name='save' value='Save'>
                     <input type='submit' class='delete-button-in-list' name='cancel' value='Cancel'>
@@ -492,6 +576,30 @@ function GuestAdd($fname, $mname, $lname, $address, $city, $postcode, $email, $p
     return $error;
 }
 
+function GuestDropdown($fieldName = 'guest-id', $selectedId = null)
+{
+    $db = createDB();
+
+    $sql = "SELECT GUEST_ID, F_NAME, L_NAME FROM GUEST ORDER BY F_NAME";
+    $result = $db->query($sql);
+
+    echo "<select name='{$fieldName}' id='{$fieldName}' required>";
+    echo "<option value=''>-- Select Guest Name --</option>";
+
+    while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
+        $id = (int) $row['GUEST_ID'];
+        $fname = htmlspecialchars($row['F_NAME']);
+        $lname = htmlspecialchars($row['L_NAME']);
+
+        $label = "[{$id}] {$fname} {$lname}";
+        $selected = ($selectedId == $id) ? "selected" : "";
+
+        echo "<option value='{$id}' {$selected}>{$label}</option>";
+    }
+
+    echo "</select>";
+}
+
 
 function GuestList($editingId = null)
 {
@@ -502,56 +610,46 @@ function GuestList($editingId = null)
 
     while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
 
-        // build full name once
         $name = trim($row['F_NAME'] . " " . $row['M_NAME'] . " " . $row['L_NAME']);
 
-        // edit mode row
         if ($editingId == $row['GUEST_ID']) {
 
             echo "<form method='post'><tr>";
 
-            // guest id (not editable)
             echo "<td>" . $row['GUEST_ID'] . "</td>";
             echo "<input type='hidden' name='guest-id' value='" . $row['GUEST_ID'] . "'>";
 
-            // name column – three inputs inside one cell
             echo "<td>
                     <input type='text' name='fname' value='" . htmlspecialchars($row['F_NAME']) . "' required placeholder='First Name'><br>
                     <input type='text' name='mname' value='" . htmlspecialchars($row['M_NAME']) . "' placeholder='Middle Name'><br>
                     <input type='text' name='lname' value='" . htmlspecialchars($row['L_NAME']) . "' required placeholder='Last Name'>
                   </td>";
 
-            // address
             echo "<td>
                     <input type='text' name='address'
                            value='" . htmlspecialchars($row['GUEST_ADDRESS']) . "' required>
                   </td>";
 
-            // city
             echo "<td>
                     <input type='text' name='city'
                            value='" . htmlspecialchars($row['CITY']) . "' required>
                   </td>";
 
-            // postcode
             echo "<td>
                     <input type='text' name='postcode'
                            value='" . htmlspecialchars($row['POSTCODE']) . "' required>
                   </td>";
 
-            // email
             echo "<td>
                     <input type='email' name='email'
                            value='" . htmlspecialchars($row['GUEST_EMAIL']) . "' required>
                   </td>";
 
-            // phone
             echo "<td>
                     <input type='text' name='phone'
                            value='" . htmlspecialchars($row['GUEST_PHNO']) . "' required>
                   </td>";
 
-            // actions: save / cancel
             echo "<td>
                     <input type='submit' class='submit-btn' name='save' value='Save'>
                     <input type='submit' class='delete-button-in-list' name='cancel' value='Cancel'>

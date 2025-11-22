@@ -73,15 +73,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="base-form">
                     <div>
                         <label for="room-id">Room ID: </label>
-                        <input type="number" placeholder="Room ID" name="room-id" required>
+                        <?php RoomDropdown('room-id'); ?>
                     </div>
                     <div>
-                        <label for="guest-id">Guest ID: </label>
-                        <input type="number" placeholder="Guest ID" name="guest-id" required>
+                        <label for="guest-id">Guest: </label>
+                        <?php GuestDropdown('guest-id'); ?>
                     </div>
                     <div>
                         <label for="num-guest">Number of Guest: </label>
-                        <input type="number" placeholder="Number of Guest" name="num-guest" required>
+                        <input type="number" placeholder="Number of Guest" name="num-guest" min="1" max="4" required>
                     </div>
                     <div>
                         <label for="date-in">Check In: </label>

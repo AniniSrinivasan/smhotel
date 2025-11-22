@@ -78,37 +78,41 @@ if (isset($_POST["cancel"])) {
 
             <form autocomplete="off" method="post">
                 <div class="base-form">
-                    <div>
-                        <label for="fname">First Name: </label>
-                        <input type="text" name="fname" required>
+
+                    <div class="name-group">
+                        <div>
+                            <label for="fname">First Name:</label>
+                            <input type="text" id="fname" name="fname" placeholder="First Name">
+                        </div>
+                        <div>
+                            <label for="mname">Middle Name:</label>
+                            <input type="text" id="mname" name="mname" placeholder="Middle Name">
+                        </div>
+                        <div>
+                            <label for="lname">Last Name:</label>
+                            <input type="text" id="lname" name="lname" placeholder="Last Name">
+                        </div>
                     </div>
-                    <div>
-                        <label for="mname">Middle Name: </label>
-                        <input type="text" name="mname">
-                    </div>
-                    <div>
-                        <label for="lname">Last Name: </label>
-                        <input type="text" name="lname" required>
-                    </div>
+
                     <div>
                         <label for="address">Address: </label>
-                        <input type="text" name="address" required>
+                        <input type="text" placeholder="Address" name="address" required>
                     </div>
                     <div>
                         <label for="city">City: </label>
-                        <input type="text" name="city" required>
+                        <input type="text"  placeholder="City" name="city" required>
                     </div>
                     <div>
                         <label for="postcode">Postcode: </label>
-                        <input type="text" name="postcode" required>
+                        <input type="text"  placeholder="Postcode" name="postcode" required>
                     </div>
                     <div>
                         <label for="email">Email: </label>
-                        <input type="email" name="email" required>
+                        <input type="email"  placeholder="Email" name="email" required>
                     </div>
                     <div>
                         <label for="ph-no">Phone Number: </label>
-                        <input type="text" name="ph-no" required>
+                        <input type="text"  placeholder="Phone Number" name="ph-no" required>
                     </div>
                     <input type="submit" class="submit-btn" name="add" value="Add">
                 </div>

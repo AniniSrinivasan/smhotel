@@ -24,6 +24,8 @@ if (isset($_POST["add"])) {
     $price = $_POST["room-price"] ?? "";
     $hotel_id = $_POST["hotel-id"] ?? "";
 
+    echo "<p>".$room_type_id."".$room_number.  "".$price."<p>";
+
     $errormessage = RoomInsert($room_type_id, $room_number, $price, $hotel_id);
 }
 
@@ -70,16 +72,18 @@ if (isset($_POST["cancel"])) {
             <form autocomplete="off" method="post">
                 <div class="base-form">
                     <div>
-                        <label for="hotel-id">Hotel ID: </label>
-                        <input type="number" placeholder="Room Number" name="hotel-id" required>
+                        <label for="hotel-id">Hotel Branch: </label>
+                        <?php HotelDropdown('hotel-id'); ?>
+                        <!-- <input type="number" placeholder="Room Number" name="hotel-id" required> -->
                     </div>
                     <div>
-                        <label for="room-type-id">Room Type ID: </label>
-                        <input type="number" placeholder="Room Number" name="room-type-id" required>
+                        <label for="room-type-id">Room Type: </label>
+                        <?php RoomTypeDropdown('room-type-id'); ?>
+                        <!-- <input type="number" placeholder="Room Number" name="room-type-id" required> -->
                     </div>
                     <div>
                         <label for="room-number">Room Number: </label>
-                        <input type="number" placeholder="Room Number" name="room-number" required>
+                        <input type="number" placeholder="Room Number" name="room-number" min="1" required>
                     </div>
                     <div>
                         <label for="room-price">Price: </label>

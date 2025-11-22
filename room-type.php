@@ -71,11 +71,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="base-form">
                         <div>
                             <label for="room-type-name"> Room Type Name: </label>
-                            <input type="text" id="room-type-name" name="room-type-name" required>
+                            <input type="text" id="room-type-name"  placeholder="Room Type Name" name="room-type-name" required>
                         </div>
                         <div>
                             <label for="room-type-desc"> Room Type Description: </label>
-                            <input type="text" id="room-type-desc" name="room-type-desc" required>
+                            <input type="text" id="room-type-desc"  placeholder="Room Type Description" name="room-type-desc" required>
                         </div>
                         <input type="submit" class="submit-btn" name="add" value="Add">
                         <div class="base-form">

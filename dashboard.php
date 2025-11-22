@@ -1,3 +1,12 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['USER_ID'])) {
+    header("Location: login.php");
+    exit;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,6 +19,7 @@
     <script src="./nav.js"></script>
     <!-- using google fonts -->
 </head>
+
 
 <body class="dashboard-body">
     <!-- top navigation -->
@@ -39,10 +49,14 @@
         </nav>
     </aside>
     <!-- main content -->
-    <main id="main-content" class="main-content">
+    <main id="main-content" class="main_content">
+    <h1>Welcome to S&M Hotels Dashboard</h1>
+    <p>Select a menu option to get started.</p>
+</main>
+    <!-- <main id="main-content" class="main-content">
         <h1>Welcome to S&M Hotels Dashboard</h1>
         <p>Select a menu option to get started.</p>
-    </main>
+    </main> -->
 </body>
 
 </html>

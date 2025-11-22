@@ -184,14 +184,14 @@ input[type="password"]:focus {
 
 /* main content */
 
-.main-content {
-  margin-top: 60px;
-  margin-left: 220px;
+.main_content {
+  margin-top: 40px;     
   padding: 30px;
   background: #f8f6f6;
   min-height: calc(100vh - 60px);
   color: #2e2e2e;
 }
+
 
 .main-content h1 {
   color: #5f4d93;
@@ -473,4 +473,61 @@ input[type="password"]:focus {
   background-color: #c676e3;
   color: #ffffff;
   border: 1px solid #c676e3;
+}
+
+
+.add-container .name-group {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 2%;      
+  row-gap: 16px;       
+  margin-bottom: 20px;
+}
+
+.add-container .name-group > div {
+  width: 22%;          
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.add-container .name-group label {
+  font-weight: 600;
+  color: #5f4d93;
+}
+
+.add-container .name-group input {
+  width: 100%;        
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+}
+
+
+.add-container select,
+.base-form select {
+  width: 90%;
+  max-width: 450px;        
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+  font-size: 0.95rem;
+  /* color: #414040; */
+  outline: none;
+  cursor: pointer;
+}
+
+/* Focus state – same purple as your other focused inputs */
+.add-container select:focus,
+.base-form select:focus {
+  border-color: #a64ca6;
+  box-shadow: 0 0 0 2px rgba(166, 76, 166, 0.15);
+  background-color: #ffffff;
+}
+
+/* Optional: hover feedback */
+.add-container select:hover,
+.base-form select:hover {
+  border-color: #b8a9d9;
 }
