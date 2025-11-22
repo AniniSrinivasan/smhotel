@@ -57,8 +57,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <div id="navbar-container"></div> <!-- Navbar will be loaded here -->
 
-    <div id="message"><h3><?= $action_message?></h3></div>
-    <div id="error-message"><?= $action_error_message?></div>
+    <div id="message">
+        <h3><?= $action_message ?></h3>
+    </div>
+    <div id="error-message"><?= $action_error_message ?></div>
 
     <div class="main_content">
         <section class="add-container">
@@ -82,13 +84,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </section>
 
         <br /><br />
-        
+
 
         <section class="add-container">
-        <h2>Room Type List</h2>
-        <div class="search-bar">
-                <input type="text" id="searchInput" placeholder="Search by Room Type ID or Room Type Name..." autocomplete="off"
-                    onkeyup="filterRoomTypeList(this)">
+            <h2>Room Type List</h2>
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Search by Room Type ID or Room Type Name..."
+                    autocomplete="off" onkeyup="filterRoomTypeList(this)">
             </div>
             <table class="base-table">
                 <thead>
@@ -105,6 +107,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </table>
         </section>
     </div>
+
+    <ul class="pagination">
+        <li><a href="#">&laquo;</a></li>
+        <li class="active"><a href="#">1</a></li>
+        <li><a href="#">2</a></li>
+        <li><a href="#">3</a></li>
+        <li><a href="#">4</a></li>
+        <li><a href="#">5</a></li>
+        <li><a href="#">&raquo;</a></li>
+    </ul>
 
 
 </body>

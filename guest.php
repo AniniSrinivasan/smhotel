@@ -19,14 +19,14 @@ $editingId = null;
 
 // add (inserts a new guest)
 if (isset($_POST["add"])) {
-    $fname    = $_POST["fname"]    ?? "";
-    $mname    = $_POST["mname"]    ?? "";
-    $lname    = $_POST["lname"]    ?? "";
-    $address  = $_POST["address"]  ?? "";
-    $city     = $_POST["city"]     ?? "";
+    $fname = $_POST["fname"] ?? "";
+    $mname = $_POST["mname"] ?? "";
+    $lname = $_POST["lname"] ?? "";
+    $address = $_POST["address"] ?? "";
+    $city = $_POST["city"] ?? "";
     $postcode = $_POST["postcode"] ?? "";
-    $email    = $_POST["email"]    ?? "";
-    $phone    = $_POST["phone"]    ?? "";
+    $email = $_POST["email"] ?? "";
+    $phone = $_POST["phone"] ?? "";
 
     $errormessage = GuestAdd($fname, $mname, $lname, $address, $city, $postcode, $email, $phone);
 }
@@ -40,15 +40,15 @@ if (isset($_POST["delete"]) && isset($_POST["guest-id"])) {
 
 // save (updates the existing)
 if (isset($_POST["save"]) && isset($_POST["guest-id"])) {
-    $id       = $_POST["guest-id"];
-    $fname    = $_POST["fname"]    ?? "";
-    $mname    = $_POST["mname"]    ?? "";
-    $lname    = $_POST["lname"]    ?? "";
-    $address  = $_POST["address"]  ?? "";
-    $city     = $_POST["city"]     ?? "";
+    $id = $_POST["guest-id"];
+    $fname = $_POST["fname"] ?? "";
+    $mname = $_POST["mname"] ?? "";
+    $lname = $_POST["lname"] ?? "";
+    $address = $_POST["address"] ?? "";
+    $city = $_POST["city"] ?? "";
     $postcode = $_POST["postcode"] ?? "";
-    $email    = $_POST["email"]    ?? "";
-    $phone    = $_POST["phone"]    ?? "";
+    $email = $_POST["email"] ?? "";
+    $phone = $_POST["phone"] ?? "";
 
     GuestUpdate($id, $fname, $mname, $lname, $address, $city, $postcode, $email, $phone);
     exit();
@@ -114,11 +114,11 @@ if (isset($_POST["cancel"])) {
                 </div>
             </form>
 
-            </section>
+        </section>
 
-            <br /> <br />
+        <br /> <br />
 
-            <section class="add-container">
+        <section class="add-container">
             <h2>Guest List</h2>
             <div class="search-bar">
                 <input type="text" id="searchInput" placeholder="Search by Guest ID or Name..." autocomplete="off"
@@ -144,6 +144,15 @@ if (isset($_POST["cancel"])) {
         </section>
     </div>
 
+    <ul class="pagination">
+        <li><a href="#">&laquo;</a></li>
+        <li class="active"><a href="#">1</a></li>
+        <li><a href="#">2</a></li>
+        <li><a href="#">3</a></li>
+        <li><a href="#">4</a></li>
+        <li><a href="#">5</a></li>
+        <li><a href="#">&raquo;</a></li>
+    </ul>
 
 </body>
 

@@ -5,6 +5,19 @@ function createDB()
     return $db = new SQLite3('hotelSQL.db');
 }
 
+function GetAdminUser()
+{
+    $db = createDB();
+
+    $sql = "SELECT F_NAME, M_NAME, L_NAME, USER_EMAIL, USERNAME 
+            FROM USER 
+            WHERE ROLE = 'Admin'";
+
+    $row = $db->querySingle($sql, true);
+
+    return $row;
+}
+
 function BookingInsert($room_id, $guest_id, $num_guest, $dateIn, $dateOut)
 {
     $error = "";
@@ -147,8 +160,9 @@ function HotelInsert($branch, $address, $city, $postcode, $email, $phone)
     return $error;
 }
 
-function HotelList($editingId = null){
-    $db = createDB();   
+function HotelList($editingId = null)
+{
+    $db = createDB();
 
     $select_query = "SELECT * FROM HOTEL";
     $result = $db->query($select_query);
@@ -269,8 +283,9 @@ function RoomTypeInsert($type, $description, &$action_message, &$action_error_me
     }
 }
 
-function RoomTypeList($editingId = null){
-    $db = createDB();   
+function RoomTypeList($editingId = null)
+{
+    $db = createDB();
 
     $select_query = "SELECT * FROM ROOM_TYPE";
     $result = $db->query($select_query);
@@ -279,10 +294,10 @@ function RoomTypeList($editingId = null){
 
         // if edit mode chosen
         if ($editingId == $row['ROOM_TYPE_ID']) {
-    
+
             echo "<form method='post'><tr>";
             echo "<td>" . $row['ROOM_TYPE_ID'] . "</td>";
-    
+
             // pre-filled edit mode
             echo "<td>
                     <input type='hidden' name='room-type-id' value='" . $row['ROOM_TYPE_ID'] . "'>
@@ -291,21 +306,21 @@ function RoomTypeList($editingId = null){
             echo "<td>
                     <input type='text' name='room-type-desc' value='" . htmlspecialchars($row['ROOM_TYPE_DESCRIPTION']) . "' required>
                   </td>";
-    
+
             echo "<td>
                     <input type='submit' class='submit-btn' name='save' value='Save'>
                     <input type='submit' class='delete-button-in-list' name='cancel' value='Cancel'>
                   </td>";
             echo "</tr></form>";
-    
+
         } else {
-    
+
             // view only
             echo "<form method='post'><tr>";
             echo "<td>" . $row['ROOM_TYPE_ID'] . "</td>";
             echo "<td>" . $row['ROOM_TYPE_NAME'] . "</td>";
             echo "<td>" . $row['ROOM_TYPE_DESCRIPTION'] . "</td>";
-    
+
             echo "<td>
                     <input type='hidden' name='room-type-id' value='" . $row['ROOM_TYPE_ID'] . "'>
                     <input type='submit' class='edit-button-in-list' name='edit' value='Edit'>
@@ -361,8 +376,9 @@ function RoomInsert($room_type_id, $room_number, $price, $hotel_id)
     return $error;
 }
 
-function RoomList($editingId = null){
-    $db = createDB();   
+function RoomList($editingId = null)
+{
+    $db = createDB();
 
     $select_query = "SELECT * FROM ROOM";
     $result = $db->query($select_query);
@@ -414,11 +430,11 @@ function RoomList($editingId = null){
 
             // normal view row
             echo "<form method='post'><tr>";
-            echo "<td>" . $row['HOTEL_ID']     . "</td>";
-            echo "<td>" . $row['ROOM_ID']      . "</td>";
+            echo "<td>" . $row['HOTEL_ID'] . "</td>";
+            echo "<td>" . $row['ROOM_ID'] . "</td>";
             echo "<td>" . $row['ROOM_TYPE_ID'] . "</td>";
-            echo "<td>" . $row['ROOM_NO']      . "</td>";
-            echo "<td>" . $row['PRICE']        . "</td>";
+            echo "<td>" . $row['ROOM_NO'] . "</td>";
+            echo "<td>" . $row['PRICE'] . "</td>";
             echo "<td>
                     <input type='hidden' name='room-id' value='" . $row['ROOM_ID'] . "'>
                     <input type='submit' class='edit-button-in-list' name='edit' value='Edit'>
@@ -477,8 +493,9 @@ function GuestAdd($fname, $mname, $lname, $address, $city, $postcode, $email, $p
 }
 
 
-function GuestList($editingId = null){
-    $db = createDB();   
+function GuestList($editingId = null)
+{
+    $db = createDB();
 
     $select_query = "SELECT * FROM GUEST";
     $result = $db->query($select_query);
@@ -546,13 +563,13 @@ function GuestList($editingId = null){
 
             // normal view row
             echo "<form method='post'><tr>";
-            echo "<td>" . $row['GUEST_ID']      . "</td>";
-            echo "<td>" . $name                 . "</td>";
+            echo "<td>" . $row['GUEST_ID'] . "</td>";
+            echo "<td>" . $name . "</td>";
             echo "<td>" . $row['GUEST_ADDRESS'] . "</td>";
-            echo "<td>" . $row['CITY']          . "</td>";
-            echo "<td>" . $row['POSTCODE']      . "</td>";
-            echo "<td>" . $row['GUEST_EMAIL']   . "</td>";
-            echo "<td>" . $row['GUEST_PHNO']    . "</td>";
+            echo "<td>" . $row['CITY'] . "</td>";
+            echo "<td>" . $row['POSTCODE'] . "</td>";
+            echo "<td>" . $row['GUEST_EMAIL'] . "</td>";
+            echo "<td>" . $row['GUEST_PHNO'] . "</td>";
             echo "<td>
                     <input type='hidden' name='guest-id' value='" . $row['GUEST_ID'] . "'>
                     <input type='submit' class='edit-button-in-list' name='edit' value='Edit'>
@@ -600,7 +617,5 @@ function GuestDelete($id)
         echo "Error deleting room type: " . $db->lastErrorMsg();
     }
 }
-
-
 
 ?>

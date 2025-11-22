@@ -8,7 +8,7 @@ function loadNavbar() {
 }
 
 // search bar filter
-  
+
 function filterBookingList(input) {
   const query = input.value.toLowerCase();
   const tableRows = document.querySelectorAll(".base-table tbody tr");

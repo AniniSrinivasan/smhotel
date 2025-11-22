@@ -20,9 +20,9 @@ $editingId = null;
 // add (inserts a new room)
 if (isset($_POST["add"])) {
     $room_type_id = $_POST["room-type-id"] ?? "";
-    $room_number  = $_POST["room-number"]   ?? "";
-    $price        = $_POST["room-price"]    ?? "";
-    $hotel_id     = $_POST["hotel-id"]      ?? "";
+    $room_number = $_POST["room-number"] ?? "";
+    $price = $_POST["room-price"] ?? "";
+    $hotel_id = $_POST["hotel-id"] ?? "";
 
     $errormessage = RoomInsert($room_type_id, $room_number, $price, $hotel_id);
 }
@@ -36,11 +36,11 @@ if (isset($_POST["delete"]) && isset($_POST["room-id"])) {
 
 // save (updates the existing)
 if (isset($_POST["save"]) && isset($_POST["room-id"])) {
-    $id           = $_POST["room-id"];
-    $hotel_id     = $_POST["hotel-id"]      ?? "";
+    $id = $_POST["room-id"];
+    $hotel_id = $_POST["hotel-id"] ?? "";
     $room_type_id = $_POST["room-type-id"] ?? "";
-    $room_number  = $_POST["room-number"]   ?? "";
-    $price        = $_POST["room-price"]    ?? "";
+    $room_number = $_POST["room-number"] ?? "";
+    $price = $_POST["room-price"] ?? "";
 
     RoomUpdate($id, $hotel_id, $room_type_id, $room_number, $price);
     exit();
@@ -88,11 +88,11 @@ if (isset($_POST["cancel"])) {
                     <input type="submit" class="submit-btn" name="add" value="Add">
                 </div>
             </form>
-            </section>
+        </section>
 
-            <br /> <br />
+        <br /> <br />
 
-            <section class="add-container">
+        <section class="add-container">
             <h2>Room List</h2>
             <div class="search-bar">
                 <input type="text" id="searchInput" placeholder="Search by Room ID or Number..." autocomplete="off"
@@ -110,11 +110,21 @@ if (isset($_POST["cancel"])) {
                     </tr>
                 </thead>
                 <tbody>
-                    <?php RoomList($editingId)?>
+                    <?php RoomList($editingId) ?>
                 </tbody>
             </table>
         </section>
     </div>
+
+    <ul class="pagination">
+        <li><a href="#">&laquo;</a></li>
+        <li class="active"><a href="#">1</a></li>
+        <li><a href="#">2</a></li>
+        <li><a href="#">3</a></li>
+        <li><a href="#">4</a></li>
+        <li><a href="#">5</a></li>
+        <li><a href="#">&raquo;</a></li>
+    </ul>
 
 
 </body>

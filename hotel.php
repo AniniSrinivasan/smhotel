@@ -19,12 +19,12 @@ $editingId = null;
 
 
 if (isset($_POST["add"])) {
-    $branch   = $_POST["branch"];
-    $address  = $_POST["address"];
-    $city     = $_POST["city"];
+    $branch = $_POST["branch"];
+    $address = $_POST["address"];
+    $city = $_POST["city"];
     $postcode = $_POST["postcode"];
-    $email    = $_POST["email"];
-    $phone    = $_POST["tel-no"];
+    $email = $_POST["email"];
+    $phone = $_POST["tel-no"];
 
     $errormessage = HotelInsert($branch, $address, $city, $postcode, $email, $phone);
 }
@@ -38,12 +38,12 @@ if (isset($_POST["delete"]) && isset($_POST["hotel-id"])) {
 
 // save (updates the existing)
 if (isset($_POST["save"]) && isset($_POST["hotel-id"])) {
-    $id       = $_POST["hotel-id"];
-    $city     = $_POST["city"]     ?? "";
+    $id = $_POST["hotel-id"];
+    $city = $_POST["city"] ?? "";
     $postcode = $_POST["postcode"] ?? "";
-    $address  = $_POST["address"]  ?? "";
-    $email    = $_POST["email"]    ?? "";
-    $phone    = $_POST["tel-no"]   ?? "";
+    $address = $_POST["address"] ?? "";
+    $email = $_POST["email"] ?? "";
+    $phone = $_POST["tel-no"] ?? "";
 
     HotelUpdate($id, $city, $address, $postcode, $email, $phone);
     exit();
@@ -99,14 +99,14 @@ if (isset($_POST["cancel"])) {
                     <input type="submit" class="submit-btn" name="add" value="Add">
                 </div>
             </form>
-            </section>
-            <br /> <br /> 
+        </section>
+        <br /> <br />
 
-            <section class="add-container">
+        <section class="add-container">
             <h2>Hotel List</h2>
             <div class="search-bar">
-                <input type="text" id="searchInput" placeholder="Search by Hotel ID or Branch Name..." autocomplete="off"
-                    onkeyup="filterHotelList(this)">
+                <input type="text" id="searchInput" placeholder="Search by Hotel ID or Branch Name..."
+                    autocomplete="off" onkeyup="filterHotelList(this)">
             </div>
             <table class="base-table">
                 <thead>
@@ -121,12 +121,21 @@ if (isset($_POST["cancel"])) {
                     </tr>
                 </thead>
                 <tbody>
-                    <?php HotelList($editingId)?>
+                    <?php HotelList($editingId) ?>
                 </tbody>
             </table>
         </section>
     </div>
 
+    <ul class="pagination">
+        <li><a href="#">&laquo;</a></li>
+        <li class="active"><a href="#">1</a></li>
+        <li><a href="#">2</a></li>
+        <li><a href="#">3</a></li>
+        <li><a href="#">4</a></li>
+        <li><a href="#">5</a></li>
+        <li><a href="#">&raquo;</a></li>
+    </ul>
 
 </body>
 
