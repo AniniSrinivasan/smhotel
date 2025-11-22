@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $num_guest = $_POST['num-guest'] ?? '';
         $dateIn = $_POST['date-in'] ?? '';
         $dateOut = $_POST['date-out'] ?? '';
-         BookingInsert($room_id, $guest_id, $num_guest, $dateIn, $dateOut);
+        BookingInsert($room_id, $guest_id, $num_guest, $dateIn, $dateOut);
     }
 
     if (isset($_POST['delete']) && isset($_POST['booking-id'])) {
@@ -99,7 +99,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <br /> <br />
 
         <section class="add-container">
-        <h2>Booking List</h2>
+            <h2>Booking List</h2>
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Search by Booking ID or Guest ID..." autocomplete="off"
+                    onkeyup="filterBookingList(this)">
+            </div>
             <table class="base-table">
                 <thead>
                     <tr>

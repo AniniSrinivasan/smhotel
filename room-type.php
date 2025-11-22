@@ -63,7 +63,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="main_content">
         <section class="add-container">
             <h2>Add Room Type</h2>
-           
 
             <div class="base-form">
                 <form autocomplete="off" method="post">
@@ -87,6 +86,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <section class="add-container">
         <h2>Room Type List</h2>
+        <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Search by Room Type ID or Room Type Name..." autocomplete="off"
+                    onkeyup="filterRoomTypeList(this)">
+            </div>
             <table class="base-table">
                 <thead>
                     <tr>

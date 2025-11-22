@@ -97,8 +97,6 @@ if (isset($_POST["cancel"])) {
                         <input type="text" placeholder="Phone number" name="tel-no" required>
                     </div>
                     <input type="submit" class="submit-btn" name="add" value="Add">
-                    <input type="submit" class="submit-btn" name="edit" value="Edit">
-                    <input type="submit" class="submit-btn" name="delete" value="Delete">
                 </div>
             </form>
             </section>
@@ -106,6 +104,10 @@ if (isset($_POST["cancel"])) {
 
             <section class="add-container">
             <h2>Hotel List</h2>
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Search by Hotel ID or Branch Name..." autocomplete="off"
+                    onkeyup="filterHotelList(this)">
+            </div>
             <table class="base-table">
                 <thead>
                     <tr>

@@ -216,6 +216,25 @@ input[type="password"]:focus {
     margin-bottom: 20px;
     text-align: left;
   }
+
+
+  .add-container {
+    display: block;
+}
+
+/* secrch bar style */
+.search-bar {
+    margin: 10px 0;
+    padding: 5px 0;
+}
+
+.search-bar input {
+    display: block;
+    width: 100%;
+    padding: 6px 10px;
+    border: 1px solid #ccc;
+}
+
   
   /* base table style */
   .base-table {

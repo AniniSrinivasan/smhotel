@@ -120,6 +120,10 @@ if (isset($_POST["cancel"])) {
 
             <section class="add-container">
             <h2>Guest List</h2>
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Search by Guest ID or Name..." autocomplete="off"
+                    onkeyup="filterHotelList(this)">
+            </div>
             <table class="base-table">
                 <thead>
                     <tr>
