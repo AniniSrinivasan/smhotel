@@ -1,3 +1,13 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
 * {
   font-family: "Source Sans Pro", Helvetica, sans-serif;
 }
@@ -89,12 +99,12 @@ input[type="password"]:focus {
 .dashboard-body {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
   display: flex;
   min-height: 100vh;
   background: #f8f6f6;
   color: #333;
 }
+
 
 /* top bar */
 
@@ -129,9 +139,11 @@ input[type="password"]:focus {
 
 .profile img {
   border-radius: 50%;
-  height: 5%;
-  width: 5%;
+  width: 32px;
+  height: 32px;
+  object-fit: cover;
 }
+
 
 /* sidebar */
 
@@ -185,11 +197,14 @@ input[type="password"]:focus {
 /* main content */
 
 .main_content {
-  margin-top: 40px;     
+  margin-top: 60px;
+  margin-left: 220px;
   padding: 30px;
   background: #f8f6f6;
   min-height: calc(100vh - 60px);
   color: #2e2e2e;
+  flex: 1;
+  min-width: 0; 
 }
 
 
@@ -328,18 +343,12 @@ input[type="password"]:focus {
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
 }
 
-/* reduce heading gap to match Guest List */
 .add-container h1 {
   margin-top: 0;
   margin-bottom: 20px;
   color: #5f4d93;
   font-weight: 700;
 }
-
-/* .main_content .add-container {
-  margin-top: -55px; 
-}
- */
 
 
 .add-container fieldset {
@@ -362,7 +371,6 @@ input[type="password"]:focus {
   gap: 6px;
 }
 
-/* Shared field styling */
 .add-container label {
   font-weight: 600;
   color: #5f4d93;
@@ -401,13 +409,6 @@ input[type="password"]:focus {
   color: #fff;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  .add-container .name-group {
-    grid-template-columns: 1fr;
-  }
-}
-
 /*  edit + delete button */
 .add-container td form {
   display: flex;
@@ -442,6 +443,21 @@ input[type="password"]:focus {
 
 .add-container .delete-button-in-list:hover {
   background-color: #f0b6bb;
+}
+
+.base-form input,
+.add-container input,
+.add-container select,
+.base-form select {
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .add-container .name-group {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* Pagination */

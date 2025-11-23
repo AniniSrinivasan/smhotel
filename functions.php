@@ -40,6 +40,32 @@ function GetAdminUser()
     return $row;
 }
 
+function getAvailableRooms($dateIn, $dateOut)
+{
+    $db = createDB();
+
+    $sql = "
+        SELECT r.ROOM_ID, r.ROOM_NO
+        FROM ROOM r
+        WHERE NOT EXISTS (
+            SELECT 1
+            FROM BOOKING b
+            WHERE b.ROOM_ID = r.ROOM_ID
+              -- overlap condition
+              AND b.DATE_IN  < :dateOut
+              AND b.DATE_OUT > :dateIn
+        )
+        ORDER BY r.ROOM_NO
+    ";
+
+    $stmt = $db->prepare($sql);
+    $stmt->bindValue(':dateIn',  $dateIn,  SQLITE3_TEXT);
+    $stmt->bindValue(':dateOut', $dateOut, SQLITE3_TEXT);
+
+    return $stmt->execute(); // this is an SQLite3Result
+}
+
+
 function BookingInsert($room_id, $guest_id, $num_guest, $dateIn, $dateOut)
 {
     $error = "";
@@ -445,11 +471,29 @@ function RoomInsert($room_type_id, $room_number, $price, $hotel_id)
     return $error;
 }
 
-function RoomDropdown($fieldName = 'room-id', $selectedId = null)
+function RoomDropdown($fieldName = 'room-id', $selectedId = null, $dateIn = '', $dateOut = '')
 {
     $db = createDB();
 
-    $sql = "SELECT ROOM_ID FROM ROOM ORDER BY ROOM_ID";
+    if (!empty($dateIn) && !empty($dateOut)) {
+        // only show rooms that are free for the selected date range
+        $sql = "
+            SELECT r.ROOM_ID
+            FROM ROOM r
+            WHERE NOT EXISTS (
+                SELECT 1
+                FROM BOOKING b
+                WHERE b.ROOM_ID = r.ROOM_ID
+                  AND b.DATE_IN  < '$dateOut'
+                  AND b.DATE_OUT > '$dateIn'
+            )
+            ORDER BY r.ROOM_ID
+        ";
+    } else {
+        // if no dates chosen yet, show all rooms
+        $sql = "SELECT ROOM_ID FROM ROOM ORDER BY ROOM_ID";
+    }
+
     $result = $db->query($sql);
 
     echo "<select name='{$fieldName}' id='{$fieldName}' required>";
@@ -457,15 +501,13 @@ function RoomDropdown($fieldName = 'room-id', $selectedId = null)
 
     while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
         $id = (int) $row['ROOM_ID'];
-
-        $label = "{$id}";
         $selected = ($selectedId == $id) ? "selected" : "";
-
-        echo "<option value='{$id}' {$selected}>{$label}</option>";
+        echo "<option value='{$id}' {$selected}>{$id}</option>";
     }
 
     echo "</select>";
 }
+
 
 function RoomList($editingId = null)
 {

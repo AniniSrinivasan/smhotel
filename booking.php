@@ -17,6 +17,38 @@ require_once("functions.php");
 $errormessage = "";
 $editingId = null;
 
+$availableRooms = null;
+$dateIn  = $_POST['date-in']  ?? '';
+$dateOut = $_POST['date-out'] ?? '';
+
+$db = createDB();
+
+if ($dateIn !== '' && $dateOut !== '') {
+    $sql = "
+        SELECT r.ROOM_ID, r.ROOM_NO
+        FROM ROOM r
+        WHERE NOT EXISTS (
+            SELECT 1
+            FROM BOOKING b
+            WHERE b.ROOM_ID = r.ROOM_ID
+              AND b.DATE_IN  < '$dateOut'
+              AND b.DATE_OUT > '$dateIn'
+        )
+        ORDER BY r.ROOM_NO
+    ";
+} else {
+    $sql = "
+        SELECT r.ROOM_ID, r.ROOM_NO
+        FROM ROOM r
+        ORDER BY r.ROOM_NO
+    ";
+}
+
+$availableRooms = $db->query($sql);
+
+$errormessage = "";
+$editingId = null;
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (isset($_POST['add'])) {
@@ -72,8 +104,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <form autocomplete="off" method="post">
                 <div class="base-form">
                     <div>
-                        <label for="room-id">Room ID: </label>
-                        <?php RoomDropdown('room-id'); ?>
+                        <label for="hotel-id">Hotel Branch: </label>
+                        <?php HotelDropdown('hotel-id'); ?>
                     </div>
                     <div>
                         <label for="guest-id">Guest: </label>
@@ -91,6 +123,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <label for="date-out">Check Out: </label>
                         <input type="date" name="date-out" required>
                     </div>
+                    <div>
+    <label for="room-id">Room ID: </label>
+    <?php
+        $dateIn  = $_POST['date-in']  ?? '';
+        $dateOut = $_POST['date-out'] ?? '';
+        RoomDropdown('room-id', null, $dateIn, $dateOut);
+    ?>
+</div>
+
                     <input type="submit" class="submit-btn" name="add" value="Add">
                 </div>
             </form>
