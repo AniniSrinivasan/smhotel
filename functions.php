@@ -72,7 +72,7 @@ function BookingInsert($room_id, $guest_id, $num_guest, $dateIn, $dateOut)
     $db = createDB();
     $insert = $db->exec("INSERT INTO BOOKING (NO_OF_GUEST, DATE_IN, DATE_OUT, GUEST_ID, ROOM_ID) VALUES ('$num_guest', '$dateIn', '$dateOut', '$guest_id', '$room_id')");
     if ($insert) {
-        // header("Location: dashboard.php");
+        header("Location: booking.php");
     } else {
         $error = "Error in inserting room " . $db->lastErrorMsg() . "<br>";
     }

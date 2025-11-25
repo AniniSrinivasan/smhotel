@@ -97,47 +97,50 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
     <div class="main_content">
-
         <section class="add-container">
-            <h2>Booking List</h2>
 
-            <a href="booking-add.php" class="add-btn">Add Booking</a>
+            <h2>Add Booking</h2>
 
 
-            <div class="search-bar">
-                <input type="text" id="searchInput" placeholder="Search by Booking ID or Guest ID..." autocomplete="off"
-                    onkeyup="filterBookingList(this)">
-            </div>
-            <table class="base-table">
-                <thead>
-                    <tr>
-                        <th>Booking ID</th>
-                        <th>Room ID</th>
-                        <th>Guest ID</th>
-                        <th>Check-In</th>
-                        <th>Check-Out</th>
-                        <th>Number of Guests</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php BookingList($editingId); ?>
-                </tbody>
+            <h2><?= htmlspecialchars(string: $errormessage) ?></h2>
+            <form autocomplete="off" method="post">
+                <div class="group">
+                    <label for="date-in">Check In: </label>
+                    <input type="date" id="date-in" name="date-in" value="<?= htmlspecialchars($dateIn) ?>" required>
+                </div>
+                <br />
+                <div class="group">
+                    <label for="date-out">Check Out: </label>
+                    <input type="date" id="date-out" name="date-out" value="<?= htmlspecialchars($dateOut) ?>" required>
+                </div>
+                <br />
+                <div class="group">
+                    <label for="hotel-id">Hotel Branch: </label>
+                    <?php HotelDropdown('hotel-id', $selectedHotelId); ?>
+                </div>
+                <br />
+                <div class="group">
+                    <label for="guest-id">Guest: </label>
+                    <?php GuestDropdown('guest-id'); ?>
+                </div>
+                <br />
+                <div class="group">
+                    <label for="num-guest">Number of Guest: </label>
+                    <input type="number" placeholder="Number of Guest" name="num-guest" min="1" max="4" required>
+                </div>
+                <br />
 
-            </table>
+                <div>
+                    <label for="room-id">Room ID: </label>
+                    <?php RoomDropdown('room-id', null, $dateIn, $dateOut, $selectedHotelId); ?>
+                </div>
+                <input type="submit" class="submit-btn" name="add" value="Add">
+
+            </form>
         </section>
-    
     </div>
 
-    <ul class="pagination">
-        <li><a href="#">&laquo;</a></li>
-        <li class="active"><a href="#">1</a></li>
-        <li><a href="#">2</a></li>
-        <li><a href="#">3</a></li>
-        <li><a href="#">4</a></li>
-        <li><a href="#">5</a></li>
-        <li><a href="#">&raquo;</a></li>
-    </ul>
+
 
 
 

@@ -198,13 +198,13 @@ input[type="password"]:focus {
 
 .main_content {
   margin-top: 60px;
-  margin-left: 220px;
-  padding: 30px;
+  margin-left: 220px;          /* same as sidebar width */
+  padding: 30px 40px 40px 30px;/* small left padding so it’s close to sidebar */
   background: #f8f6f6;
   min-height: calc(100vh - 60px);
   color: #2e2e2e;
   flex: 1;
-  min-width: 0; 
+  min-width: 0;
 }
 
 
@@ -215,16 +215,6 @@ input[type="password"]:focus {
 }
 
 /* table section style */
-
-.add-container {
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 30px;
-  background: #ffffffcc;
-  border-radius: 12px;
-  border: 1px solid #ddd;
-}
-
 .add-container h2 {
   color: #5f4d93;
   font-size: 1.4rem;
@@ -233,10 +223,6 @@ input[type="password"]:focus {
   text-align: left;
 }
 
-
-.add-container {
-  display: block;
-}
 
 /* secrch bar style */
 .search-bar {
@@ -336,12 +322,13 @@ input[type="password"]:focus {
 .add-container {
   max-width: 1000px;
   padding: 30px 40px 40px 40px;
-  margin: 0 auto;
+  margin: 0 0 30px 0;     
   background: rgba(255, 255, 255, 0.8);
   border-radius: 12px;
   border: 1px solid #ddd;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
 }
+
 
 .add-container h1 {
   margin-top: 0;
@@ -534,7 +521,7 @@ input[type="password"]:focus {
   cursor: pointer;
 }
 
-/* Focus state – same purple as your other focused inputs */
+
 .add-container select:focus,
 .base-form select:focus {
   border-color: #a64ca6;
@@ -542,8 +529,55 @@ input[type="password"]:focus {
   background-color: #ffffff;
 }
 
-/* Optional: hover feedback */
 .add-container select:hover,
 .base-form select:hover {
   border-color: #b8a9d9;
 }
+
+
+.add-btn {
+  display: inline-block;
+  padding: 8px 22px;
+  background-color: #8e73e1;
+  color: #fff;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+
+.add-btn:hover {
+  background-color: #7556c5;
+}
+
+
+.group {
+  display: flex;
+  flex-direction: column;
+  /* gap: 8px; */
+  row-gap: 8px;    
+}
+
+.group label {
+  font-weight: 600;
+  color: #5f4d93;
+}
+
+.group input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  background-color: #fff;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.group input:focus {
+  border-color: #8e73e1;
+  box-shadow: 0 0 5px rgba(142, 115, 225, 0.4);
+  outline: none;
+}
+
+
+
