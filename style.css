@@ -299,7 +299,7 @@ input[type="password"]:focus {
   border: 1px solid #ccc;
   border-radius: 6px;
   background-color: #fff;
-  width: 450px;
+  /* width: 450px; */
 }
 
 .submit-btn {
@@ -436,7 +436,7 @@ input[type="password"]:focus {
 .add-container input,
 .add-container select,
 .base-form select {
-  width: 100%;
+  width: 50%;
   max-width: 100%;
 }
 
@@ -509,8 +509,8 @@ input[type="password"]:focus {
 
 .add-container select,
 .base-form select {
-  width: 90%;
-  max-width: 450px;        
+  width: 50%;
+  max-width: 600px;        
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 8px;

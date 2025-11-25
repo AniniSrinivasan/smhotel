@@ -134,6 +134,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <label for="room-id">Room ID: </label>
                     <?php RoomDropdown('room-id', null, $dateIn, $dateOut, $selectedHotelId); ?>
                 </div>
+                <br/>
                 <input type="submit" class="submit-btn" name="add" value="Add">
 
             </form>
