@@ -188,7 +188,7 @@ function BookingDelete($id)
     $delete = $db->exec("DELETE FROM BOOKING WHERE BOOKING_ID = '$id'");
 
     if ($delete) {
-        // header("Location: dashboard.php");
+        header("Location: booking.php");
         // exit();
     } else {
         echo "Error deleting room type: " . $db->lastErrorMsg();
@@ -471,12 +471,46 @@ function RoomInsert($room_type_id, $room_number, $price, $hotel_id)
     return $error;
 }
 
-function RoomDropdown($fieldName = 'room-id', $selectedId = null, $dateIn = '', $dateOut = '')
-{
+function RoomDropdown(
+    $fieldName   = 'room-id',
+    $selectedId  = null,
+    $dateIn      = '',
+    $dateOut     = '',
+    $hotelId     = ''
+) {
     $db = createDB();
+    //echo "<p>".$hotelId ."</p>";
+    //echo "<p>".$dateIn ."</p>";
 
-    if (!empty($dateIn) && !empty($dateOut)) {
-        // only show rooms that are free for the selected date range
+    // Normalise hotel id
+    $hotelId = trim((string)$hotelId);
+
+    if (!empty($dateIn) && !empty($dateOut) && $hotelId !== '') {
+        
+        // Hotel selected + dates selected → only free rooms in that hotel
+        $sql = "
+            SELECT r.ROOM_ID
+            FROM ROOM r
+            WHERE r.HOTEL_ID = '$hotelId'
+              AND NOT EXISTS (
+                  SELECT 1
+                  FROM BOOKING b
+                  WHERE b.ROOM_ID = r.ROOM_ID
+                    AND b.DATE_IN  < '$dateOut'
+                    AND b.DATE_OUT > '$dateIn'
+              )
+            ORDER BY r.ROOM_ID
+        ";
+    } elseif ($hotelId !== '') {
+        // Hotel selected, no dates → all rooms in that hotel
+        $sql = "
+            SELECT r.ROOM_ID
+            FROM ROOM r
+            WHERE r.HOTEL_ID = '$hotelId'
+            ORDER BY r.ROOM_ID
+        ";
+    } elseif (!empty($dateIn) && !empty($dateOut)) {
+        // Dates selected, no hotel filter → free rooms in any hotel
         $sql = "
             SELECT r.ROOM_ID
             FROM ROOM r
@@ -490,23 +524,26 @@ function RoomDropdown($fieldName = 'room-id', $selectedId = null, $dateIn = '', 
             ORDER BY r.ROOM_ID
         ";
     } else {
-        // if no dates chosen yet, show all rooms
+        // No filters → all rooms
         $sql = "SELECT ROOM_ID FROM ROOM ORDER BY ROOM_ID";
     }
 
     $result = $db->query($sql);
 
+    //echo "<p>".$hotelId ."</p>";
+    //echo "<p>".$sql ."</p>";
     echo "<select name='{$fieldName}' id='{$fieldName}' required>";
     echo "<option value=''>-- Select Room ID --</option>";
 
     while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
-        $id = (int) $row['ROOM_ID'];
+        $id       = (int)$row['ROOM_ID'];
         $selected = ($selectedId == $id) ? "selected" : "";
         echo "<option value='{$id}' {$selected}>{$id}</option>";
     }
 
     echo "</select>";
 }
+
 
 
 function RoomList($editingId = null)

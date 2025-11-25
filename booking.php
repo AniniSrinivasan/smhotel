@@ -18,33 +18,11 @@ $errormessage = "";
 $editingId = null;
 
 $availableRooms = null;
-$dateIn  = $_POST['date-in']  ?? '';
+$dateIn = $_POST['date-in'] ?? '';
 $dateOut = $_POST['date-out'] ?? '';
+$selectedHotelId = $_POST['hotel-id'] ?? '';
 
 $db = createDB();
-
-if ($dateIn !== '' && $dateOut !== '') {
-    $sql = "
-        SELECT r.ROOM_ID, r.ROOM_NO
-        FROM ROOM r
-        WHERE NOT EXISTS (
-            SELECT 1
-            FROM BOOKING b
-            WHERE b.ROOM_ID = r.ROOM_ID
-              AND b.DATE_IN  < '$dateOut'
-              AND b.DATE_OUT > '$dateIn'
-        )
-        ORDER BY r.ROOM_NO
-    ";
-} else {
-    $sql = "
-        SELECT r.ROOM_ID, r.ROOM_NO
-        FROM ROOM r
-        ORDER BY r.ROOM_NO
-    ";
-}
-
-$availableRooms = $db->query($sql);
 
 $errormessage = "";
 $editingId = null;
@@ -91,6 +69,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const form = document.querySelector('.add-container form');
+        const dateIn = document.getElementById('date-in');
+        const dateOut = document.getElementById('date-out');
+        const hotelId = document.getElementById('hotel-id');
+
+        if (!form || !dateIn || !dateOut || !hotelId) return;
+
+        function refreshAvailability() {
+            form.submit();
+        }
+
+        dateIn.addEventListener('change', refreshAvailability);
+        dateOut.addEventListener('change', refreshAvailability);
+        hotelId.addEventListener('change', refreshAvailability);
+
+    });
+</script>
+
+
 <body onload="loadNavbar()">
 
 
@@ -100,37 +99,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <section class="add-container">
             <h2>Add Booking</h2>
 
+            <h2><?= htmlspecialchars(string: $sql) ?></h2>
+
             <h2><?= htmlspecialchars(string: $errormessage) ?></h2>
             <form autocomplete="off" method="post">
                 <div class="base-form">
+                    <label for="date-in">Check In: </label>
+                    <input type="date" id="date-in" name="date-in" value="<?= htmlspecialchars($dateIn) ?>" required>
+                </div>
+                <div>
+                    <label for="date-out">Check Out: </label>
+                    <input type="date" id="date-out" name="date-out" value="<?= htmlspecialchars($dateOut) ?>" required>
+                </div>
+                <div>
+                    <label for="hotel-id">Hotel Branch: </label>
+                    <?php HotelDropdown('hotel-id', $selectedHotelId); ?>
+                </div>
+                <div>
+                    <label for="guest-id">Guest: </label>
+                    <?php GuestDropdown('guest-id'); ?>
+                </div>
+                <div>
+                    <label for="num-guest">Number of Guest: </label>
+                    <input type="number" placeholder="Number of Guest" name="num-guest" min="1" max="4" required>
+                </div>
+                <div>
+
+
                     <div>
-                        <label for="hotel-id">Hotel Branch: </label>
-                        <?php HotelDropdown('hotel-id'); ?>
+                        <label for="room-id">Room ID: </label>
+                        <?php RoomDropdown('room-id', null, $dateIn, $dateOut, $selectedHotelId); ?>
                     </div>
-                    <div>
-                        <label for="guest-id">Guest: </label>
-                        <?php GuestDropdown('guest-id'); ?>
-                    </div>
-                    <div>
-                        <label for="num-guest">Number of Guest: </label>
-                        <input type="number" placeholder="Number of Guest" name="num-guest" min="1" max="4" required>
-                    </div>
-                    <div>
-                        <label for="date-in">Check In: </label>
-                        <input type="date" name="date-in" required>
-                    </div>
-                    <div>
-                        <label for="date-out">Check Out: </label>
-                        <input type="date" name="date-out" required>
-                    </div>
-                    <div>
-    <label for="room-id">Room ID: </label>
-    <?php
-        $dateIn  = $_POST['date-in']  ?? '';
-        $dateOut = $_POST['date-out'] ?? '';
-        RoomDropdown('room-id', null, $dateIn, $dateOut);
-    ?>
-</div>
+
 
                     <input type="submit" class="submit-btn" name="add" value="Add">
                 </div>
@@ -149,8 +149,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <thead>
                     <tr>
                         <th>Booking ID</th>
-                        <th>Guest ID</th>
                         <th>Room ID</th>
+                        <th>Guest ID</th>
                         <th>Check-In</th>
                         <th>Check-Out</th>
                         <th>Number of Guests</th>
