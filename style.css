@@ -207,16 +207,15 @@ input[type="password"]:focus {
 }
 
 /* main content */
-
 .main_content {
   margin-top: 60px;
-  margin-left: 220px;          /* same as sidebar width */
-  padding: 30px 40px 40px 30px;/* small left padding so it’s close to sidebar */
+  margin-left: 220px;
+  padding: 30px 40px 40px 30px;
   background: #f8f6f6;
   min-height: calc(100vh - 60px);
   color: #2e2e2e;
   flex: 1;
-  min-width: 0;
+  width: 97%;
 }
 
 
@@ -292,6 +291,21 @@ input[type="password"]:focus {
   background-color: #f0eafd;
 }
 
+/* Fix edit-mode input sizes in table rows */
+.base-table td input[type="text"],
+.base-table td input[type="email"],
+.base-table td input[type="number"],
+.base-table td input[type="date"],
+.base-table td input[type="tel"] {
+    width: 100%;
+    min-width: 140px;       /* adjustable */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 0.95rem;
+}
+
+
 
 /* base-form template */
 
@@ -332,7 +346,8 @@ input[type="password"]:focus {
 
 /* ----- Add Form----- */
 .add-container {
-  max-width: 1000px;
+  width: 90%;                       
+  max-width: none;    
   padding: 30px 40px 40px 40px;
   margin: 0 0 30px 0;     
   background: rgba(255, 255, 255, 0.8);
@@ -340,6 +355,8 @@ input[type="password"]:focus {
   border: 1px solid #ddd;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
 }
+
+
 
 
 .add-container h1 {
@@ -355,19 +372,6 @@ input[type="password"]:focus {
   flex-direction: column;
   gap: 18px;
   border: none;
-}
-
-/* Name row (3 columns) */
-.add-container .name-group {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 25px;
-}
-
-.add-container .name-group div {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
 }
 
 .add-container label {
@@ -492,19 +496,19 @@ input[type="password"]:focus {
 
 
 .add-container .name-group {
-  display: flex;
-  flex-wrap: wrap;
-  column-gap: 2%;      
-  row-gap: 16px;       
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: 25px;
+  row-gap: 0;
   margin-bottom: 20px;
 }
 
-.add-container .name-group > div {
-  width: 22%;          
+.add-container .name-group div {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 6px; 
 }
+
 
 .add-container .name-group label {
   font-weight: 600;
@@ -516,7 +520,8 @@ input[type="password"]:focus {
   padding: 10px;
   border-radius: 8px;
   font-size: 0.95rem;
-}
+} 
+
 
 
 .add-container select,
