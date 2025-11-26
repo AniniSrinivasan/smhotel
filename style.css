@@ -172,9 +172,21 @@ input[type="password"]:focus {
 }
 
 .sidebar li {
-  padding: 10px 20px;
   cursor: pointer;
-  font-size: 0.95rem;
+  font-size: 1.0rem;
+  color: #5f4d93;
+}
+
+.sidebar li:hover {
+  background: #eaeaea;
+}
+
+
+.sidebar li a {
+  display: block;        /* makes the anchor fill the li */
+  width: 100%;
+  padding: 10px 20px;    /* same padding as li */
+  color: inherit;
 }
 
 .footer {
@@ -189,7 +201,7 @@ input[type="password"]:focus {
 .sidebar .section {
   font-weight: bold;
   text-transform: uppercase;
-  font-size: 0.8rem;
+  font-size: 1.1rem;
   color: #5f4d93;
   margin-top: 10px;
 }
@@ -233,7 +245,7 @@ input[type="password"]:focus {
 .add-container .search-bar input {
   display: block;
   width: 100%;
-  padding: 6px 10px;
+  padding: 12px 14px;
   border: 1px solid #ccc;
 }
 
@@ -579,5 +591,18 @@ input[type="password"]:focus {
   outline: none;
 }
 
+.heading-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* left + right */
+  margin-bottom: 20px;
+}
+
+.heading-row h2 {
+  margin: 0;
+  color: #5f4d93;
+  font-size: 1.4rem;
+  font-weight: 700;
+}
 
 

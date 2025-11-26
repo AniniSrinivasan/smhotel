@@ -99,9 +99,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="main_content">
 
         <section class="add-container">
-            <h2>Booking List</h2>
-
-            <a href="booking-add.php" class="add-btn">Add Booking</a>
+            <div class="heading-row">
+                <h2>Booking List</h2>
+                <a class="add-btn" href="booking-add.php">Add Booking</a>
+            </div>
+            
 
 
             <div class="search-bar">
@@ -125,19 +127,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </tbody>
 
             </table>
+            <br />
+            <ul class="pagination">
+                <li><a href="#">&laquo;</a></li>
+                <li class="active"><a href="#">1</a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">5</a></li>
+                <li><a href="#">&raquo;</a></li>
+            </ul>
         </section>
-    
+
+
     </div>
 
-    <ul class="pagination">
-        <li><a href="#">&laquo;</a></li>
-        <li class="active"><a href="#">1</a></li>
-        <li><a href="#">2</a></li>
-        <li><a href="#">3</a></li>
-        <li><a href="#">4</a></li>
-        <li><a href="#">5</a></li>
-        <li><a href="#">&raquo;</a></li>
-    </ul>
+
 
 
 

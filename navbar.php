@@ -36,6 +36,7 @@ $adminUsername = $admin
         <ul>
             <li class="section">My Account</li>
             <li><?= htmlspecialchars($adminUsername) ?></li>
+            <br/><br/>
             <li class="section">Management</li>
             <li><a href="booking.php">Manage Booking</a></li> <!-- done -->
             <li><a href="hotel.php">Manage Hotel</a></li> <!-- done -->
