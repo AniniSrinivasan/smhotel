@@ -526,8 +526,7 @@ input[type="password"]:focus {
 
 .add-container select,
 .base-form select {
-  width: 50%;
-  max-width: 600px;        
+  width: 50%;    
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 8px;
