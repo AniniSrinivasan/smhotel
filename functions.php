@@ -785,14 +785,11 @@ function GuestDelete($id)
 }
 
 
-function showAlertMessage($error = "", $success = "") {
+function showAlertMessage($error = "") {
     if (!empty($error)) {
         echo '<div class="alert-box alert-error">' . htmlspecialchars($error) . '</div>';
     }
 
-    if (!empty($success)) {
-        echo '<div class="alert-box alert-success">' . htmlspecialchars($success) . '</div>';
-    }
 }
 
 

@@ -39,7 +39,7 @@ if (isset($_POST["add"])) {
     <div class="main_content">
         <section class="add-container">
 
-            <?php showAlertMessage($errormessage ?? "", $successmessage ?? ""); ?>
+            <?php showAlertMessage($errormessage ?? ""); ?>
 
             <h2>Add Guest</h2>
 
