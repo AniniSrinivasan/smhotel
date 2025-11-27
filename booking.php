@@ -29,19 +29,9 @@ $editingId = null;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    if (isset($_POST['add'])) {
-        $room_id = $_POST['room-id'] ?? '';
-        $guest_id = $_POST['guest-id'] ?? '';
-        $num_guest = $_POST['num-guest'] ?? '';
-        $dateIn = $_POST['date-in'] ?? '';
-        $dateOut = $_POST['date-out'] ?? '';
-        BookingInsert($room_id, $guest_id, $num_guest, $dateIn, $dateOut);
-    }
-
     if (isset($_POST['delete']) && isset($_POST['booking-id'])) {
         $id = $_POST['booking-id'];
         BookingDelete($id);   // assuming you already have this
-        exit;
     }
 
     // save (updates the existing)
@@ -54,7 +44,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $dateOut = $_POST['date-out'] ?? '';
 
         BookingUpdate($booking_id, $room_id, $guest_id, $num_guest, $dateIn, $dateOut);
-        exit;
     }
 
     // for edit mode
@@ -103,7 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <h2>Booking List</h2>
                 <a class="add-btn" href="booking-add.php">Add Booking</a>
             </div>
-            
+
 
 
             <div class="search-bar">

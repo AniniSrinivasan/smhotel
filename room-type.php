@@ -21,12 +21,6 @@ $editingId = null;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    if (isset($_POST["add"])) {
-        $type = $_POST["room-type-name"];
-        $description = $_POST["room-type-desc"];
-        RoomTypeInsert($type, $description, $action_message, $action_error_message);
-    }
-
     if (isset($_POST['delete']) && isset($_POST['room-type-id'])) {
         $id = $_POST['room-type-id'];
         RoomTypeDelete($id);
@@ -60,34 +54,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div id="message">
         <h3><?= $action_message ?></h3>
     </div>
+
     <div id="error-message"><?= $action_error_message ?></div>
 
     <div class="main_content">
         <section class="add-container">
-            <h2>Add Room Type</h2>
-
-            <div class="base-form">
-                <form autocomplete="off" method="post">
-                    <div class="base-form">
-                        <div>
-                            <label for="room-type-name"> Room Type Name: </label>
-                            <input type="text" id="room-type-name"  placeholder="Room Type Name" name="room-type-name" required>
-                        </div>
-                        <div>
-                            <label for="room-type-desc"> Room Type Description: </label>
-                            <input type="text" id="room-type-desc"  placeholder="Room Type Description" name="room-type-desc" required>
-                        </div>
-                        <input type="submit" class="submit-btn" name="add" value="Add">
-                        <div class="base-form">
-                </form>
+            <div class="heading-row">
+                <h2>Room Type List</h2>
+                <a class="add-btn" href="room-type-add.php">Add Room Type</a>
             </div>
-        </section>
-
-        <br /><br />
-
-
-        <section class="add-container">
-            <h2>Room Type List</h2>
             <div class="search-bar">
                 <input type="text" id="searchInput" placeholder="Search by Room Type ID or Room Type Name..."
                     autocomplete="off" onkeyup="filterRoomTypeList(this)">
@@ -117,7 +92,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <li><a href="#">5</a></li>
         <li><a href="#">&raquo;</a></li>
     </ul>
-
 
 </body>
 

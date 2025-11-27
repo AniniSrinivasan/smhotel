@@ -24,7 +24,7 @@ if (isset($_POST["add"])) {
     $price = $_POST["room-price"] ?? "";
     $hotel_id = $_POST["hotel-id"] ?? "";
 
-    echo "<p>".$room_type_id."".$room_number.  "".$price."<p>";
+    echo "<p>" . $room_type_id . "" . $room_number . "" . $price . "<p>";
 
     $errormessage = RoomInsert($room_type_id, $room_number, $price, $hotel_id);
 }
@@ -66,38 +66,13 @@ if (isset($_POST["cancel"])) {
     <div id="navbar-container"></div> <!-- Navbar will be loaded here -->
 
     <div class="main_content">
-        <section class="add-container">
-            <h2>Add Room</h2>
-            <h2><?= htmlspecialchars(string: $errormessage) ?></h2>
-            <form autocomplete="off" method="post">
-                <div class="base-form">
-                    <div>
-                        <label for="hotel-id">Hotel Branch: </label>
-                        <?php HotelDropdown('hotel-id'); ?>
-                        <!-- <input type="number" placeholder="Room Number" name="hotel-id" required> -->
-                    </div>
-                    <div>
-                        <label for="room-type-id">Room Type: </label>
-                        <?php RoomTypeDropdown('room-type-id'); ?>
-                        <!-- <input type="number" placeholder="Room Number" name="room-type-id" required> -->
-                    </div>
-                    <div>
-                        <label for="room-number">Room Number: </label>
-                        <input type="number" placeholder="Room Number" name="room-number" min="1" required>
-                    </div>
-                    <div>
-                        <label for="room-price">Price: </label>
-                        <input type="text" placeholder="Price" name="room-price" required>
-                    </div>
-                    <input type="submit" class="submit-btn" name="add" value="Add">
-                </div>
-            </form>
-        </section>
 
-        <br /> <br />
 
         <section class="add-container">
-            <h2>Room List</h2>
+            <div class="heading-row">
+                <h2>Hotel List</h2>
+                <a class="add-btn" href="hotel-add.php">Add Hotel</a>
+            </div>
             <div class="search-bar">
                 <input type="text" id="searchInput" placeholder="Search by Room ID or Number..." autocomplete="off"
                     onkeyup="filterRoomList(this)">

@@ -173,8 +173,7 @@ function BookingUpdate($booking_id, $room_id, $guest_id, $num_guest, $dateIn, $d
                          WHERE BOOKING_ID = '$booking_id'");
 
     if ($update) {
-        // header("Location: booking.php");
-        exit();
+        header("Location: booking.php");
     } else {
         echo 'Error in updating booking ' . $db->lastErrorMsg() . '<br>';
     }
@@ -189,7 +188,6 @@ function BookingDelete($id)
 
     if ($delete) {
         header("Location: booking.php");
-        // exit();
     } else {
         echo "Error deleting room type: " . $db->lastErrorMsg();
     }
@@ -201,7 +199,7 @@ function HotelInsert($branch, $address, $city, $postcode, $email, $phone)
     $db = createDB();
     $insert = $db->exec("INSERT INTO HOTEL (HOTEL_NAME, HOTEL_ADDRESS, CITY, POSTCODE, HOTEL_TELNO, HOTEL_EMAIL) VALUES ('$branch', '$address', '$city', '$postcode', '$phone', '$email')");
     if ($insert) {
-        // header("Location: dashboard.php");
+        header("Location: hotel.php");
     } else {
         $error = "Error in inserting room " . $db->lastErrorMsg() . "<br>";
     }
@@ -321,8 +319,7 @@ function HotelUpdate($id, $city, $address, $postcode, $email, $phone)
                          WHERE HOTEL_ID   = '$id'");
 
     if ($update) {
-        // header("Location: hotel.php");
-        // exit();
+        header("Location: hotel.php");
     } else {
         echo "Error in updating hotel " . $db->lastErrorMsg() . "<br>";
     }
@@ -336,8 +333,7 @@ function HotelDelete($id)
     $delete = $db->exec("DELETE FROM HOTEL WHERE HOTEL_ID = '$id'");
 
     if ($delete) {
-        // header("Location: dashboard.php");
-        // exit();
+        header("Location: hotel.php");
     } else {
         echo "Error deleting room type: " . $db->lastErrorMsg();
     }
@@ -349,10 +345,9 @@ function RoomTypeInsert($type, $description, &$action_message, &$action_error_me
     $insert = $db->exec("INSERT INTO ROOM_TYPE (ROOM_TYPE_NAME, ROOM_TYPE_DESCRIPTION) VALUES ('$type','$description')");
     if ($insert) {
         $action_message = "Room Type Added Successfully!!";
-        //echo $action_message;
+        header("Location: room-type.php");
     } else {
         $action_error_message = "Error in inserting room type " . $db->lastErrorMsg() . "<br>";
-        //echo $action_error_message;
     }
 }
 
@@ -436,7 +431,7 @@ function RoomTypeUpdate($id, $type, $description)
                          WHERE ROOM_TYPE_ID = '$id'");
 
     if ($update) {
-
+        header("Location: room-type.php");
     } else {
         echo "Error in updating room type " . $db->lastErrorMsg() . "<br>";
     }
@@ -450,12 +445,11 @@ function RoomTypeDelete($id)
     $delete = $db->exec("DELETE FROM ROOM_TYPE WHERE ROOM_TYPE_ID = '$id'");
 
     if ($delete) {
-
+        header("Location: room-type.php");
     } else {
         echo "Error deleting room type: " . $db->lastErrorMsg();
     }
 }
-
 
 
 function RoomInsert($room_type_id, $room_number, $price, $hotel_id)
@@ -620,8 +614,7 @@ function RoomUpdate($room_id, $hotel_id, $room_type_id, $room_number, $price)
                          WHERE ROOM_ID   = '$room_id'");
 
     if ($update) {
-        // header("Location: room.php");
-        // exit();
+        header("Location: room.php");
     } else {
         echo "Error in updating room " . $db->lastErrorMsg() . "<br>";
     }
@@ -635,20 +628,19 @@ function RoomDelete($id)
     $delete = $db->exec("DELETE FROM ROOM WHERE ROOM_ID = '$id'");
 
     if ($delete) {
-        // header("Location: dashboard.php");
-        // exit();
+        header("Location: room.php");
     } else {
         echo "Error deleting room type: " . $db->lastErrorMsg();
     }
 }
 
-function GuestAdd($fname, $mname, $lname, $address, $city, $postcode, $email, $phone)
+function GuestInsert($fname, $mname, $lname, $address, $city, $postcode, $email, $phone)
 {
     $error = "";
     $db = createDB();
     $insert = $db->exec("INSERT INTO GUEST (F_NAME, M_NAME, L_NAME, GUEST_ADDRESS, CITY, POSTCODE, GUEST_EMAIL, GUEST_PHNO) VALUES ('$fname', '$mname', '$lname', '$address', '$city', '$postcode', '$email', '$phone')");
     if ($insert) {
-        // header("Location: dashboard.php");
+        header("Location: guest.php");
     } else {
         $error = "Error in inserting room " . $db->lastErrorMsg() . "<br>";
     }
@@ -773,8 +765,7 @@ function GuestUpdate($id, $fname, $mname, $lname, $address, $city, $postcode, $e
                          WHERE GUEST_ID    = '$id'");
 
     if ($update) {
-        // header('Location: guest.php');
-        // exit();
+        header('Location: guest.php');
     } else {
         echo 'Error updating guest: ' . $db->lastErrorMsg() . '<br>';
     }
@@ -788,8 +779,7 @@ function GuestDelete($id)
     $delete = $db->exec("DELETE FROM GUEST WHERE GUEST_ID = '$id'");
 
     if ($delete) {
-        // header("Location: dashboard.php");
-        // exit();
+        header("Location: guest.php");
     } else {
         echo "Error deleting room type: " . $db->lastErrorMsg();
     }

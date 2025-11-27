@@ -17,25 +17,10 @@ require_once("functions.php");
 $errormessage = "";
 $editingId = null;
 
-// add (inserts a new guest)
-if (isset($_POST["add"])) {
-    $fname = $_POST["fname"] ?? "";
-    $mname = $_POST["mname"] ?? "";
-    $lname = $_POST["lname"] ?? "";
-    $address = $_POST["address"] ?? "";
-    $city = $_POST["city"] ?? "";
-    $postcode = $_POST["postcode"] ?? "";
-    $email = $_POST["email"] ?? "";
-    $phone = $_POST["phone"] ?? "";
-
-    $errormessage = GuestAdd($fname, $mname, $lname, $address, $city, $postcode, $email, $phone);
-}
-
 // delete (removes the guest)
 if (isset($_POST["delete"]) && isset($_POST["guest-id"])) {
     $id = $_POST["guest-id"];
     GuestDelete($id);
-    exit();
 }
 
 // save (updates the existing)
@@ -51,7 +36,6 @@ if (isset($_POST["save"]) && isset($_POST["guest-id"])) {
     $phone = $_POST["phone"] ?? "";
 
     GuestUpdate($id, $fname, $mname, $lname, $address, $city, $postcode, $email, $phone);
-    exit();
 }
 
 // for edit mode
@@ -65,65 +49,16 @@ if (isset($_POST["cancel"])) {
 }
 ?>
 
-
 <body onload="loadNavbar()">
 
     <div id="navbar-container"></div> <!-- Navbar will be loaded here -->
 
     <div class="main_content">
         <section class="add-container">
-            <h2>Add Guest</h2>
-
-            <h2><?= htmlspecialchars(string: $errormessage) ?></h2>
-
-            <form autocomplete="off" method="post">
-                <div class="base-form">
-
-                    <div class="name-group">
-                        <div>
-                            <label for="fname">First Name:</label>
-                            <input type="text" id="fname" name="fname" placeholder="First Name">
-                        </div>
-                        <div>
-                            <label for="mname">Middle Name:</label>
-                            <input type="text" id="mname" name="mname" placeholder="Middle Name">
-                        </div>
-                        <div>
-                            <label for="lname">Last Name:</label>
-                            <input type="text" id="lname" name="lname" placeholder="Last Name">
-                        </div>
-                    </div>
-
-                    <div>
-                        <label for="address">Address: </label>
-                        <input type="text" placeholder="Address" name="address" required>
-                    </div>
-                    <div>
-                        <label for="city">City: </label>
-                        <input type="text"  placeholder="City" name="city" required>
-                    </div>
-                    <div>
-                        <label for="postcode">Postcode: </label>
-                        <input type="text"  placeholder="Postcode" name="postcode" required>
-                    </div>
-                    <div>
-                        <label for="email">Email: </label>
-                        <input type="email"  placeholder="Email" name="email" required>
-                    </div>
-                    <div>
-                        <label for="ph-no">Phone Number: </label>
-                        <input type="text"  placeholder="Phone Number" name="ph-no" required>
-                    </div>
-                    <input type="submit" class="submit-btn" name="add" value="Add">
-                </div>
-            </form>
-
-        </section>
-
-        <br /> <br />
-
-        <section class="add-container">
-            <h2>Guest List</h2>
+            <div class="heading-row">
+                <h2>Guest List</h2>
+                <a class="add-btn" href="guest-add.php">Add Guest</a>
+            </div>
             <div class="search-bar">
                 <input type="text" id="searchInput" placeholder="Search by Guest ID or Name..." autocomplete="off"
                     onkeyup="filterHotelList(this)">

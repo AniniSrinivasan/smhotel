@@ -37,35 +37,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $dateOut = $_POST['date-out'] ?? '';
         BookingInsert($room_id, $guest_id, $num_guest, $dateIn, $dateOut);
     }
-
-    if (isset($_POST['delete']) && isset($_POST['booking-id'])) {
-        $id = $_POST['booking-id'];
-        BookingDelete($id);   // assuming you already have this
-        exit;
-    }
-
-    // save (updates the existing)
-    if (isset($_POST['save']) && isset($_POST['booking-id'])) {
-        $booking_id = $_POST['booking-id'];
-        $room_id = $_POST['room-id'] ?? '';
-        $guest_id = $_POST['guest-id'] ?? '';
-        $num_guest = $_POST['num-guest'] ?? '';
-        $dateIn = $_POST['date-in'] ?? '';
-        $dateOut = $_POST['date-out'] ?? '';
-
-        BookingUpdate($booking_id, $room_id, $guest_id, $num_guest, $dateIn, $dateOut);
-        exit;
-    }
-
-    // for edit mode
-    if (isset($_POST['edit']) && isset($_POST['booking-id'])) {
-        $editingId = $_POST['booking-id'];
-    }
-
-    // Cancel edit mode
-    if (isset($_POST['cancel'])) {
-        $editingId = null;
-    }
 }
 ?>
 
@@ -89,18 +60,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     });
 </script>
 
-
 <body onload="loadNavbar()">
 
-
     <div id="navbar-container"></div> <!-- Navbar will be loaded here -->
-
 
     <div class="main_content">
         <section class="add-container">
 
             <h2>Add Booking</h2>
-
 
             <h2><?= htmlspecialchars(string: $errormessage) ?></h2>
             <form autocomplete="off" method="post">
@@ -134,15 +101,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <label for="room-id">Room ID: </label>
                     <?php RoomDropdown('room-id', null, $dateIn, $dateOut, $selectedHotelId); ?>
                 </div>
-                <br/>
+                <br />
                 <input type="submit" class="submit-btn" name="add" value="Add">
 
             </form>
         </section>
     </div>
-
-
-
 
 
 </body>
