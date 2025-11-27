@@ -66,12 +66,10 @@ if (isset($_POST["cancel"])) {
     <div id="navbar-container"></div> <!-- Navbar will be loaded here -->
 
     <div class="main_content">
-
-
         <section class="add-container">
             <div class="heading-row">
-                <h2>Hotel List</h2>
-                <a class="add-btn" href="hotel-add.php">Add Hotel</a>
+                <h2>Room List</h2>
+                <a class="add-btn" href="room-add.php">Add Room</a>
             </div>
             <div class="search-bar">
                 <input type="text" id="searchInput" placeholder="Search by Room ID or Number..." autocomplete="off"

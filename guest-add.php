@@ -77,8 +77,8 @@ if (isset($_POST["add"])) {
                         <input type="email" placeholder="Email" name="email" required>
                     </div>
                     <div>
-                        <label for="ph-no">Phone Number: </label>
-                        <input type="text" placeholder="Phone Number" name="ph-no" required>
+                        <label for="phone">Phone Number: </label>
+                        <input type="text" placeholder="Phone Number" name="phone" required>
                     </div>
                     <input type="submit" class="submit-btn" name="add" value="Add">
                 </div>
