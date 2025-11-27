@@ -478,7 +478,7 @@ input[type="password"]:focus {
 
 .pagination a {
   text-decoration: none;
-  color: #c676e3;
+  color: #8277a6;
   padding: 8px 16px;
   border: 1px solid #ddd;
   border-radius: 4px;
@@ -489,9 +489,9 @@ input[type="password"]:focus {
 }
 
 .pagination .active a {
-  background-color: #c676e3;
+  background-color: #8277a6;
   color: #ffffff;
-  border: 1px solid #c676e3;
+  border: 1px solid #8277a6;
 }
 
 
