@@ -104,3 +104,11 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 });
+
+
+setTimeout(() => {
+    document.querySelectorAll('.alert-box').forEach(el => {
+        el.style.display = 'none';
+    });
+}, 5000); // closes the error message div after 5 seconds
+

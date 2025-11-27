@@ -38,9 +38,10 @@ if (isset($_POST["add"])) {
 
     <div class="main_content">
         <section class="add-container">
-            <h2>Add Guest</h2>
 
-            <h2><?= htmlspecialchars(string: $errormessage) ?></h2>
+            <?php showAlertMessage($errormessage ?? "", $successmessage ?? ""); ?>
+
+            <h2>Add Guest</h2>
 
             <form autocomplete="off" method="post">
                 <div class="base-form">
@@ -48,7 +49,7 @@ if (isset($_POST["add"])) {
                     <div class="name-group">
                         <div>
                             <label for="fname">First Name:</label>
-                            <input type="text" id="fname" name="fname" placeholder="First Name">
+                            <input type="text" id="fname" name="fname" placeholder="First Name" required>
                         </div>
                         <div>
                             <label for="mname">Middle Name:</label>
@@ -56,7 +57,7 @@ if (isset($_POST["add"])) {
                         </div>
                         <div>
                             <label for="lname">Last Name:</label>
-                            <input type="text" id="lname" name="lname" placeholder="Last Name">
+                            <input type="text" id="lname" name="lname" placeholder="Last Name" required>
                         </div>
                     </div>
 
@@ -85,3 +86,8 @@ if (isset($_POST["add"])) {
             </form>
 
         </section>
+    </div>
+
+</body>
+
+</html>

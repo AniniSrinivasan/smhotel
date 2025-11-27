@@ -771,7 +771,6 @@ function GuestUpdate($id, $fname, $mname, $lname, $address, $city, $postcode, $e
     }
 }
 
-
 function GuestDelete($id)
 {
     $db = createDB();
@@ -784,5 +783,17 @@ function GuestDelete($id)
         echo "Error deleting room type: " . $db->lastErrorMsg();
     }
 }
+
+
+function showAlertMessage($error = "", $success = "") {
+    if (!empty($error)) {
+        echo '<div class="alert-box alert-error">' . htmlspecialchars($error) . '</div>';
+    }
+
+    if (!empty($success)) {
+        echo '<div class="alert-box alert-success">' . htmlspecialchars($success) . '</div>';
+    }
+}
+
 
 ?>

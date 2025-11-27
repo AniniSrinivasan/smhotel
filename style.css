@@ -610,4 +610,36 @@ input[type="password"]:focus {
   font-weight: 700;
 }
 
+/* Alert messages */
+.alert-box {
+  padding: 14px 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  animation: fadeOut 1s ease forwards;
+  animation-delay: 4s; /* stays for 4s then fades */
+}
+
+/* Error */
+.alert-error {
+  background: #f8d7da;
+  color: #7a1c1c;
+  border-left: 5px solid #c03434;
+}
+
+/* Success */
+.alert-success {
+  background: #d7f8de;
+  color: #1c7a32;
+  border-left: 5px solid #1e9e3a;
+}
+
+/* Fade out animation */
+@keyframes fadeOut {
+  to {
+      opacity: 0;
+      transform: translateY(-10px);
+  }
+}
 
