@@ -641,3 +641,19 @@ input[type="password"]:focus {
   }
 }
 
+.sidebar .footer {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #7a3db8;         
+  color: #ffffff;
+  text-align: center;
+  padding: 12px 10px;
+  font-size: 0.85rem;
+  border-top: 1px solid #5f4d93;
+}
+.footer{
+  cursor: pointer;
+  font-size: 0.95rem;
+}
