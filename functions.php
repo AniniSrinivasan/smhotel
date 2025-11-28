@@ -27,6 +27,28 @@ function validateUser($username, $password, &$error)
     }
 }
 
+function requireLogin()
+{
+    session_start();
+
+    if (!isset($_SESSION['USER_ID'])) {
+        header("Location: login.php");
+        exit;
+    }
+}
+
+function logoutUser()
+{
+    session_start();
+    $_SESSION = [];
+    session_destroy();
+    
+    header("Location: login.php");
+    exit;
+}
+
+
+
 function GetAdminUser()
 {
     $db = createDB();

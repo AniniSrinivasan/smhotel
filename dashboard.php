@@ -1,10 +1,6 @@
 <?php
-session_start();
-
-if (!isset($_SESSION['USER_ID'])) {
-    header("Location: login.php");
-    exit;
-}
+    require_once "functions.php";
+    requireLogin();
 ?>
 
 <!DOCTYPE html>
@@ -50,9 +46,9 @@ if (!isset($_SESSION['USER_ID'])) {
     </aside>
     <!-- main content -->
     <main id="main-content" class="main_content">
-    <h1>Welcome to S&M Hotels Dashboard</h1>
-    <p>Select a menu option to get started.</p>
-</main>
+        <h1>Welcome to S&M Hotels Dashboard</h1>
+        <p>Select a menu option to get started.</p>
+    </main>
     <!-- <main id="main-content" class="main-content">
         <h1>Welcome to S&M Hotels Dashboard</h1>
         <p>Select a menu option to get started.</p>

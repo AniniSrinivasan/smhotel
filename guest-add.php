@@ -13,6 +13,7 @@
 
 <?php
 require_once("functions.php");
+requireLogin();
 
 $errormessage = "";
 $editingId = null;

@@ -532,7 +532,6 @@ input[type="password"]:focus {
   border-radius: 8px;
   background-color: #fff;
   font-size: 0.95rem;
-  /* color: #414040; */
   outline: none;
   cursor: pointer;
 }
