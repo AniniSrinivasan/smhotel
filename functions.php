@@ -37,17 +37,6 @@ function requireLogin()
     }
 }
 
-function logoutUser()
-{
-    session_start();
-    $_SESSION = [];
-    session_destroy();
-    
-    header("Location: login.php");
-    exit;
-}
-
-
 
 function GetAdminUser()
 {
