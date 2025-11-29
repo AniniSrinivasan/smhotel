@@ -70,7 +70,7 @@ function getAvailableRooms($dateIn, $dateOut)
     ";
 
     $stmt = $db->prepare($sql);
-    $stmt->bindValue(':dateIn',  $dateIn,  SQLITE3_TEXT);
+    $stmt->bindValue(':dateIn', $dateIn, SQLITE3_TEXT);
     $stmt->bindValue(':dateOut', $dateOut, SQLITE3_TEXT);
 
     return $stmt->execute(); // this is an SQLite3Result
@@ -94,7 +94,8 @@ function BookingList($editingId = null)
 {
     $db = createDB();
 
-    $select_query = "SELECT * FROM BOOKING";
+    $select_query = "SELECT * FROM BOOKING b INNER JOIN GUEST g ON (b.GUEST_ID = g.GUEST_ID) INNER JOIN ROOM r ON (b.ROOM_ID = r.ROOM_ID) INNER JOIN HOTEL h ON (r.HOTEL_ID = h.HOTEL_ID)";
+
     $result = $db->query($select_query);
 
     while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
@@ -154,8 +155,8 @@ function BookingList($editingId = null)
             echo "<form method='post'><tr>";
 
             echo "<td>" . $row['BOOKING_ID'] . "</td>";
-            echo "<td>" . $row['ROOM_ID'] . "</td>";
-            echo "<td>" . $row['GUEST_ID'] . "</td>";
+            echo "<td>" . $row['HOTEL_NAME'] . "</td>";
+            echo "<td>" . $row['F_NAME'] . " " . $row['L_NAME'] . "</td>";
             echo "<td>" . $row['DATE_IN'] . "</td>";
             echo "<td>" . $row['DATE_OUT'] . "</td>";
             echo "<td>" . $row['NO_OF_GUEST'] . "</td>";
@@ -477,21 +478,21 @@ function RoomInsert($room_type_id, $room_number, $price, $hotel_id)
 }
 
 function RoomDropdown(
-    $fieldName   = 'room-id',
-    $selectedId  = null,
-    $dateIn      = '',
-    $dateOut     = '',
-    $hotelId     = ''
+    $fieldName = 'room-id',
+    $selectedId = null,
+    $dateIn = '',
+    $dateOut = '',
+    $hotelId = ''
 ) {
     $db = createDB();
     //echo "<p>".$hotelId ."</p>";
     //echo "<p>".$dateIn ."</p>";
 
     // Normalise hotel id
-    $hotelId = trim((string)$hotelId);
+    $hotelId = trim((string) $hotelId);
 
     if (!empty($dateIn) && !empty($dateOut) && $hotelId !== '') {
-        
+
         // Hotel selected + dates selected → only free rooms in that hotel
         $sql = "
             SELECT r.ROOM_ID
@@ -541,7 +542,7 @@ function RoomDropdown(
     echo "<option value=''>-- Select Room ID --</option>";
 
     while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
-        $id       = (int)$row['ROOM_ID'];
+        $id = (int) $row['ROOM_ID'];
         $selected = ($selectedId == $id) ? "selected" : "";
         echo "<option value='{$id}' {$selected}>{$id}</option>";
     }
@@ -555,7 +556,12 @@ function RoomList($editingId = null)
 {
     $db = createDB();
 
-    $select_query = "SELECT * FROM ROOM";
+    $select_query = "SELECT * FROM ROOM r
+INNER JOIN HOTEL h ON (r.HOTEL_ID = h.HOTEL_ID)
+INNER JOIN ROOM_TYPE rt ON (r.ROOM_TYPE_ID = rt.ROOM_TYPE_ID)
+ORDER BY HOTEL_ID ASC
+
+";
     $result = $db->query($select_query);
 
     while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
@@ -598,9 +604,9 @@ function RoomList($editingId = null)
 
             // normal view row
             echo "<form method='post'><tr>";
-            echo "<td>" . $row['HOTEL_ID'] . "</td>";
+            echo "<td>" . $row['HOTEL_NAME'] . "</td>";
             echo "<td>" . $row['ROOM_ID'] . "</td>";
-            echo "<td>" . $row['ROOM_TYPE_ID'] . "</td>";
+            echo "<td>" . $row['ROOM_TYPE_NAME'] . "</td>";
             echo "<td>" . $row['ROOM_NO'] . "</td>";
             echo "<td>" . $row['PRICE'] . "</td>";
             echo "<td>
@@ -796,7 +802,8 @@ function GuestDelete($id)
 }
 
 
-function showAlertMessage($error = "") {
+function showAlertMessage($error = "")
+{
     if (!empty($error)) {
         echo '<div class="alert-box alert-error">' . htmlspecialchars($error) . '</div>';
     }

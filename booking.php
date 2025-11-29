@@ -104,8 +104,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <thead>
                     <tr>
                         <th>Booking ID</th>
-                        <th>Room ID</th>
-                        <th>Guest ID</th>
+                        <th>Hotel</th>
+                        <th>Guest</th>
                         <th>Check-In</th>
                         <th>Check-Out</th>
                         <th>Number of Guests</th>
