@@ -44,7 +44,7 @@ $adminUsername = $admin
             <li><a href="room.php">Manage Room</a></li> <!-- done -->
             <li><a href="guest.php">Manage Guest</a></li> <!-- created -->
         </ul>
-        <a href="logout.php" class="footer">Sign Out</a>
+        <a href="logout.php" class="logout">Sign Out</a>
 
     </nav>
 </aside>

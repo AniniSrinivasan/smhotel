@@ -29,7 +29,7 @@ if (isset($_POST["login"])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>S&M Login</title>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="login.css" />
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400" rel="stylesheet" />
     <!-- using google fonts -->
 </head>
@@ -47,11 +47,13 @@ if (isset($_POST["login"])) {
                     <input type="text" id="username" name="username" minlength="5" maxlength="15" required
                         placeholder="Enter your username">
                 </div>
+                <br />
                 <div class="group">
                     <label for="password"> Password: </label>
                     <input type="password" id="password" name="password" minlength="8" required
                         placeholder="Enter your password">
                 </div>
+                <br />
                 <input type="submit" class="submit-btn-login" name="login" value="Login">
             </fieldset>
         </form>
