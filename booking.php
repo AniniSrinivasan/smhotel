@@ -94,8 +94,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <a class="add-btn" href="booking-add.php">Add Booking</a>
             </div>
 
-
-
             <div class="search-bar">
                 <input type="text" id="searchInput" placeholder="Search by Booking ID or Guest ID..." autocomplete="off"
                     onkeyup="filterBookingList(this)">

@@ -112,16 +112,15 @@ function BookingList($editingId = null)
             echo "<input type='hidden' name='booking-id' value='" . $row['BOOKING_ID'] . "'>";
 
             // ROOM_ID
-            echo "<td>
-                    <input type='number' name='room-id'
-                           value='" . htmlspecialchars($row['ROOM_ID']) . "' required>
-                  </td>";
+            echo "<td>";
+                RoomDropdown('room-id', $row['ROOM_ID']);
+            echo "</td>";
 
             // GUEST_ID
-            echo "<td>
-                    <input type='number' name='guest-id'
-                           value='" . htmlspecialchars($row['GUEST_ID']) . "' required>
-                  </td>";
+            echo "<td>";
+                GuestDropdown('guest-id', $row['GUEST_ID']);
+            echo "</td>";
+
 
             // DATE_IN
             echo "<td>
@@ -568,20 +567,18 @@ ORDER BY HOTEL_ID ASC
 
         if ($editingId == $row['ROOM_ID']) {
 
-            echo "<form method='post'><tr>";
+            echo "<tr><form method='post'>";
 
-            echo "<td>
-                    <input type='number' name='hotel-id'
-                           value='" . htmlspecialchars($row['HOTEL_ID']) . "' required>
-                  </td>";
+            echo "<td>";
+            HotelDropdown('hotel-id', $row['HOTEL_ID']);
+        echo "</td>";
 
             echo "<td>" . $row['ROOM_ID'] . "</td>";
             echo "<input type='hidden' name='room-id' value='" . $row['ROOM_ID'] . "'>";
 
-            echo "<td>
-                    <input type='number' name='room-type-id'
-                           value='" . htmlspecialchars($row['ROOM_TYPE_ID']) . "' required>
-                  </td>";
+            echo "<td>";
+                RoomTypeDropdown('room-type-id', $row['ROOM_TYPE_ID']);
+            echo "</td>";
 
             echo "<td>
                     <input type='number' name='room-number'
@@ -598,7 +595,7 @@ ORDER BY HOTEL_ID ASC
                     <input type='submit' class='delete-button-in-list' name='cancel' value='Cancel'>
                   </td>";
 
-            echo "</tr></form>";
+            echo "</form></tr>";
 
         } else {
 
