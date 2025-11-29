@@ -77,8 +77,6 @@ label {
   margin-bottom: 8px;
 }
 
-
-
 /* sidebar */
 
 .sidebar {
@@ -229,11 +227,11 @@ label {
 .base-table td input[type="text"],
 .base-table td input[type="email"],
 .base-table td input[type="number"],
-/* .base-table td select, */
+.base-table td select,
 .base-table td input[type="date"],
 .base-table td input[type="tel"] {
     width: 100%;
-    min-width: 140px;       /* adjustable */
+    min-width: 140px;       
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 8px;
