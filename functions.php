@@ -37,7 +37,6 @@ function requireLogin()
     }
 }
 
-
 function GetAdminUser()
 {
     $db = createDB();
@@ -73,7 +72,7 @@ function getAvailableRooms($dateIn, $dateOut)
     $stmt->bindValue(':dateIn', $dateIn, SQLITE3_TEXT);
     $stmt->bindValue(':dateOut', $dateOut, SQLITE3_TEXT);
 
-    return $stmt->execute(); // this is an SQLite3Result
+    return $stmt->execute(); 
 }
 
 
@@ -93,8 +92,14 @@ function BookingInsert($room_id, $guest_id, $num_guest, $dateIn, $dateOut)
 function BookingList($editingId = null)
 {
     $db = createDB();
+    session_start();
 
     $select_query = "SELECT * FROM BOOKING b INNER JOIN GUEST g ON (b.GUEST_ID = g.GUEST_ID) INNER JOIN ROOM r ON (b.ROOM_ID = r.ROOM_ID) INNER JOIN HOTEL h ON (r.HOTEL_ID = h.HOTEL_ID)";
+
+    if (isset($_SESSION['ROLE']) && $_SESSION['ROLE'] === 'Guest') {
+        $email = $_SESSION['EMAIL'];   // make sure this is set during login
+        $select_query .= " WHERE g.GUEST_EMAIL = '$email'";
+    }
 
     $result = $db->query($select_query);
 
@@ -113,25 +118,25 @@ function BookingList($editingId = null)
 
             // ROOM_ID
             echo "<td>";
-                RoomDropdown('room-id', $row['ROOM_ID']);
+            RoomDropdown('room-id', $row['ROOM_ID']);
             echo "</td>";
 
             // GUEST_ID
             echo "<td>";
-                GuestDropdown('guest-id', $row['GUEST_ID']);
+            GuestDropdown('guest-id', $row['GUEST_ID']);
             echo "</td>";
 
 
             // DATE_IN
             echo "<td>
                     <input type='date' name='date-in'
-                           value='" . htmlspecialchars($row['DATE_IN']) . "' required>
+                           value='" . htmlspecialchars($row['DATE_IN']) . "'  min='" . date('Y-m-d') . "' required>
                   </td>";
 
             // DATE_OUT
             echo "<td>
                     <input type='date' name='date-out'
-                           value='" . htmlspecialchars($row['DATE_OUT']) . "' required>
+                           value='" . htmlspecialchars($row['DATE_OUT']) . "' min='" . date('Y-m-d') . "'required>
                   </td>";
 
             // NO_OF_GUEST
@@ -571,13 +576,13 @@ ORDER BY HOTEL_ID ASC
 
             echo "<td>";
             HotelDropdown('hotel-id', $row['HOTEL_ID']);
-        echo "</td>";
+            echo "</td>";
 
             echo "<td>" . $row['ROOM_ID'] . "</td>";
             echo "<input type='hidden' name='room-id' value='" . $row['ROOM_ID'] . "'>";
 
             echo "<td>";
-                RoomTypeDropdown('room-type-id', $row['ROOM_TYPE_ID']);
+            RoomTypeDropdown('room-type-id', $row['ROOM_TYPE_ID']);
             echo "</td>";
 
             echo "<td>

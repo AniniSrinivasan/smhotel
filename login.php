@@ -15,12 +15,18 @@ if (isset($_POST["login"])) {
         $_SESSION["USER_ID"] = $user["USER_ID"];
         $_SESSION["USERNAME"] = $user["USERNAME"];
         $_SESSION["ROLE"] = $user["ROLE"];
+        $_SESSION["EMAIL"] = $user["USER_EMAIL"];
+
+        echo "<script>alert('".addslashes($_SESSION["ROLE"])."');</script>";
+        
 
         header("Location: dashboard.php");
         exit;
     }
 }
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -35,12 +41,15 @@ if (isset($_POST["login"])) {
 </head>
 
 <body class="login-body">
+
     <div class="login-container">
         <img id="logo" src="./img/s&mhotel_logov2.png" alt="Logo of S&M Hotels">
         <h2>Welcome Back!</h2>
+
+
         <h4>Sign in to your S&M account</h4>
         <?php if (!empty($error)) echo "<p style='color:red;'>$error</p>"; ?>
-        <form id="login-form" autocomplete="on" action="login.php" method="post">
+        <form id="login-form" autocomplete="off" action="login.php" method="post">
             <fieldset>
                 <div class="group">
                     <label for="username">Username: </label>

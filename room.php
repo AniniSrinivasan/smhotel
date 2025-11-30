@@ -73,13 +73,13 @@ if (isset($_POST["cancel"])) {
                 <a class="add-btn" href="room-add.php">Add Room</a>
             </div>
             <div class="search-bar">
-                <input type="text" id="searchInput" placeholder="Search by Room ID or Number..." autocomplete="off"
+                <input type="text" id="searchInput" placeholder="Search by Hotel, Room ID or Number..." autocomplete="off"
                     onkeyup="filterRoomList(this)">
             </div>
             <table class="base-table">
                 <thead>
                     <tr>
-                        <th>Hotel ID</th>
+                        <th>Hotel</th>
                         <th>Room ID</th>
                         <th>Room Type</th>
                         <th>Room Number</th>

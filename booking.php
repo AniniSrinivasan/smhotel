@@ -95,7 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
 
             <div class="search-bar">
-                <input type="text" id="searchInput" placeholder="Search by Booking ID or Guest ID..." autocomplete="off"
+                <input type="text" id="searchInput" placeholder="Search by Booking ID or Guest..." autocomplete="off"
                     onkeyup="filterBookingList(this)">
             </div>
             <table class="base-table">

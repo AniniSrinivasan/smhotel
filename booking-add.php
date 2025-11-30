@@ -74,12 +74,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <form autocomplete="off" method="post">
                 <div class="group">
                     <label for="date-in">Check In: </label>
-                    <input type="date" id="date-in" name="date-in" value="<?= htmlspecialchars($dateIn) ?>" required>
+                    <input type="date" id="date-in" name="date-in" value="<?= htmlspecialchars($dateIn) ?>" min="<?= date('Y-m-d') ?>" required>
                 </div>
                 <br />
                 <div class="group">
                     <label for="date-out">Check Out: </label>
-                    <input type="date" id="date-out" name="date-out" value="<?= htmlspecialchars($dateOut) ?>" required>
+                    <input type="date" id="date-out" name="date-out" value="<?= htmlspecialchars($dateOut) ?>" min="<?= date('Y-m-d') ?>" required>
                 </div>
                 <br />
                 <div class="group">

@@ -15,7 +15,7 @@ function filterBookingList(input) {
 
   tableRows.forEach(row => {
     const bookingId = row.cells[0].textContent.toLowerCase();
-    const guestID = row.cells[1].textContent.toLowerCase();
+    const guestID = row.cells[2].textContent.toLowerCase();
 
     if (bookingId.includes(query) || guestID.includes(query)) {
       row.style.display = "";
@@ -62,10 +62,11 @@ function filterRoomList(input) {
   const tableRows = document.querySelectorAll(".base-table tbody tr");
 
   tableRows.forEach(row => {
+    const hotelID = row.cells[0].textContent.toLowerCase();
     const roomId = row.cells[1].textContent.toLowerCase();
     const roomNumber = row.cells[3].textContent.toLowerCase();
 
-    if (roomId.includes(query) || roomNumber.includes(query)) {
+    if (hotelID.includes(query) || roomId.includes(query) || roomNumber.includes(query)) {
       row.style.display = "";
     } else {
       row.style.display = "none";

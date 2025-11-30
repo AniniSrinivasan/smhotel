@@ -1,6 +1,8 @@
 <?php
 require_once("functions.php");
 
+session_start();
+
 $admin = GetAdminUser();
 
 $adminEmail = $admin['USER_EMAIL'];
@@ -38,11 +40,16 @@ $adminUsername = $admin
             <li><?= htmlspecialchars($adminUsername) ?></li>
             <br /><br />
             <li class="section">Management</li>
-            <li><a href="booking.php">Manage Booking</a></li> <!-- done -->
-            <li><a href="hotel.php">Manage Hotel</a></li> <!-- done -->
-            <li><a href="room-type.php">Manage Room Type</a></li> <!-- done -->
-            <li><a href="room.php">Manage Room</a></li> <!-- done -->
-            <li><a href="guest.php">Manage Guest</a></li> <!-- created -->
+
+            <li><a href="booking.php">Manage Booking</a></li>
+         
+            <?php if (isset($_SESSION['ROLE']) && $_SESSION['ROLE'] === 'Admin'): ?>
+                <li><a href="hotel.php">Manage Hotel</a></li>
+                <li><a href="room-type.php">Manage Room Type</a></li>
+                <li><a href="room.php">Manage Room</a></li>
+                <li><a href="guest.php">Manage Guest</a></li>
+            <?php endif; ?>
+
         </ul>
         <a href="logout.php" class="logout">Sign Out</a>
 
