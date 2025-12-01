@@ -597,7 +597,8 @@ ORDER BY HOTEL_ID ASC
             echo "<td>" . $row['ROOM_ID'] . "</td>";
             echo "<td>" . $row['ROOM_TYPE_NAME'] . "</td>";
             echo "<td>" . $row['ROOM_NO'] . "</td>";
-            echo "<td>" ."£". $row['PRICE'] . "</td>";
+            //2dp for price
+            echo "<td>" ."£". number_format($row['PRICE'], 2, '.', '') . "</td>";
             echo "<td>
                     <input type='hidden' name='room-id' value='" . $row['ROOM_ID'] . "'>
                     <input type='submit' class='edit-button-in-list' name='edit' value='Edit'>
