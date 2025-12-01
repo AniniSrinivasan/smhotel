@@ -3,18 +3,9 @@ require_once("functions.php");
 
 session_start();
 
-$admin = GetAdminUser();
-
-$adminEmail = $admin['USER_EMAIL'];
-
-// first name + starting letter of last name
-$adminName = $admin
-    ? trim($admin['F_NAME'] . ' ' . strtoupper(substr($admin['L_NAME'], 0, 1)))
-    : 'Admin User';
-
-$adminUsername = $admin
-    ? $admin['USERNAME']
-    : 'admin';
+$email = $_SESSION["EMAIL"];
+$username = $_SESSION["USERNAME"];
+$role = $_SESSION["ROLE"];
 ?>
 
 <!-- top navigation -->
@@ -22,11 +13,11 @@ $adminUsername = $admin
     <div>S&M Hotels</div>
     <div class="top-menu">
         <div class="profile">
-            <a href="mailto:<?= htmlspecialchars($adminEmail) ?>" class="contact">
-                <?= htmlspecialchars($adminEmail) ?>
+            <a href="mailto:<?= htmlspecialchars($email) ?>" class="contact">
+                <?= htmlspecialchars($email) ?>
             </a>
             <img src="./img/profile-logo.jpg" alt="Profile">
-            <span><?= htmlspecialchars($adminName) ?></span>
+            <span><?= htmlspecialchars($username) ?></span>
         </div>
     </div>
 </header>
@@ -35,7 +26,7 @@ $adminUsername = $admin
     <nav>
         <ul>
             <li class="section">My Account</li>
-            <li><?= htmlspecialchars($adminUsername) ?></li>
+            <li><?= htmlspecialchars($role) ?></li>
             <br /><br />
             <li class="section">Management</li>
             <li><a href="booking.php">Manage Booking</a></li>
