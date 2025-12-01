@@ -1,8 +1,3 @@
-<?php
-    require_once "functions.php";
-    requireLogin();
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,7 +11,10 @@
     <!-- using google fonts -->
 </head>
 
-
+<?php
+    require_once "functions.php";
+    requireLogin();
+?>
 
 <body class="dashboard-body" onload="loadNavbar()">
     <!-- top navigation -->
@@ -27,10 +25,6 @@
         <h1>Welcome to S&M Hotels Dashboard</h1>
         <p>Select a menu option to get started.</p>
     </main>
-    <!-- <main id="main-content" class="main-content">
-        <h1>Welcome to S&M Hotels Dashboard</h1>
-        <p>Select a menu option to get started.</p>
-    </main> -->
 </body>
 
 </html>

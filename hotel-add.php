@@ -32,14 +32,10 @@ if (isset($_POST["add"])) {
 ?>
 
 <body onload="loadNavbar()">
-
-
     <div id="navbar-container"></div> <!-- Navbar will be loaded here -->
-
     <div class="main_content">
         <section class="add-container">
             <h2>Add Hotel</h2>
-
             <h2><?= htmlspecialchars(string: $errormessage) ?></h2>
             <form autocomplete="off" method="post">
                 <div class="base-form">
@@ -71,3 +67,7 @@ if (isset($_POST["add"])) {
                 </div>
             </form>
         </section>
+    </div>
+</body>
+
+</html>

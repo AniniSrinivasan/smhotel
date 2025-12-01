@@ -7,8 +7,7 @@ function loadNavbar() {
     .catch(error => console.error("Error loading navbar:", error));
 }
 
-// search bar filter
-
+// search bar filters
 function filterBookingList(input) {
   const query = input.value.toLowerCase();
   const tableRows = document.querySelectorAll(".base-table tbody tr");
@@ -90,17 +89,13 @@ function filterGuestList(input) {
   });
 }
 
-
 document.addEventListener('DOMContentLoaded', function () {
-  // get all rows in the Guest List table body
   const rows = document.querySelectorAll('.base-table tbody tr');
-
   rows.forEach(function (row) {
     row.addEventListener('dblclick', function () {
-      // find the Edit button inside this row
       const editButton = row.querySelector("input[name='edit']");
       if (editButton) {
-        editButton.click();   // trigger the same behaviour as clicking Edit
+        editButton.click();
       }
     });
   });

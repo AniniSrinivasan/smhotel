@@ -17,7 +17,6 @@ $adminUsername = $admin
     : 'admin';
 ?>
 
-
 <!-- top navigation -->
 <header class="top-nav">
     <div>S&M Hotels</div>
@@ -29,7 +28,6 @@ $adminUsername = $admin
             <img src="./img/profile-logo.jpg" alt="Profile">
             <span><?= htmlspecialchars($adminName) ?></span>
         </div>
-
     </div>
 </header>
 <!-- side navigation -->
@@ -40,18 +38,14 @@ $adminUsername = $admin
             <li><?= htmlspecialchars($adminUsername) ?></li>
             <br /><br />
             <li class="section">Management</li>
-
             <li><a href="booking.php">Manage Booking</a></li>
-         
             <?php if (isset($_SESSION['ROLE']) && $_SESSION['ROLE'] === 'Admin'): ?>
                 <li><a href="hotel.php">Manage Hotel</a></li>
                 <li><a href="room-type.php">Manage Room Type</a></li>
                 <li><a href="room.php">Manage Room</a></li>
                 <li><a href="guest.php">Manage Guest</a></li>
             <?php endif; ?>
-
         </ul>
         <a href="logout.php" class="logout">Sign Out</a>
-
     </nav>
 </aside>

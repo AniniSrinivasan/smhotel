@@ -32,18 +32,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ?>
 
 <body onload="loadNavbar()">
-
     <div id="navbar-container"></div> <!-- Navbar will be loaded here -->
-
     <div id="message">
         <h3><?= $action_message ?></h3>
     </div>
     <div id="error-message"><?= $action_error_message ?></div>
-
     <div class="main_content">
         <section class="add-container">
             <h2>Add Room Type</h2>
-
             <div class="base-form">
                 <form autocomplete="off" method="post">
                     <div class="base-form">
@@ -60,9 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </form>
             </div>
         </section>
-
-        <br /><br />
-
+    </div>
 </body>
 
 </html>

@@ -51,9 +51,7 @@ if (isset($_POST["cancel"])) {
 ?>
 
 <body onload="loadNavbar()">
-
     <div id="navbar-container"></div> <!-- Navbar will be loaded here -->
-
     <div class="main_content">
         <section class="add-container">
             <div class="heading-row">
@@ -80,7 +78,6 @@ if (isset($_POST["cancel"])) {
                 <tbody>
                     <?php GuestList($editingId) ?>
                 </tbody>
-
             </table>
             <br />
             <ul class="pagination">
@@ -94,9 +91,6 @@ if (isset($_POST["cancel"])) {
             </ul>
         </section>
     </div>
-
-
-
 </body>
 
 </html>

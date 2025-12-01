@@ -30,7 +30,18 @@ function validateUser($username, $password, &$error)
 function requireLogin()
 {
     session_start();
+    $currentPage = basename($_SERVER['PHP_SELF']);
 
+    // to make sure the guest cant replace the last part of url and access other pages
+    if (
+        isset($_SESSION['USER_ID']) &&
+        $_SESSION['ROLE'] === 'Guest' &&
+        ($currentPage !== 'booking.php' && $currentPage !== 'booking-add.php')
+    ) {
+        header("Location: booking.php");
+        exit;
+    }
+    
     if (!isset($_SESSION['USER_ID'])) {
         header("Location: login.php");
         exit;
@@ -72,9 +83,8 @@ function getAvailableRooms($dateIn, $dateOut)
     $stmt->bindValue(':dateIn', $dateIn, SQLITE3_TEXT);
     $stmt->bindValue(':dateOut', $dateOut, SQLITE3_TEXT);
 
-    return $stmt->execute(); 
+    return $stmt->execute();
 }
-
 
 function BookingInsert($room_id, $guest_id, $num_guest, $dateIn, $dateOut)
 {
@@ -97,7 +107,7 @@ function BookingList($editingId = null)
     $select_query = "SELECT * FROM BOOKING b INNER JOIN GUEST g ON (b.GUEST_ID = g.GUEST_ID) INNER JOIN ROOM r ON (b.ROOM_ID = r.ROOM_ID) INNER JOIN HOTEL h ON (r.HOTEL_ID = h.HOTEL_ID)";
 
     if (isset($_SESSION['ROLE']) && $_SESSION['ROLE'] === 'Guest') {
-        $email = $_SESSION['EMAIL'];   // make sure this is set during login
+        $email = $_SESSION['EMAIL'];
         $select_query .= " WHERE g.GUEST_EMAIL = '$email'";
     }
 
@@ -105,47 +115,39 @@ function BookingList($editingId = null)
 
     while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
 
-        // If this row is in edit mode then it'll proceed to go into the input mode for the admin to edit
+        // edit mode
         if ($editingId == $row['BOOKING_ID']) {
 
             echo "<form method='post'><tr>";
 
-            // Booking ID is not editable
             echo "<td>" . $row['BOOKING_ID'] . "</td>";
 
-            // Hidden ID for save
             echo "<input type='hidden' name='booking-id' value='" . $row['BOOKING_ID'] . "'>";
 
-            // ROOM_ID
             echo "<td>";
             RoomDropdown('room-id', $row['ROOM_ID']);
             echo "</td>";
 
-            // GUEST_ID
             echo "<td>";
             GuestDropdown('guest-id', $row['GUEST_ID']);
             echo "</td>";
 
 
-            // DATE_IN
             echo "<td>
                     <input type='date' name='date-in'
                            value='" . htmlspecialchars($row['DATE_IN']) . "'  min='" . date('Y-m-d') . "' required>
                   </td>";
 
-            // DATE_OUT
             echo "<td>
                     <input type='date' name='date-out'
                            value='" . htmlspecialchars($row['DATE_OUT']) . "' min='" . date('Y-m-d') . "'required>
                   </td>";
 
-            // NO_OF_GUEST
             echo "<td>
                     <input type='number' name='num-guest'
                            value='" . htmlspecialchars($row['NO_OF_GUEST']) . "' required>
                   </td>";
 
-            // Actions: Save / Cancel
             echo "<td>
                     <input type='submit' class='submit-btn' name='save' value='Save'>
                     <input type='submit' class='delete-button-in-list' name='cancel' value='Cancel'>
@@ -155,7 +157,7 @@ function BookingList($editingId = null)
 
         } else {
 
-            // Normal view row
+            // view only
             echo "<form method='post'><tr>";
 
             echo "<td>" . $row['BOOKING_ID'] . "</td>";
@@ -194,7 +196,6 @@ function BookingUpdate($booking_id, $room_id, $guest_id, $num_guest, $dateIn, $d
         echo 'Error in updating booking ' . $db->lastErrorMsg() . '<br>';
     }
 }
-
 
 function BookingDelete($id)
 {
@@ -246,7 +247,6 @@ function HotelDropdown($fieldName = 'hotel-id', $selectedId = null)
     echo "</select>";
 }
 
-
 function HotelList($editingId = null)
 {
     $db = createDB();
@@ -256,22 +256,19 @@ function HotelList($editingId = null)
 
     while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
 
-        // === EDIT MODE ROW ===
+        // edit mode
         if ($editingId == $row['HOTEL_ID']) {
 
             echo "<form method='post'><tr>";
 
-            // Hotel ID (not editable)
             echo "<td>" . $row['HOTEL_ID'] . "</td>";
             echo "<input type='hidden' name='hotel-id' value='" . $row['HOTEL_ID'] . "'>";
 
-            // Branch column – you are currently showing CITY here
             echo "<td>
                     <input type='text' name='city'
                            value='" . htmlspecialchars($row['CITY']) . "' required>
                   </td>";
 
-            // Postcode / Address / Email / Phone
             echo "<td>
                     <input type='text' name='postcode'
                            value='" . htmlspecialchars($row['POSTCODE']) . "' required>
@@ -292,7 +289,6 @@ function HotelList($editingId = null)
                            value='" . htmlspecialchars($row['HOTEL_TELNO']) . "' required>
                   </td>";
 
-            // Actions: Save / Cancel
             echo "<td>
                     <input type='submit' class='submit-btn' name='save' value='Save'>
                     <input type='submit' class='delete-button-in-list' name='cancel' value='Cancel'>
@@ -300,8 +296,8 @@ function HotelList($editingId = null)
 
             echo "</tr></form>";
 
+            // view only
         } else {
-            // === NORMAL VIEW ROW ===
 
             echo "<form method='post'><tr>";
             echo "<td>" . $row['HOTEL_ID'] . "</td>";
@@ -340,7 +336,6 @@ function HotelUpdate($id, $city, $address, $postcode, $email, $phone)
         echo "Error in updating hotel " . $db->lastErrorMsg() . "<br>";
     }
 }
-
 
 function HotelDelete($id)
 {
@@ -388,7 +383,6 @@ function RoomTypeDropdown($fieldName = 'room-type-id', $selectedId = null)
     echo "</select>";
 }
 
-
 function RoomTypeList($editingId = null)
 {
     $db = createDB();
@@ -398,13 +392,13 @@ function RoomTypeList($editingId = null)
 
     while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
 
-        // if edit mode chosen
+        // edit mode
         if ($editingId == $row['ROOM_TYPE_ID']) {
 
             echo "<form method='post'><tr>";
             echo "<td>" . $row['ROOM_TYPE_ID'] . "</td>";
 
-            // pre-filled edit mode
+
             echo "<td>
                     <input type='hidden' name='room-type-id' value='" . $row['ROOM_TYPE_ID'] . "'>
                     <input type='text' name='room-type-name' value='" . htmlspecialchars($row['ROOM_TYPE_NAME']) . "' required>
@@ -453,7 +447,6 @@ function RoomTypeUpdate($id, $type, $description)
     }
 }
 
-
 function RoomTypeDelete($id)
 {
     $db = createDB();
@@ -489,15 +482,12 @@ function RoomDropdown(
     $hotelId = ''
 ) {
     $db = createDB();
-    //echo "<p>".$hotelId ."</p>";
-    //echo "<p>".$dateIn ."</p>";
 
-    // Normalise hotel id
     $hotelId = trim((string) $hotelId);
 
     if (!empty($dateIn) && !empty($dateOut) && $hotelId !== '') {
 
-        // Hotel selected + dates selected → only free rooms in that hotel
+        // hotel selected + dates selected = only free rooms in that hotel
         $sql = "
             SELECT r.ROOM_ID
             FROM ROOM r
@@ -512,7 +502,7 @@ function RoomDropdown(
             ORDER BY r.ROOM_ID
         ";
     } elseif ($hotelId !== '') {
-        // Hotel selected, no dates → all rooms in that hotel
+        // hotel selected, no dates = all rooms in that hotel
         $sql = "
             SELECT r.ROOM_ID
             FROM ROOM r
@@ -520,7 +510,7 @@ function RoomDropdown(
             ORDER BY r.ROOM_ID
         ";
     } elseif (!empty($dateIn) && !empty($dateOut)) {
-        // Dates selected, no hotel filter → free rooms in any hotel
+        // dates selected, no hotel filter = free rooms in any hotel
         $sql = "
             SELECT r.ROOM_ID
             FROM ROOM r
@@ -534,14 +524,12 @@ function RoomDropdown(
             ORDER BY r.ROOM_ID
         ";
     } else {
-        // No filters → all rooms
+        // no filters = all rooms
         $sql = "SELECT ROOM_ID FROM ROOM ORDER BY ROOM_ID";
     }
 
     $result = $db->query($sql);
 
-    //echo "<p>".$hotelId ."</p>";
-    //echo "<p>".$sql ."</p>";
     echo "<select name='{$fieldName}' id='{$fieldName}' required>";
     echo "<option value=''>-- Select Room ID --</option>";
 
@@ -553,8 +541,6 @@ function RoomDropdown(
 
     echo "</select>";
 }
-
-
 
 function RoomList($editingId = null)
 {
@@ -570,6 +556,7 @@ ORDER BY HOTEL_ID ASC
 
     while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
 
+        // edit mode
         if ($editingId == $row['ROOM_ID']) {
 
             echo "<tr><form method='post'>";
@@ -604,13 +591,13 @@ ORDER BY HOTEL_ID ASC
 
         } else {
 
-            // normal view row
+            // view only
             echo "<form method='post'><tr>";
             echo "<td>" . $row['HOTEL_NAME'] . "</td>";
             echo "<td>" . $row['ROOM_ID'] . "</td>";
             echo "<td>" . $row['ROOM_TYPE_NAME'] . "</td>";
             echo "<td>" . $row['ROOM_NO'] . "</td>";
-            echo "<td>" . $row['PRICE'] . "</td>";
+            echo "<td>" ."£". $row['PRICE'] . "</td>";
             echo "<td>
                     <input type='hidden' name='room-id' value='" . $row['ROOM_ID'] . "'>
                     <input type='submit' class='edit-button-in-list' name='edit' value='Edit'>
@@ -638,7 +625,6 @@ function RoomUpdate($room_id, $hotel_id, $room_type_id, $room_number, $price)
         echo "Error in updating room " . $db->lastErrorMsg() . "<br>";
     }
 }
-
 
 function RoomDelete($id)
 {
@@ -690,7 +676,6 @@ function GuestDropdown($fieldName = 'guest-id', $selectedId = null)
     echo "</select>";
 }
 
-
 function GuestList($editingId = null)
 {
     $db = createDB();
@@ -702,6 +687,7 @@ function GuestList($editingId = null)
 
         $name = trim($row['F_NAME'] . " " . $row['M_NAME'] . " " . $row['L_NAME']);
 
+        // edit mode
         if ($editingId == $row['GUEST_ID']) {
 
             echo "<form method='post'><tr>";
@@ -749,7 +735,7 @@ function GuestList($editingId = null)
 
         } else {
 
-            // normal view row
+            // view only
             echo "<form method='post'><tr>";
             echo "<td>" . $row['GUEST_ID'] . "</td>";
             echo "<td>" . $name . "</td>";
@@ -803,7 +789,6 @@ function GuestDelete($id)
     }
 }
 
-
 function showAlertMessage($error = "")
 {
     if (!empty($error)) {
@@ -811,6 +796,5 @@ function showAlertMessage($error = "")
     }
 
 }
-
 
 ?>

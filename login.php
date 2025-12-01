@@ -1,3 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S&M Login</title>
+    <link rel="stylesheet" href="login.css" />
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400" rel="stylesheet" />
+    <!-- using google fonts -->
+</head>
+
 <?php
 require_once("functions.php");
 
@@ -26,22 +38,7 @@ if (isset($_POST["login"])) {
 }
 ?>
 
-
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S&M Login</title>
-    <link rel="stylesheet" href="login.css" />
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400" rel="stylesheet" />
-    <!-- using google fonts -->
-</head>
-
 <body class="login-body">
-
     <div class="login-container">
         <img id="logo" src="./img/s&mhotel_logov2.png" alt="Logo of S&M Hotels">
         <h2>Welcome Back!</h2>

@@ -32,12 +32,8 @@ if (isset($_POST["add"])) {
 
 ?>
 
-
 <body onload="loadNavbar()">
-
-
     <div id="navbar-container"></div> <!-- Navbar will be loaded here -->
-
     <div class="main_content">
         <section class="add-container">
             <h2>Add Room</h2>
@@ -66,8 +62,7 @@ if (isset($_POST["add"])) {
                 </div>
             </form>
         </section>
-
-
+    </div>
 </body>
 
 </html>

@@ -18,19 +18,7 @@ requireLogin();
 $errormessage = "";
 $editingId = null;
 
-// add (inserts a new room)
-if (isset($_POST["add"])) {
-    $room_type_id = $_POST["room-type-id"] ?? "";
-    $room_number = $_POST["room-number"] ?? "";
-    $price = $_POST["room-price"] ?? "";
-    $hotel_id = $_POST["hotel-id"] ?? "";
-
-    echo "<p>" . $room_type_id . "" . $room_number . "" . $price . "<p>";
-
-    $errormessage = RoomInsert($room_type_id, $room_number, $price, $hotel_id);
-}
-
-// delete (removes the room)
+// delete
 if (isset($_POST["delete"]) && isset($_POST["room-id"])) {
     $id = $_POST["room-id"];
     RoomDelete($id);
@@ -60,12 +48,8 @@ if (isset($_POST["cancel"])) {
 }
 ?>
 
-
 <body onload="loadNavbar()">
-
-
     <div id="navbar-container"></div> <!-- Navbar will be loaded here -->
-
     <div class="main_content">
         <section class="add-container">
             <div class="heading-row">

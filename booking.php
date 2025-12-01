@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (isset($_POST['delete']) && isset($_POST['booking-id'])) {
         $id = $_POST['booking-id'];
-        BookingDelete($id);   // assuming you already have this
+        BookingDelete($id);
     }
 
     // save (updates the existing)
@@ -52,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $editingId = $_POST['booking-id'];
     }
 
-    // Cancel edit mode
+    // cancel edit mode
     if (isset($_POST['cancel'])) {
         $editingId = null;
     }
@@ -79,13 +79,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     });
 </script>
 
-
 <body onload="loadNavbar()">
-
-
     <div id="navbar-container"></div> <!-- Navbar will be loaded here -->
-
-
     <div class="main_content">
 
         <section class="add-container">
@@ -126,14 +121,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <li><a href="#">&raquo;</a></li>
             </ul>
         </section>
-
-
     </div>
-
-
-
-
-
 </body>
 
 </html>

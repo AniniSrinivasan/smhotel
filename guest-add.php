@@ -18,7 +18,7 @@ requireLogin();
 $errormessage = "";
 $editingId = null;
 
-// add (inserts a new guest)
+// add
 if (isset($_POST["add"])) {
     $fname = $_POST["fname"] ?? "";
     $mname = $_POST["mname"] ?? "";
@@ -34,16 +34,11 @@ if (isset($_POST["add"])) {
 ?>
 
 <body onload="loadNavbar()">
-
     <div id="navbar-container"></div> <!-- Navbar will be loaded here -->
-
     <div class="main_content">
         <section class="add-container">
-
             <?php showAlertMessage($errormessage ?? ""); ?>
-
             <h2>Add Guest</h2>
-
             <form autocomplete="off" method="post">
                 <div class="base-form">
 
@@ -85,10 +80,8 @@ if (isset($_POST["add"])) {
                     <input type="submit" class="submit-btn" name="add" value="Add">
                 </div>
             </form>
-
         </section>
     </div>
-
 </body>
 
 </html>

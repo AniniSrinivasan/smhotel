@@ -18,6 +18,7 @@ requireLogin();
 $errormessage = "";
 $editingId = null;
 
+// delete
 if (isset($_POST["delete"]) && isset($_POST["hotel-id"])) {
     $id = $_POST["hotel-id"];
     HotelDelete($id);
@@ -49,10 +50,7 @@ if (isset($_POST["cancel"])) {
 ?>
 
 <body onload="loadNavbar()">
-
-
     <div id="navbar-container"></div> <!-- Navbar will be loaded here -->
-
     <div class="main_content">
         <section class="add-container">
             <div class="heading-row">

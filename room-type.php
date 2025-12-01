@@ -49,15 +49,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ?>
 
 <body onload="loadNavbar()">
-
     <div id="navbar-container"></div> <!-- Navbar will be loaded here -->
-
     <div id="message">
         <h3><?= $action_message ?></h3>
     </div>
-
     <div id="error-message"><?= $action_error_message ?></div>
-
     <div class="main_content">
         <section class="add-container">
             <div class="heading-row">
@@ -93,7 +89,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </ul>
         </section>
     </div>
-
 </body>
 
 </html>

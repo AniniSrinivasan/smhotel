@@ -62,24 +62,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </script>
 
 <body onload="loadNavbar()">
-
     <div id="navbar-container"></div> <!-- Navbar will be loaded here -->
-
     <div class="main_content">
+
         <section class="add-container">
-
             <h2>Add Booking</h2>
-
             <h2><?= htmlspecialchars(string: $errormessage) ?></h2>
+
             <form autocomplete="off" method="post">
                 <div class="group">
                     <label for="date-in">Check In: </label>
-                    <input type="date" id="date-in" name="date-in" value="<?= htmlspecialchars($dateIn) ?>" min="<?= date('Y-m-d') ?>" required>
+                    <input type="date" id="date-in" name="date-in" value="<?= htmlspecialchars($dateIn) ?>"
+                        min="<?= date('Y-m-d') ?>" required>
                 </div>
                 <br />
                 <div class="group">
                     <label for="date-out">Check Out: </label>
-                    <input type="date" id="date-out" name="date-out" value="<?= htmlspecialchars($dateOut) ?>" min="<?= date('Y-m-d') ?>" required>
+                    <input type="date" id="date-out" name="date-out" value="<?= htmlspecialchars($dateOut) ?>"
+                        min="<?= date('Y-m-d') ?>" required>
                 </div>
                 <br />
                 <div class="group">
@@ -104,12 +104,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
                 <br />
                 <input type="submit" class="submit-btn" name="add" value="Add">
-
             </form>
+
         </section>
+
     </div>
-
-
 </body>
 
 </html>

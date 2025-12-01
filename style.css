@@ -115,9 +115,9 @@ label {
 
 
 .sidebar li a {
-  display: block;        /* makes the anchor fill the li */
+  display: block;      
   width: 100%;
-  padding: 10px 20px;    /* same padding as li */
+  padding: 10px 20px;    
   color: inherit;
 }
 
@@ -223,7 +223,7 @@ label {
   background-color: #f0eafd;
 }
 
-/* Fix edit-mode input sizes in table rows */
+/* edit-mode input sizes in table rows */
 .base-table td input[type="text"],
 .base-table td input[type="email"],
 .base-table td input[type="number"],
@@ -237,8 +237,6 @@ label {
     border-radius: 8px;
     font-size: 0.95rem;
 }
-
-
 
 /* base-form template */
 
@@ -289,16 +287,12 @@ label {
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
 }
 
-
-
-
 .add-container h1 {
   margin-top: 0;
   margin-bottom: 20px;
   color: #5f4d93;
   font-weight: 700;
 }
-
 
 .add-container fieldset {
   display: flex;
@@ -325,24 +319,6 @@ label {
   background-color: #b8a9d9;
   border-color: #8e73e1;
   outline: none;
-}
-
-/* Submit button */
-.add-container button[type="submit"] {
-  background-color: #b8a9d9;
-  color: #222;
-  border: none;
-  padding: 12px;
-  border-radius: 8px;
-  width: 150px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background-color 0.3s, color 0.3s;
-}
-
-.add-container button[type="submit"]:hover {
-  background-color: #8e73e1;
-  color: #fff;
 }
 
 /*  edit + delete button */
@@ -455,8 +431,6 @@ label {
   font-size: 0.95rem;
 } 
 
-
-
 .add-container select,
 .base-form select {
   width: 50%;    
@@ -468,7 +442,6 @@ label {
   outline: none;
   cursor: pointer;
 }
-
 
 .add-container select:focus,
 .base-form select:focus {
@@ -482,7 +455,6 @@ label {
   border-color: #b8a9d9;
 }
 
-
 .add-btn {
   display: inline-block;
   padding: 8px 22px;
@@ -492,7 +464,6 @@ label {
   font-weight: 600;
   font-size: 0.95rem;
   text-decoration: none;
-  transition: background 0.2s ease;
 }
 
 .add-btn:hover {
@@ -503,7 +474,6 @@ label {
 .group {
   display: flex;
   flex-direction: column;
-  /* gap: 8px; */
   row-gap: 8px;    
 }
 
