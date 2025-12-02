@@ -101,10 +101,53 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 
-
 setTimeout(() => {
     document.querySelectorAll('.alert-box').forEach(el => {
         el.style.display = 'none';
     });
 }, 5000); // closes the error message div after 5 seconds
 
+
+// delete popup confirmation
+
+// reference : https://developer.mozilla.org
+
+document.addEventListener("DOMContentLoaded", function () {
+  const popup = document.getElementById("deletePopup");
+  if (!popup) return;
+
+  // alert(1);
+  const confirmBtn = popup.querySelector(".confirm-delete");
+  const cancelBtn = popup.querySelector(".cancel-delete");
+
+  let currentForm = null;
+
+  // when user clicks the delete 
+  document.querySelectorAll("input[name='delete']").forEach(btn => {
+    btn.addEventListener("click", function () {
+        currentForm = this.form;
+        popup.style.display = "flex";
+    });
+  });
+
+
+  // if user confirms delete
+  confirmBtn.addEventListener("click", function () {
+      if (currentForm) {
+          const hiddenDelete = document.createElement("input");
+          hiddenDelete.type = "hidden";
+          hiddenDelete.name = "delete";
+          hiddenDelete.value = "Delete";
+
+          currentForm.appendChild(hiddenDelete);
+          popup.style.display = "none";
+          currentForm.submit();
+      }
+  });
+
+  // if user cancels delete
+  cancelBtn.addEventListener("click", function () {
+      popup.style.display = "none";
+      currentForm = null;
+  });
+});

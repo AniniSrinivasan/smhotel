@@ -89,6 +89,17 @@ if (isset($_POST["cancel"])) {
             </ul>
         </section>
     </div>
+    <!-- Custom Delete Confirmation Popup -->
+    <div id="deletePopup" class="popup-overlay" style="display: none;">
+        <div class="popup-box">
+            <h3>Delete</h3>
+            <p>Are you sure you want to delete this?</p>
+            <div class="popup-actions">
+                <button class="confirm-delete">Yes, Delete</button>
+                <button class="cancel-delete">Cancel</button>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>

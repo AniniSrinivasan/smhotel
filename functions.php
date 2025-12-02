@@ -170,7 +170,7 @@ function BookingList($editingId = null)
             echo "<td>
                     <input type='hidden' name='booking-id' value='" . $row['BOOKING_ID'] . "'>
                     <input type='submit' class='edit-button-in-list' name='edit' value='Edit'>
-                    <input type='submit' class='delete-button-in-list' name='delete' value='Delete'>
+                    <input type='button' class='delete-button-in-list' name='delete' value='Delete'>
                   </td>";
 
             echo "</tr></form>";
@@ -310,7 +310,7 @@ function HotelList($editingId = null)
             echo "<td>
                     <input type='hidden' name='hotel-id' value='" . $row['HOTEL_ID'] . "'>
                     <input type='submit' class='edit-button-in-list' name='edit' value='Edit'>
-                    <input type='submit' class='delete-button-in-list' name='delete' value='Delete'>
+                    <input type='button' class='delete-button-in-list' name='delete' value='Delete'>
                   </td>";
 
             echo "</tr></form>";
@@ -424,7 +424,7 @@ function RoomTypeList($editingId = null)
             echo "<td>
                     <input type='hidden' name='room-type-id' value='" . $row['ROOM_TYPE_ID'] . "'>
                     <input type='submit' class='edit-button-in-list' name='edit' value='Edit'>
-                    <input type='submit' class='delete-button-in-list' name='delete' value='Delete'>
+                    <input type='button' class='delete-button-in-list' name='delete' value='Delete'>
                   </td>";
             echo "</tr></form>";
         }
@@ -547,11 +547,11 @@ function RoomList($editingId = null)
     $db = createDB();
 
     $select_query = "SELECT * FROM ROOM r
-INNER JOIN HOTEL h ON (r.HOTEL_ID = h.HOTEL_ID)
-INNER JOIN ROOM_TYPE rt ON (r.ROOM_TYPE_ID = rt.ROOM_TYPE_ID)
-ORDER BY HOTEL_ID ASC
-
-";
+        INNER JOIN HOTEL h ON (r.HOTEL_ID = h.HOTEL_ID)
+        INNER JOIN ROOM_TYPE rt ON (r.ROOM_TYPE_ID = rt.ROOM_TYPE_ID)
+        ORDER BY HOTEL_ID ASC
+    ";
+    
     $result = $db->query($select_query);
 
     while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
@@ -602,8 +602,8 @@ ORDER BY HOTEL_ID ASC
             echo "<td>
                     <input type='hidden' name='room-id' value='" . $row['ROOM_ID'] . "'>
                     <input type='submit' class='edit-button-in-list' name='edit' value='Edit'>
-                    <input type='submit' class='delete-button-in-list' name='delete' value='Delete'>
-                  </td>";
+                    <input type='button' class='delete-button-in-list' value='Delete'>
+                </td>";
             echo "</tr></form>";
         }
     }
@@ -748,7 +748,7 @@ function GuestList($editingId = null)
             echo "<td>
                     <input type='hidden' name='guest-id' value='" . $row['GUEST_ID'] . "'>
                     <input type='submit' class='edit-button-in-list' name='edit' value='Edit'>
-                    <input type='submit' class='delete-button-in-list' name='delete' value='Delete'>
+                    <input type='button' class='delete-button-in-list' name='delete' value='Delete'>
                   </td>";
             echo "</tr></form>";
         }

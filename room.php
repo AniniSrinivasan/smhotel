@@ -57,8 +57,8 @@ if (isset($_POST["cancel"])) {
                 <a class="add-btn" href="room-add.php">Add Room</a>
             </div>
             <div class="search-bar">
-                <input type="text" id="searchInput" placeholder="Search by Hotel, Room ID or Number..." autocomplete="off"
-                    onkeyup="filterRoomList(this)">
+                <input type="text" id="searchInput" placeholder="Search by Hotel, Room ID or Number..."
+                    autocomplete="off" onkeyup="filterRoomList(this)">
             </div>
             <table class="base-table">
                 <thead>
@@ -86,6 +86,18 @@ if (isset($_POST["cancel"])) {
                 <li><a href="#">&raquo;</a></li>
             </ul>
         </section>
+    </div>
+
+    <!-- Custom Delete Confirmation Popup -->
+    <div id="deletePopup" class="popup-overlay" style="display: none;">
+        <div class="popup-box">
+            <h3>Delete</h3>
+            <p>Are you sure you want to delete this?</p>
+            <div class="popup-actions">
+                <button class="confirm-delete">Yes, Delete</button>
+                <button class="cancel-delete">Cancel</button>
+            </div>
+        </div>
     </div>
 </body>
 
