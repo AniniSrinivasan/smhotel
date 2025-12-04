@@ -651,3 +651,41 @@ label {
 .delete-button-in-list {
     cursor: pointer;
 }
+
+.main_content.signup {
+  margin: 0;
+  padding-top: 20px;
+  display: flex;
+  justify-content: centre;
+  align-items: flex-start;
+  min-height: calc(100vh - 20px);
+}
+
+/* signup card */
+.signup .add-container {
+  width: 100%;
+  max-width: 800px;                 
+  margin: 0 auto;                   
+  padding: 30px 40px 40px 40px;
+}
+
+/* heading for signup */
+.signup .add-container h2 {
+  text-align: centre;
+}
+
+.signup .base-form input,
+.signup .add-container input,
+.signup .add-container select {
+  width: 100%;
+  max-width: 100%;
+}
+
+.signup .submit-btn,
+.signup .add-container .submit-btn {
+  width: 100%;
+  max-width: 100%;
+  background-image: linear-gradient(45deg, #c676e3 0%, #5f4d93 85%);
+  colour: #fff;
+  border: none;
+}

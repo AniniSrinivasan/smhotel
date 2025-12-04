@@ -104,12 +104,15 @@ function BookingList($editingId = null, $limit = null, $offset = null)
     $db = createDB();
     session_start();
 
-    $select_query = "SELECT * FROM BOOKING b INNER JOIN GUEST g ON (b.GUEST_ID = g.GUEST_ID) INNER JOIN ROOM r ON (b.ROOM_ID = r.ROOM_ID) INNER JOIN HOTEL h ON (r.HOTEL_ID = h.HOTEL_ID) ORDER BY BOOKING_ID ASC";
+    $select_query = "SELECT * FROM BOOKING b INNER JOIN GUEST g ON (b.GUEST_ID = g.GUEST_ID) 
+    INNER JOIN ROOM r ON (b.ROOM_ID = r.ROOM_ID) INNER JOIN HOTEL h ON (r.HOTEL_ID = h.HOTEL_ID) ";
 
     if (isset($_SESSION['ROLE']) && $_SESSION['ROLE'] === 'Guest') {
-        $email = $_SESSION['EMAIL'];
-        $select_query .= " WHERE g.GUEST_EMAIL = '$email'";
+        $email = htmlspecialchars($_SESSION['EMAIL']);
+        $select_query .= " WHERE g.GUEST_EMAIL = '$email'";        
     }
+
+    $select_query .= " ORDER BY BOOKING_ID ASC";
 
     $select_query = applyPagination($select_query, $limit, $offset);
     $result = $db->query($select_query);
@@ -792,6 +795,18 @@ function GuestDelete($id)
         header("Location: guest.php");
     } else {
         echo "Error deleting room type: " . $db->lastErrorMsg();
+    }
+}
+
+function UserInsert($fname, $mname, $lname, $address, $city, $postcode, $email, $phone, &$action_error_message)
+{
+    $error = "";
+    $db = createDB();
+    $insert = $db->exec("INSERT INTO USER (USERNAME, USER_PASSWORD, ROLE, F_NAME, M_NAME, L_NAME, USER_EMAIL) VALUES ( '$fname', 'pass1234', 'Guest', '$fname', '$mname', '$lname', '$email')");
+    if ($insert) {
+        header("Location: login.php");
+    } else {
+        $action_error_message = "Error in inserting user" . $db->lastErrorMsg() . "<br>";
     }
 }
 

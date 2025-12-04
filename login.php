@@ -28,10 +28,6 @@ if (isset($_POST["login"])) {
         $_SESSION["USERNAME"] = $user["USERNAME"];
         $_SESSION["ROLE"] = $user["ROLE"];
         $_SESSION["EMAIL"] = $user["USER_EMAIL"];
-
-        echo "<script>alert('".addslashes($_SESSION["ROLE"])."');</script>";
-        
-
         header("Location: dashboard.php");
         exit;
     }
@@ -45,7 +41,8 @@ if (isset($_POST["login"])) {
 
 
         <h4>Sign in to your S&M account</h4>
-        <?php if (!empty($error)) echo "<p style='color:red;'>$error</p>"; ?>
+        <?php if (!empty($error))
+            echo "<p style='color:red;'>$error</p>"; ?>
         <form id="login-form" autocomplete="off" action="login.php" method="post">
             <fieldset>
                 <div class="group">
@@ -53,14 +50,20 @@ if (isset($_POST["login"])) {
                     <input type="text" id="username" name="username" minlength="5" maxlength="15" required
                         placeholder="Enter your username">
                 </div>
-                <br />
+
                 <div class="group">
                     <label for="password"> Password: </label>
                     <input type="password" id="password" name="password" minlength="8" required
                         placeholder="Enter your password">
                 </div>
-                <br />
+                
                 <input type="submit" class="submit-btn-login" name="login" value="Login">
+                <br/>
+                <div class="auth-links">
+                    <a href="forgot-password.php" class="forgot">Forgot Password?</a>
+                    <span>•</span>
+                    <a href="signup.php" class="signup">Register</a>
+                </div>
             </fieldset>
         </form>
     </div>
