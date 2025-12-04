@@ -30,9 +30,10 @@ if (isset($_POST["register"])) {
     $postcode = $_POST["postcode"] ?? "";
     $email = $_POST["email"] ?? "";
     $phone = $_POST["phone"] ?? "";
+    $password = $_POST["password"] ??"";
 
     GuestInsert($fname, $mname, $lname, $address, $city, $postcode, $email, $phone, $action_error_message);
-    UserInsert($fname, $mname, $lname, $address, $city, $postcode, $email, $phone, $action_error_message);
+    UserInsert($fname, $mname, $lname, $address, $city, $postcode, $email, $phone, $password, $action_error_message);
 }
 
 }
@@ -62,7 +63,7 @@ if (isset($_POST["register"])) {
                             <input type="text" id="lname" name="lname" placeholder="Last Name" required>
                         </div>
                     </div>
-
+                    <div class="name-group">
                     <div>
                         <label for="address">Address: </label>
                         <input type="text" placeholder="Address" name="address" required>
@@ -75,13 +76,18 @@ if (isset($_POST["register"])) {
                         <label for="postcode">Postcode: </label>
                         <input type="text" placeholder="Postcode" name="postcode" required>
                     </div>
+                    </div>
                     <div>
                         <label for="email">Email: </label>
-                        <input type="email" placeholder="Email" name="email" required>
+                        <input type="email" placeholder="Email (as your username)" name="email" autocomplete="on" required>
                     </div>
                     <div>
                         <label for="phone">Phone Number: </label>
                         <input type="text" placeholder="Phone Number" name="phone" required>
+                    </div>
+                    <div>
+                        <label for="password">Password: </label>
+                        <input type="password" name="password" placeholder="Password" minlength="8" required>
                     </div>
                     <input type="submit" class="submit-btn" name="register" value="Register">
                 </div>

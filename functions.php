@@ -798,11 +798,11 @@ function GuestDelete($id)
     }
 }
 
-function UserInsert($fname, $mname, $lname, $address, $city, $postcode, $email, $phone, &$action_error_message)
+function UserInsert($fname, $mname, $lname, $address, $city, $postcode, $email, $phone, $password, &$action_error_message)
 {
     $error = "";
     $db = createDB();
-    $insert = $db->exec("INSERT INTO USER (USERNAME, USER_PASSWORD, ROLE, F_NAME, M_NAME, L_NAME, USER_EMAIL) VALUES ( '$fname', 'pass1234', 'Guest', '$fname', '$mname', '$lname', '$email')");
+    $insert = $db->exec("INSERT INTO USER (USERNAME, USER_PASSWORD, ROLE, F_NAME, M_NAME, L_NAME, USER_EMAIL) VALUES ( '$email', '$password', 'Guest', '$fname', '$mname', '$lname', '$email')");
     if ($insert) {
         header("Location: login.php");
     } else {

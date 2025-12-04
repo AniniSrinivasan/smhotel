@@ -39,7 +39,6 @@ if (isset($_POST["login"])) {
         <img id="logo" src="./img/s&mhotel_logov2.png" alt="Logo of S&M Hotels">
         <h2>Welcome Back!</h2>
 
-
         <h4>Sign in to your S&M account</h4>
         <?php if (!empty($error))
             echo "<p style='color:red;'>$error</p>"; ?>
@@ -60,9 +59,11 @@ if (isset($_POST["login"])) {
                 <input type="submit" class="submit-btn-login" name="login" value="Login">
                 <br/>
                 <div class="auth-links">
-                    <a href="forgot-password.php" class="forgot">Forgot Password?</a>
+                    <span>•</span>
+                    <a href="login.php" class="forgot">Forgot Password?</a>
                     <span>•</span>
                     <a href="signup.php" class="signup">Register</a>
+                    <span>•</span>
                 </div>
             </fieldset>
         </form>
