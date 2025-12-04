@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST["add"])) {
         $type = $_POST["room-type-name"];
         $description = $_POST["room-type-desc"];
-        RoomTypeInsert($type, $description, $action_message, $action_error_message);
+        RoomTypeInsert($type, $description, $action_error_message);
     }
 
 }

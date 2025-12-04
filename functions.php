@@ -41,7 +41,7 @@ function requireLogin()
         header("Location: booking.php");
         exit;
     }
-    
+
     if (!isset($_SESSION['USER_ID'])) {
         header("Location: login.php");
         exit;
@@ -99,18 +99,19 @@ function BookingInsert($room_id, $guest_id, $num_guest, $dateIn, $dateOut)
     return $error;
 }
 
-function BookingList($editingId = null)
+function BookingList($editingId = null, $limit = null, $offset = null)
 {
     $db = createDB();
     session_start();
 
-    $select_query = "SELECT * FROM BOOKING b INNER JOIN GUEST g ON (b.GUEST_ID = g.GUEST_ID) INNER JOIN ROOM r ON (b.ROOM_ID = r.ROOM_ID) INNER JOIN HOTEL h ON (r.HOTEL_ID = h.HOTEL_ID)";
+    $select_query = "SELECT * FROM BOOKING b INNER JOIN GUEST g ON (b.GUEST_ID = g.GUEST_ID) INNER JOIN ROOM r ON (b.ROOM_ID = r.ROOM_ID) INNER JOIN HOTEL h ON (r.HOTEL_ID = h.HOTEL_ID) ORDER BY BOOKING_ID ASC";
 
     if (isset($_SESSION['ROLE']) && $_SESSION['ROLE'] === 'Guest') {
         $email = $_SESSION['EMAIL'];
         $select_query .= " WHERE g.GUEST_EMAIL = '$email'";
     }
 
+    $select_query = applyPagination($select_query, $limit, $offset);
     $result = $db->query($select_query);
 
     while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
@@ -247,11 +248,12 @@ function HotelDropdown($fieldName = 'hotel-id', $selectedId = null)
     echo "</select>";
 }
 
-function HotelList($editingId = null)
+function HotelList($editingId = null, $limit = null, $offset = null)
 {
     $db = createDB();
 
-    $select_query = "SELECT * FROM HOTEL";
+    $select_query = "SELECT * FROM HOTEL ORDER BY HOTEL_ID ASC";
+    $select_query = applyPagination($select_query, $limit, $offset);
     $result = $db->query($select_query);
 
     while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
@@ -350,12 +352,11 @@ function HotelDelete($id)
     }
 }
 
-function RoomTypeInsert($type, $description, &$action_message, &$action_error_message)
+function RoomTypeInsert($type, $description, &$action_error_message)
 {
     $db = createDB();
     $insert = $db->exec("INSERT INTO ROOM_TYPE (ROOM_TYPE_NAME, ROOM_TYPE_DESCRIPTION) VALUES ('$type','$description')");
     if ($insert) {
-        $action_message = "Room Type Added Successfully!!";
         header("Location: room-type.php");
     } else {
         $action_error_message = "Error in inserting room type " . $db->lastErrorMsg() . "<br>";
@@ -383,11 +384,16 @@ function RoomTypeDropdown($fieldName = 'room-type-id', $selectedId = null)
     echo "</select>";
 }
 
-function RoomTypeList($editingId = null)
+function RoomTypeList($editingId = null, $limit = null, $offset = null)
 {
     $db = createDB();
 
-    $select_query = "SELECT * FROM ROOM_TYPE";
+    $select_query = "
+    SELECT *
+    FROM ROOM_TYPE
+    ORDER BY ROOM_TYPE_ID ASC
+";
+    $select_query = applyPagination($select_query, $limit, $offset);
     $result = $db->query($select_query);
 
     while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
@@ -542,7 +548,7 @@ function RoomDropdown(
     echo "</select>";
 }
 
-function RoomList($editingId = null)
+function RoomList($editingId = null, $limit = null, $offset = null)
 {
     $db = createDB();
 
@@ -551,7 +557,7 @@ function RoomList($editingId = null)
         INNER JOIN ROOM_TYPE rt ON (r.ROOM_TYPE_ID = rt.ROOM_TYPE_ID)
         ORDER BY HOTEL_ID ASC
     ";
-    
+    $select_query = applyPagination($select_query, $limit, $offset);
     $result = $db->query($select_query);
 
     while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
@@ -598,7 +604,7 @@ function RoomList($editingId = null)
             echo "<td>" . $row['ROOM_TYPE_NAME'] . "</td>";
             echo "<td>" . $row['ROOM_NO'] . "</td>";
             //2dp for price
-            echo "<td>" ."£". number_format($row['PRICE'], 2, '.', '') . "</td>";
+            echo "<td>" . "£" . number_format($row['PRICE'], 2, '.', '') . "</td>";
             echo "<td>
                     <input type='hidden' name='room-id' value='" . $row['ROOM_ID'] . "'>
                     <input type='submit' class='edit-button-in-list' name='edit' value='Edit'>
@@ -677,11 +683,12 @@ function GuestDropdown($fieldName = 'guest-id', $selectedId = null)
     echo "</select>";
 }
 
-function GuestList($editingId = null)
+function GuestList($editingId = null, $limit = null, $offset = null)
 {
     $db = createDB();
 
-    $select_query = "SELECT * FROM GUEST";
+    $select_query = "SELECT * FROM GUEST ORDER BY GUEST_ID ASC";
+    $select_query = applyPagination($select_query, $limit, $offset);
     $result = $db->query($select_query);
 
     while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
@@ -797,5 +804,16 @@ function showAlertMessage($error = "")
     }
 
 }
+
+function applyPagination($sql, $limit, $offset)
+{
+    if ($limit !== null && $offset !== null) {
+        $limit = (int) $limit;
+        $offset = (int) $offset;
+        $sql .= " LIMIT $limit OFFSET $offset";
+    }
+    return $sql;
+}
+
 
 ?>

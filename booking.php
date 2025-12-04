@@ -15,7 +15,8 @@
 require_once("functions.php");
 requireLogin();
 
-$errormessage = "";
+// $action_message = "";
+$action_error_message = "";
 $editingId = null;
 
 $availableRooms = null;
@@ -24,9 +25,6 @@ $dateOut = $_POST['date-out'] ?? '';
 $selectedHotelId = $_POST['hotel-id'] ?? '';
 
 $db = createDB();
-
-$errormessage = "";
-$editingId = null;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -57,6 +55,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $editingId = null;
     }
 }
+
+//pagination
+$records_per_page = 5;
+
+//current page
+$current_page = isset($_GET["page"]) ? intval($_GET["page"]) : 1;
+if ($current_page < 1) {
+    $current_page = 1;
+}
+
+$db = createDB();
+
+//total records
+$total_query = "SELECT COUNT(*) AS total FROM BOOKING";
+$total_result = $db->query($total_query);
+$total_row = $total_result->fetchArray(SQLITE3_ASSOC);
+$total_records = (int) ($total_row['total'] ?? 0);
+
+// calculating total pages - avoiding division by 0
+$total_pages = $total_records > 0 ? (int) ceil($total_records / $records_per_page) : 1;
+
+//offset calculation
+$offset = ($current_page - 1) * $records_per_page;
 ?>
 
 <script>
@@ -106,19 +127,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </tr>
                 </thead>
                 <tbody>
-                    <?php BookingList($editingId); ?>
+                    <?php BookingList($editingId, $records_per_page, $offset); ?>
                 </tbody>
 
             </table>
             <br />
             <ul class="pagination">
-                <li><a href="#">&laquo;</a></li>
-                <li class="active"><a href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">5</a></li>
-                <li><a href="#">&raquo;</a></li>
+                <!-- previous button -->
+                <?php if ($current_page > 1): ?>
+                    <?php $prev_page = $current_page - 1; ?>
+                    <li><a href="?page=<?= $prev_page ?>">&laquo;</a></li>
+                <?php else: ?>
+                    <li class="disabled"><span>&laquo;</span></li>
+                <?php endif; ?>
+
+                <!-- page numbers -->
+                <?php for ($i = 1; $i <= $total_pages; $i++): ?>
+                    <?php if ($i == $current_page): ?>
+                        <li class="active"><span><?= $i ?></span></li>
+                    <?php else: ?>
+                        <li><a href="?page=<?= $i ?>"><?= $i ?></a></li>
+                    <?php endif; ?>
+                <?php endfor; ?>
+
+                <!-- next button -->
+                <?php if ($current_page < $total_pages): ?>
+                    <?php $next_page = $current_page + 1; ?>
+                    <li><a href="?page=<?= $next_page ?>">&raquo;</a></li>
+                <?php else: ?>
+                    <li class="disabled"><span>&raquo;</span></li>
+                <?php endif; ?>
             </ul>
         </section>
     </div>
