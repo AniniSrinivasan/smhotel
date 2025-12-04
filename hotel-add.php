@@ -15,19 +15,22 @@
 require_once("functions.php");
 requireLogin();
 
-$errormessage = "";
+$action_error_message = "";
 $editingId = null;
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-if (isset($_POST["add"])) {
-    $branch = $_POST["branch"];
-    $address = $_POST["address"];
-    $city = $_POST["city"];
-    $postcode = $_POST["postcode"];
-    $email = $_POST["email"];
-    $phone = $_POST["tel-no"];
+    if (isset($_POST["add"])) {
+        $branch = $_POST["branch"];
+        $address = $_POST["address"];
+        $city = $_POST["city"];
+        $postcode = $_POST["postcode"];
+        $email = $_POST["email"];
+        $phone = $_POST["tel-no"];
 
-    $errormessage = HotelInsert($branch, $address, $city, $postcode, $email, $phone);
+        HotelInsert($branch, $address, $city, $postcode, $email, $phone, $action_error_message);
+    }
+
 }
 ?>
 
@@ -35,8 +38,8 @@ if (isset($_POST["add"])) {
     <div id="navbar-container"></div> <!-- Navbar will be loaded here -->
     <div class="main_content">
         <section class="add-container">
+        <?php showAlertMessage($action_error_message ?? ""); ?>
             <h2>Add Hotel</h2>
-            <h2><?= htmlspecialchars(string: $errormessage) ?></h2>
             <form autocomplete="off" method="post">
                 <div class="base-form">
                     <div>

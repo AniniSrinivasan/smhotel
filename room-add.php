@@ -15,9 +15,11 @@
 require_once("functions.php");
 requireLogin();
 
-$errormessage = "";
+$action_error_message = "";
 $editingId = null;
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    
 // add (inserts a new room)
 if (isset($_POST["add"])) {
     $room_type_id = $_POST["room-type-id"] ?? "";
@@ -27,17 +29,18 @@ if (isset($_POST["add"])) {
 
     echo "<p>" . $room_type_id . "" . $room_number . "" . $price . "<p>";
 
-    $errormessage = RoomInsert($room_type_id, $room_number, $price, $hotel_id);
+    RoomInsert($room_type_id, $room_number, $price, $hotel_id, $action_error_message);
 }
 
+}
 ?>
 
 <body onload="loadNavbar()">
     <div id="navbar-container"></div> <!-- Navbar will be loaded here -->
     <div class="main_content">
         <section class="add-container">
+        <?php showAlertMessage($action_error_message ?? ""); ?>
             <h2>Add Room</h2>
-            <h2><?= htmlspecialchars(string: $errormessage) ?></h2>
             <form autocomplete="off" method="post">
                 <div class="base-form">
                     <div>

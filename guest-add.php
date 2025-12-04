@@ -15,8 +15,10 @@
 require_once("functions.php");
 requireLogin();
 
-$errormessage = "";
+$action_error_message = "";
 $editingId = null;
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 // add
 if (isset($_POST["add"])) {
@@ -29,7 +31,9 @@ if (isset($_POST["add"])) {
     $email = $_POST["email"] ?? "";
     $phone = $_POST["phone"] ?? "";
 
-    $errormessage = GuestInsert($fname, $mname, $lname, $address, $city, $postcode, $email, $phone);
+    GuestInsert($fname, $mname, $lname, $address, $city, $postcode, $email, $phone, $action_error_message);
+}
+
 }
 ?>
 
@@ -37,7 +41,7 @@ if (isset($_POST["add"])) {
     <div id="navbar-container"></div> <!-- Navbar will be loaded here -->
     <div class="main_content">
         <section class="add-container">
-            <?php showAlertMessage($errormessage ?? ""); ?>
+            <?php showAlertMessage($action_error_message ?? ""); ?>
             <h2>Add Guest</h2>
             <form autocomplete="off" method="post">
                 <div class="base-form">

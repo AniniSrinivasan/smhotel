@@ -25,7 +25,7 @@ $selectedHotelId = $_POST['hotel-id'] ?? '';
 
 $db = createDB();
 
-$errormessage = "";
+$action_error_message = "";
 $editingId = null;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $num_guest = $_POST['num-guest'] ?? '';
         $dateIn = $_POST['date-in'] ?? '';
         $dateOut = $_POST['date-out'] ?? '';
-        BookingInsert($room_id, $guest_id, $num_guest, $dateIn, $dateOut);
+        BookingInsert($room_id, $guest_id, $num_guest, $dateIn, $dateOut, $action_error_message);
     }
 }
 ?>
@@ -66,8 +66,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="main_content">
 
         <section class="add-container">
+        <?php showAlertMessage($action_error_message ?? ""); ?>
             <h2>Add Booking</h2>
-            <h2><?= htmlspecialchars(string: $errormessage) ?></h2>
 
             <form autocomplete="off" method="post">
                 <div class="group">

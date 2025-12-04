@@ -86,7 +86,7 @@ function getAvailableRooms($dateIn, $dateOut)
     return $stmt->execute();
 }
 
-function BookingInsert($room_id, $guest_id, $num_guest, $dateIn, $dateOut)
+function BookingInsert($room_id, $guest_id, $num_guest, $dateIn, $dateOut, &$action_error_message)//&: call by reference - no need for return for any modifications
 {
     $error = "";
     $db = createDB();
@@ -94,7 +94,7 @@ function BookingInsert($room_id, $guest_id, $num_guest, $dateIn, $dateOut)
     if ($insert) {
         header("Location: booking.php");
     } else {
-        $error = "Error in inserting room " . $db->lastErrorMsg() . "<br>";
+        $action_error_message = "Error in inserting booking " . $db->lastErrorMsg() . "<br>";
     }
     return $error;
 }
@@ -211,7 +211,7 @@ function BookingDelete($id)
     }
 }
 
-function HotelInsert($branch, $address, $city, $postcode, $email, $phone)
+function HotelInsert($branch, $address, $city, $postcode, $email, $phone, $action_error_message)
 {
     $error = "";
     $db = createDB();
@@ -219,7 +219,7 @@ function HotelInsert($branch, $address, $city, $postcode, $email, $phone)
     if ($insert) {
         header("Location: hotel.php");
     } else {
-        $error = "Error in inserting room " . $db->lastErrorMsg() . "<br>";
+        $action_error_message = "Error in inserting hotel  " . $db->lastErrorMsg() . "<br>";
     }
     return $error;
 }
@@ -467,7 +467,7 @@ function RoomTypeDelete($id)
 }
 
 
-function RoomInsert($room_type_id, $room_number, $price, $hotel_id)
+function RoomInsert($room_type_id, $room_number, $price, $hotel_id, &$action_error_message)
 {
     $error = "";
     $db = createDB();
@@ -475,9 +475,8 @@ function RoomInsert($room_type_id, $room_number, $price, $hotel_id)
     if ($insert) {
         header("Location: room.php");
     } else {
-        $error = "Error in inserting room " . $db->lastErrorMsg() . "<br>";
+        $action_error_message = "Error in inserting room" . $db->lastErrorMsg() . "<br>";
     }
-    return $error;
 }
 
 function RoomDropdown(
@@ -646,7 +645,7 @@ function RoomDelete($id)
     }
 }
 
-function GuestInsert($fname, $mname, $lname, $address, $city, $postcode, $email, $phone)
+function GuestInsert($fname, $mname, $lname, $address, $city, $postcode, $email, $phone, &$action_error_message)
 {
     $error = "";
     $db = createDB();
@@ -654,9 +653,8 @@ function GuestInsert($fname, $mname, $lname, $address, $city, $postcode, $email,
     if ($insert) {
         header("Location: guest.php");
     } else {
-        $error = "Error in inserting room " . $db->lastErrorMsg() . "<br>";
+        $action_error_message = "Error in inserting guest" . $db->lastErrorMsg() . "<br>";
     }
-    return $error;
 }
 
 function GuestDropdown($fieldName = 'guest-id', $selectedId = null)
