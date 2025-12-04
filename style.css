@@ -142,12 +142,12 @@ label {
 .main_content {
   margin-top: 60px;
   margin-left: 220px;
-  padding: 30px 40px 40px 30px;
+  padding: 10px 20px 20px 10px;
   background: #f8f6f6;
   min-height: calc(100vh - 60px);
   color: #2e2e2e;
   flex: 1;
-  width: 97%;
+  overflow-x: hidden;   /* optional safety if something is 1–2px over */
 }
 
 
@@ -169,8 +169,8 @@ label {
 
 /* secrch bar style */
 .add-container .search-bar {
-  margin: 10px 0;
-  padding: 5px 0;
+  margin: 5px 0;
+  padding: 2px 0;
 }
 
 .add-container .search-bar input {
@@ -277,9 +277,9 @@ label {
 
 /* ----- Add Form----- */
 .add-container {
-  width: 90%;                       
+  width: 100%;                       
   max-width: none;    
-  padding: 30px 40px 40px 40px;
+  padding: 20px 20px 20px 20px;
   margin: 0 0 30px 0;     
   background: rgba(255, 255, 255, 0.8);
   border-radius: 12px;

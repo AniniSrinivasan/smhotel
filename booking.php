@@ -56,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-//pagination
+//pagination 
 $records_per_page = 5;
 
 //current page
@@ -129,9 +129,7 @@ $offset = ($current_page - 1) * $records_per_page;
                 <tbody>
                     <?php BookingList($editingId, $records_per_page, $offset); ?>
                 </tbody>
-
             </table>
-            <br />
             <ul class="pagination">
                 <!-- previous button -->
                 <?php if ($current_page > 1): ?>
