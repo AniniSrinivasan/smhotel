@@ -122,7 +122,7 @@ $offset = ($current_page - 1) * $records_per_page;
                         <th>Guest</th>
                         <th>Check-In</th>
                         <th>Check-Out</th>
-                        <th>Number of Guests</th>
+                        <th>No. of Guests</th>
                         <th>Action</th>
                     </tr>
                 </thead>
