@@ -131,7 +131,7 @@ $offset = ($current_page - 1) * $records_per_page;
         </section>
     </div>
 
-    <!-- Custom Delete Confirmation Popup -->
+    <!-- delete confirmation popup -->
     <div id="deletePopup" class="popup-overlay" style="display: none;">
         <div class="popup-box">
             <h3>Delete</h3>
