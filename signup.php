@@ -83,7 +83,7 @@ if (isset($_POST["register"])) {
                     </div>
                     <div>
                         <label for="phone">Phone Number: </label>
-                        <input type="text" placeholder="Phone Number" name="phone" required>
+                        <input type="text" placeholder="Phone Number" name="phone" maxlength="14" required>
                     </div>
                     <div>
                         <label for="password">Password: </label>

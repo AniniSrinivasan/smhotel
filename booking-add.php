@@ -94,7 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <br />
                 <div class="group">
                     <label for="num-guest">Number of Guest: </label>
-                    <!-- limiting the max number guest to 4 -->
+                    <!-- limiting the max number guests to 4 : https://developer.mozilla.org/-->
                     <input type="number" placeholder="Number of Guest" name="num-guest" min="1" max="4" oninput="if (this.value > 4) this.value = 4; if (this.value < 1) this.value = 1;" required>
                 </div>
                 <br />

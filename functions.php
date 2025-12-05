@@ -41,7 +41,6 @@ function requireLogin()
         header("Location: booking.php");
         exit;
     }
-
     if (!isset($_SESSION['USER_ID'])) {
         header("Location: login.php");
         exit;
@@ -61,6 +60,8 @@ function GetAdminUser()
     return $row;
 }
 
+//https://www.php.net/manual/en/sqlite3.prepare.php
+//https://www.php.net/manual/en/sqlite3stmt.bindvalue.php
 function getAvailableRooms($dateIn, $dateOut)
 {
     $db = createDB();
@@ -72,7 +73,6 @@ function getAvailableRooms($dateIn, $dateOut)
             SELECT 1
             FROM BOOKING b
             WHERE b.ROOM_ID = r.ROOM_ID
-              -- overlap condition
               AND b.DATE_IN  < :dateOut
               AND b.DATE_OUT > :dateIn
         )
@@ -99,6 +99,8 @@ function BookingInsert($room_id, $guest_id, $num_guest, $dateIn, $dateOut, &$act
     return $error;
 }
 
+//https://developer.mozilla.org/
+//https://developer.mozilla.org/
 function BookingList($editingId = null, $limit = null, $offset = null)
 {
     $db = createDB();

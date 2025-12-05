@@ -12,10 +12,10 @@
 </head>
 
 <?php
+//https://www.php.net/manual/en/migration70.new-features.php#migration70.new-features.null-coalesce-op
 require_once("functions.php");
 requireLogin();
 
-// $action_message = "";
 $action_error_message = "";
 $editingId = null;
 
@@ -80,6 +80,7 @@ $total_pages = $total_records > 0 ? (int) ceil($total_records / $records_per_pag
 $offset = ($current_page - 1) * $records_per_page;
 ?>
 
+<!-- https://developer.mozilla.org/ -->
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         const form = document.querySelector('.add-container form');
@@ -130,6 +131,10 @@ $offset = ($current_page - 1) * $records_per_page;
                     <?php BookingList($editingId, $records_per_page, $offset); ?>
                 </tbody>
             </table>
+            <!-- https://developer.mozilla.org
+            https://www.php.net/manual/en/reserved.variables.get.php            
+            https://www.php.net/manual/en/control-structures.if.php
+            https://www.php.net/manual/en/language.basic-syntax.phpmode.php -->
             <ul class="pagination">
                 <!-- previous button -->
                 <?php if ($current_page > 1): ?>
@@ -158,7 +163,7 @@ $offset = ($current_page - 1) * $records_per_page;
             </ul>
         </section>
     </div>
-    <!-- Custom Delete Confirmation Popup -->
+    <!-- delete confirmation popup -->
     <div id="deletePopup" class="popup-overlay" style="display: none;">
         <div class="popup-box">
             <h3>Delete</h3>

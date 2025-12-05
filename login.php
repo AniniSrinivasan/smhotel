@@ -58,7 +58,7 @@ if (isset($_POST["login"])) {
                 
                 <input type="submit" class="submit-btn-login" name="login" value="Login">
                 <br/>
-                <div class="auth-links">
+                <div class="account-links">
                     <span>•</span>
                     <a href="login.php" class="forgot">Forgot Password?</a>
                     <span>•</span>
