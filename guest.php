@@ -106,6 +106,7 @@ $offset = ($current_page - 1) * $records_per_page;
                 </tbody>
             </table>
             <br />
+            <?php if ($total_records > $records_per_page): ?>
             <ul class="pagination">
                 <!-- previous button -->
                 <?php if ($current_page > 1): ?>
@@ -132,6 +133,7 @@ $offset = ($current_page - 1) * $records_per_page;
                     <li class="disabled"><span>&raquo;</span></li>
                 <?php endif; ?>
             </ul>
+            <?php endif; ?>
         </section>
     </div>
     <!-- delete confirmation popup -->

@@ -46,7 +46,7 @@ if (isset($_POST["login"])) {
             <fieldset>
                 <div class="group">
                     <label for="username">Username: </label>
-                    <input type="text" id="username" name="username" minlength="5" maxlength="15" required
+                    <input type="text" id="username" name="username" required
                         placeholder="Enter your username">
                 </div>
 

@@ -15,6 +15,7 @@
 //https://www.php.net/manual/en/migration70.new-features.php#migration70.new-features.null-coalesce-op
 require_once("functions.php");
 requireLogin();
+// carry session start - get userid - where userid - so no pagination - maybe do booking admin so the logic doesnt clash with admin - meaning it might only show admin booking!!
 
 $action_error_message = "";
 $editingId = null;
@@ -68,7 +69,27 @@ if ($current_page < 1) {
 $db = createDB();
 
 //total records
-$total_query = "SELECT COUNT(*) AS total FROM BOOKING";
+// $total_query = "SELECT COUNT(*) AS total FROM BOOKING ";
+// if (
+//     isset($_SESSION['USER_ID']) &&
+//     $_SESSION['ROLE'] === 'Guest') {
+
+//         $total_query .= " WHERE USER_EMAIL = '".$_SESSION['EMAIL']."'";
+
+// }
+
+$total_query = "SELECT COUNT(*) AS total
+                FROM BOOKING b
+                INNER JOIN GUEST g ON b.GUEST_ID = g.GUEST_ID";
+
+if (
+    isset($_SESSION['USER_ID']) &&
+    $_SESSION['ROLE'] === 'Guest'
+) {
+    $total_query .= " WHERE g.GUEST_EMAIL = '" . $_SESSION['EMAIL'] . "'";
+}
+
+
 $total_result = $db->query($total_query);
 $total_row = $total_result->fetchArray(SQLITE3_ASSOC);
 $total_records = (int) ($total_row['total'] ?? 0);
@@ -135,6 +156,7 @@ $offset = ($current_page - 1) * $records_per_page;
             https://www.php.net/manual/en/reserved.variables.get.php            
             https://www.php.net/manual/en/control-structures.if.php
             https://www.php.net/manual/en/language.basic-syntax.phpmode.php -->
+            <?php if ($total_records > $records_per_page): ?>
             <ul class="pagination">
                 <!-- previous button -->
                 <?php if ($current_page > 1): ?>
@@ -161,6 +183,7 @@ $offset = ($current_page - 1) * $records_per_page;
                     <li class="disabled"><span>&raquo;</span></li>
                 <?php endif; ?>
             </ul>
+            <?php endif; ?>
         </section>
     </div>
     <!-- delete confirmation popup -->

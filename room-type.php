@@ -100,6 +100,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             </table>
             <br />
+            <?php if ($total_records > $records_per_page): ?>
             <ul class="pagination">
                 <!-- Previous button -->
                 <?php if ($current_page > 1): ?>
@@ -126,6 +127,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <li class="disabled"><span>&raquo;</span></li>
                 <?php endif; ?>
             </ul>
+            <?php endif; ?>
         </section>
     </div>
     <!-- delete confirmation popup -->
