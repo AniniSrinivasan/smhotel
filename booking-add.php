@@ -84,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <br />
                 <div class="group">
                     <label for="hotel-id">Hotel Branch: </label>
-                    <?php HotelDropdown('hotel-id', $selectedHotelId); ?>
+                    <?php HotelDropdown( $selectedHotelId); ?>
                 </div>
                 <br />
                 <div class="group">
@@ -104,7 +104,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <?php RoomDropdown('room-id', null, $dateIn, $dateOut, $selectedHotelId); ?>
                 </div>
                 <br />
-                <input type="submit" class="submit-btn" name="add" value="Add">
+                <input type="submit" class="submit-btn" name="add" value="Check Out">
             </form>
 
         </section>

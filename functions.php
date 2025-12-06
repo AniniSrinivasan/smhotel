@@ -92,12 +92,34 @@ function BookingInsert($room_id, $guest_id, $num_guest, $dateIn, $dateOut, &$act
     $db = createDB();
     $insert = $db->exec("INSERT INTO BOOKING (NO_OF_GUEST, DATE_IN, DATE_OUT, GUEST_ID, ROOM_ID) VALUES ('$num_guest', '$dateIn', '$dateOut', '$guest_id', '$room_id')");
     if ($insert) {
-        header("Location: booking.php");
+        $bookingIdInserted = $db->lastInsertRowID();
+        header("Location: booking-payment.php?bookingId=".$bookingIdInserted);
     } else {
         $action_error_message = "Error in inserting booking " . $db->lastErrorMsg() . "<br>";
     }
     return $error;
 }
+
+
+function PaymentInsert($payment_type, $amount, $booking_id, &$action_error_message): void         //&: call by reference - no need for return for any modifications
+{
+    
+    $db = createDB();
+    $sql = "INSERT INTO PAYMENT (AMOUNT, PAYMENT_TYPE, STATUS, BOOKING_ID)  VALUES ('$amount', '$payment_type', '1', '$booking_id')";
+    
+
+    echo "<script>alert('Insert query: " . addslashes($sql) . "');</script>";
+
+    $insert = $db->exec($sql);
+    if ($insert) {
+        header("Location: booking.php");
+    } else {
+        $action_error_message = "Error in inserting booking " . $db->lastErrorMsg() . "<br>";
+    }
+    
+}
+
+
 
 //https://developer.mozilla.org/
 //https://developer.mozilla.org/
@@ -229,14 +251,14 @@ function HotelInsert($branch, $address, $city, $postcode, $email, $phone, $actio
     return $error;
 }
 
-function HotelDropdown($fieldName = 'hotel-id', $selectedId = null)
+function HotelDropdown( $selectedId = null)
 {
     $db = createDB();
 
     $sql = "SELECT HOTEL_ID, HOTEL_NAME, CITY FROM HOTEL ORDER BY HOTEL_NAME";
     $result = $db->query($sql);
 
-    echo "<select name='{$fieldName}' id='{$fieldName}' required>";
+    echo "<select name='hotel-id' id='hotel-id' required>";
     echo "<option value=''>-- Select Hotel Name--</option>";
 
     while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
@@ -245,6 +267,31 @@ function HotelDropdown($fieldName = 'hotel-id', $selectedId = null)
         $city = htmlspecialchars($row['CITY']);
 
         $label = "{$name} ({$city})";
+        $selected = ($selectedId == $id) ? "selected" : "";
+
+        echo "<option value='{$id}' {$selected}>{$label}</option>";
+    }
+
+    echo "</select>";
+}
+
+
+function PaymentTypeDropdown($selectedId = null)
+{
+    $db = createDB();
+
+    $sql = "SELECT  * FROM PAYMENT_TYPE ORDER BY PAYMENT_TYPE";
+    $result = $db->query($sql);
+
+    echo "<select name='payment-type' id='payment-type' required>";
+    echo "<option value=''>-- Select Payment Type--</option>";
+
+    while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
+        $id = (int) $row['PAYMENT_TYPE'];
+        $type = htmlspecialchars($row['DESCRIPTION']);
+        
+
+        $label = "{$type}";
         $selected = ($selectedId == $id) ? "selected" : "";
 
         echo "<option value='{$id}' {$selected}>{$label}</option>";

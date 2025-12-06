@@ -45,7 +45,7 @@ if (isset($_POST["add"])) {
                 <div class="base-form">
                     <div>
                         <label for="hotel-id">Hotel Branch: </label>
-                        <?php HotelDropdown('hotel-id'); ?>
+                        <?php HotelDropdown(); ?>
                         <!-- <input type="number" placeholder="Room Number" name="hotel-id" required> -->
                     </div>
                     <div>
