@@ -93,7 +93,7 @@ function BookingInsert($room_id, $guest_id, $num_guest, $dateIn, $dateOut, &$act
     $insert = $db->exec("INSERT INTO BOOKING (NO_OF_GUEST, DATE_IN, DATE_OUT, GUEST_ID, ROOM_ID) VALUES ('$num_guest', '$dateIn', '$dateOut', '$guest_id', '$room_id')");
     if ($insert) {
         $bookingIdInserted = $db->lastInsertRowID();
-        header("Location: booking-payment.php?bookingId=".$bookingIdInserted);
+        header("Location: booking-payment.php?bookingId=" . $bookingIdInserted);
     } else {
         $action_error_message = "Error in inserting booking " . $db->lastErrorMsg() . "<br>";
     }
@@ -103,10 +103,10 @@ function BookingInsert($room_id, $guest_id, $num_guest, $dateIn, $dateOut, &$act
 
 function PaymentInsert($payment_type, $amount, $booking_id, &$action_error_message): void         //&: call by reference - no need for return for any modifications
 {
-    
+
     $db = createDB();
     $sql = "INSERT INTO PAYMENT (AMOUNT, PAYMENT_TYPE, STATUS, BOOKING_ID)  VALUES ('$amount', '$payment_type', '1', '$booking_id')";
-    
+
 
     echo "<script>alert('Insert query: " . addslashes($sql) . "');</script>";
 
@@ -116,7 +116,7 @@ function PaymentInsert($payment_type, $amount, $booking_id, &$action_error_messa
     } else {
         $action_error_message = "Error in inserting booking " . $db->lastErrorMsg() . "<br>";
     }
-    
+
 }
 
 
@@ -147,7 +147,7 @@ function BookingList($editingId = null, $limit = null, $offset = null)
 
     if (isset($_SESSION['ROLE']) && $_SESSION['ROLE'] === 'Guest') {
         $email = htmlspecialchars($_SESSION['EMAIL']);
-        $select_query .= " WHERE g.GUEST_EMAIL = '$email'";        
+        $select_query .= " WHERE g.GUEST_EMAIL = '$email'";
     }
 
     $select_query .= " ORDER BY BOOKING_ID ASC";
@@ -158,13 +158,13 @@ function BookingList($editingId = null, $limit = null, $offset = null)
     while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
 
         $paymentStatus = 'Unpaid';
-            if (!is_null($row['PAYMENT_STATUS'])) {
-                if ($row['PAYMENT_STATUS'] == 1) {
-                    $paymentStatus = 'Paid';
-                } else {
-                    $paymentStatus = 'Failed';
-                }
+        if (!is_null($row['PAYMENT_STATUS'])) {
+            if ($row['PAYMENT_STATUS'] == 1) {
+                $paymentStatus = 'Paid';
+            } else {
+                $paymentStatus = 'Failed';
             }
+        }
 
         // edit mode
         if ($editingId == $row['BOOKING_ID']) {
@@ -222,7 +222,7 @@ function BookingList($editingId = null, $limit = null, $offset = null)
             echo "<td>" . $row['DATE_IN'] . "</td>";
             echo "<td>" . $row['DATE_OUT'] . "</td>";
             echo "<td>" . $row['NO_OF_GUEST'] . "</td>";
-            
+
 
             echo "<td>" . htmlspecialchars($paymentStatus) . "</td>";
 
@@ -282,7 +282,7 @@ function HotelInsert($branch, $address, $city, $postcode, $email, $phone, $actio
     return $error;
 }
 
-function HotelDropdown( $selectedId = null)
+function HotelDropdown($selectedId = null)
 {
     $db = createDB();
 
@@ -320,7 +320,7 @@ function PaymentTypeDropdown($selectedId = null)
     while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
         $id = (int) $row['PAYMENT_TYPE'];
         $type = htmlspecialchars($row['DESCRIPTION']);
-        
+
 
         $label = "{$type}";
         $selected = ($selectedId == $id) ? "selected" : "";
@@ -576,44 +576,61 @@ function RoomDropdown(
     if (!empty($dateIn) && !empty($dateOut) && $hotelId !== '') {
 
         // hotel selected + dates selected = only free rooms in that hotel
-        $sql = "
-            SELECT r.ROOM_ID
-            FROM ROOM r
-            WHERE r.HOTEL_ID = '$hotelId'
-              AND NOT EXISTS (
-                  SELECT 1
-                  FROM BOOKING b
-                  WHERE b.ROOM_ID = r.ROOM_ID
+        $sql = "SELECT 
+                r.ROOM_ID,
+                r.PRICE,
+                rt.ROOM_TYPE_DESCRIPTION
+                FROM ROOM r
+                INNER JOIN ROOM_TYPE rt 
+                ON r.ROOM_TYPE_ID = rt.ROOM_TYPE_ID
+                WHERE r.HOTEL_ID = '$hotelId'
+                AND NOT EXISTS (
+                SELECT 1
+                FROM BOOKING b
+                WHERE b.ROOM_ID = r.ROOM_ID
                     AND b.DATE_IN  < '$dateOut'
                     AND b.DATE_OUT > '$dateIn'
-              )
+            )
             ORDER BY r.ROOM_ID
         ";
     } elseif ($hotelId !== '') {
         // hotel selected, no dates = all rooms in that hotel
         $sql = "
-            SELECT r.ROOM_ID
-            FROM ROOM r
-            WHERE r.HOTEL_ID = '$hotelId'
-            ORDER BY r.ROOM_ID
-        ";
+        SELECT 
+            r.ROOM_ID,
+            r.PRICE,
+            rt.ROOM_TYPE_DESCRIPTION
+        FROM ROOM r
+        INNER JOIN ROOM_TYPE rt
+            ON r.ROOM_TYPE_ID = rt.ROOM_TYPE_ID
+        WHERE r.HOTEL_ID = '$hotelId'
+        ORDER BY r.ROOM_ID
+    ";
+    
     } elseif (!empty($dateIn) && !empty($dateOut)) {
         // dates selected, no hotel filter = free rooms in any hotel
         $sql = "
-            SELECT r.ROOM_ID
-            FROM ROOM r
-            WHERE NOT EXISTS (
-                SELECT 1
-                FROM BOOKING b
-                WHERE b.ROOM_ID = r.ROOM_ID
-                  AND b.DATE_IN  < '$dateOut'
-                  AND b.DATE_OUT > '$dateIn'
-            )
-            ORDER BY r.ROOM_ID
-        ";
+        SELECT 
+            r.ROOM_ID,
+            r.PRICE,
+            rt.ROOM_TYPE_DESCRIPTION
+        FROM ROOM r
+        INNER JOIN ROOM_TYPE rt
+            ON r.ROOM_TYPE_ID = rt.ROOM_TYPE_ID
+        WHERE NOT EXISTS (
+            SELECT 1
+            FROM BOOKING b
+            WHERE b.ROOM_ID = r.ROOM_ID
+              AND b.DATE_IN  < '$dateOut'
+              AND b.DATE_OUT > '$dateIn'
+        )
+        ORDER BY r.ROOM_ID
+    ";
+    
     } else {
         // no filters = all rooms
-        $sql = "SELECT ROOM_ID FROM ROOM ORDER BY ROOM_ID";
+        $sql = "SELECT r.ROOM_ID, r.PRICE, rt.ROOM_TYPE_DESCRIPTION FROM ROOM r
+        INNER JOIN ROOM_TYPE rt ON (r.ROOM_TYPE_ID = rt.ROOM_TYPE_ID) ORDER BY ROOM_ID";
     }
 
     $result = $db->query($sql);
@@ -623,8 +640,10 @@ function RoomDropdown(
 
     while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
         $id = (int) $row['ROOM_ID'];
+        $room_type = $row['ROOM_TYPE_DESCRIPTION'];
+        $price = $row['PRICE'];
         $selected = ($selectedId == $id) ? "selected" : "";
-        echo "<option value='{$id}' {$selected}>{$id}</option>";
+        echo "<option value='{$id}' {$selected}>Room: {$id} [{$room_type} : £ {$price}]</option>";
     }
 
     echo "</select>";
