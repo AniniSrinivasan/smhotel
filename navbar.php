@@ -30,7 +30,8 @@ $role = $_SESSION["ROLE"];
             <br /><br />
             <li class="section">Management</li>
             <li><a href="booking.php">Manage Booking</a></li>
-            <?php if (isset($_SESSION['ROLE']) && $_SESSION['ROLE'] === 'Admin'): ?>
+            <!-- using session to display based on their role, below displayed only for admin -->
+            <?php if (isset($_SESSION['ROLE']) && $_SESSION['ROLE'] === 'Admin'): ?> 
                 <li><a href="hotel.php">Manage Hotel</a></li>
                 <li><a href="room-type.php">Manage Room Type</a></li>
                 <li><a href="room.php">Manage Room</a></li>

@@ -21,7 +21,8 @@
     <div id="navbar-container"></div> <!-- Navbar will be loaded here -->
 
     <!-- main content -->
-    <main id="main-content" class="main_content" style="background-image: url('./img/ht2.jpeg'); background-repeat: no-repeat; background-size: cover;">
+    <!-- <main id="main-content" class="main_content" style="background-image: url('./img/ht2.jpeg'); background-repeat: no-repeat; background-size: cover;"> -->
+    <main id="main-content" class="main_content">
         <h1>Welcome to S&M Hotels Dashboard</h1>
         <p>Select a menu option to get started.</p>
     </main>

@@ -157,7 +157,7 @@ label {
   min-height: calc(100vh - 60px);
   color: #2e2e2e;
   flex: 1;
-  overflow-x: hidden;   /* optional safety if something is 1–2px over */
+  overflow-x: hidden; 
 }
 
 

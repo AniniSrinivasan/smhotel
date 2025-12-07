@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S&M Dashboard</title>
+    <title>S&M Booking</title>
     <link rel="stylesheet" href="style.css" />
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400" rel="stylesheet" />
     <!-- using google fonts -->
@@ -13,14 +13,13 @@
 
 <?php
 //https://www.php.net/manual/en/migration70.new-features.php#migration70.new-features.null-coalesce-op
+
 require_once("functions.php");
-requireLogin();
-// carry session start - get userid - where userid - so no pagination - maybe do booking admin so the logic doesnt clash with admin - meaning it might only show admin booking!!
+requireLogin(); // security and authentication feature - checks if user has logged in or not
 
 $action_error_message = "";
 $editingId = null;
 
-$availableRooms = null;
 $dateIn = $_POST['date-in'] ?? '';
 $dateOut = $_POST['date-out'] ?? '';
 $selectedHotelId = $_POST['hotel-id'] ?? '';
@@ -29,6 +28,7 @@ $db = createDB();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
+    //delete
     if (isset($_POST['delete']) && isset($_POST['booking-id'])) {
         $id = $_POST['booking-id'];
         BookingDelete($id);
@@ -57,70 +57,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-//pagination 
-$records_per_page = 5;
+//**** pagination logic start ****
+    $records_per_page = 5;
 
-//current page
-$current_page = isset($_GET["page"]) ? intval($_GET["page"]) : 1;
-if ($current_page < 1) {
-    $current_page = 1;
-}
+    //current page
+    $current_page = isset($_GET["page"]) ? intval($_GET["page"]) : 1;
+    if ($current_page < 1) {
+        $current_page = 1;
+    }
 
-$db = createDB();
+    $db = createDB();
 
-//total records
-// $total_query = "SELECT COUNT(*) AS total FROM BOOKING ";
-// if (
-//     isset($_SESSION['USER_ID']) &&
-//     $_SESSION['ROLE'] === 'Guest') {
+    $total_query = "SELECT COUNT(*) AS total
+                    FROM BOOKING b
+                    INNER JOIN GUEST g ON b.GUEST_ID = g.GUEST_ID";
 
-//         $total_query .= " WHERE USER_EMAIL = '".$_SESSION['EMAIL']."'";
-
-// }
-
-$total_query = "SELECT COUNT(*) AS total
-                FROM BOOKING b
-                INNER JOIN GUEST g ON b.GUEST_ID = g.GUEST_ID";
-
-if (
-    isset($_SESSION['USER_ID']) &&
-    $_SESSION['ROLE'] === 'Guest'
-) {
-    $total_query .= " WHERE g.GUEST_EMAIL = '" . $_SESSION['EMAIL'] . "'";
-}
+    // used for Guest login 
+    if (
+        isset($_SESSION['USER_ID']) &&
+        $_SESSION['ROLE'] === 'Guest'
+    ) {
+        $total_query .= " WHERE g.GUEST_EMAIL = '" . $_SESSION['EMAIL'] . "'";
+    }
 
 
-$total_result = $db->query($total_query);
-$total_row = $total_result->fetchArray(SQLITE3_ASSOC);
-$total_records = (int) ($total_row['total'] ?? 0);
+    $total_result = $db->query($total_query);
+    $total_row = $total_result->fetchArray(SQLITE3_ASSOC);
+    $total_records = (int) ($total_row['total'] ?? 0);
 
-// calculating total pages - avoiding division by 0
-$total_pages = $total_records > 0 ? (int) ceil($total_records / $records_per_page) : 1;
+    // calculating total pages - avoiding division by 0
+    $total_pages = $total_records > 0 ? (int) ceil($total_records / $records_per_page) : 1;
 
-//offset calculation
-$offset = ($current_page - 1) * $records_per_page;
+    //offset calculation
+    $offset = ($current_page - 1) * $records_per_page;
+
+//**** pagination logic end ****
+
 ?>
 
-<!-- https://developer.mozilla.org/ -->
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const form = document.querySelector('.add-container form');
-        const dateIn = document.getElementById('date-in');
-        const dateOut = document.getElementById('date-out');
-        const hotelId = document.getElementById('hotel-id');
-
-        if (!form || !dateIn || !dateOut || !hotelId) return;
-
-        function refreshAvailability() {
-            form.submit();
-        }
-
-        dateIn.addEventListener('change', refreshAvailability);
-        dateOut.addEventListener('change', refreshAvailability);
-        hotelId.addEventListener('change', refreshAvailability);
-
-    });
-</script>
 
 <body onload="loadNavbar()">
     <div id="navbar-container"></div> <!-- Navbar will be loaded here -->
@@ -145,6 +119,7 @@ $offset = ($current_page - 1) * $records_per_page;
                         <th>Check-In</th>
                         <th>Check-Out</th>
                         <th>No. of Guests</th>
+                        <th>Payment Status</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -152,6 +127,7 @@ $offset = ($current_page - 1) * $records_per_page;
                     <?php BookingList($editingId, $records_per_page, $offset); ?>
                 </tbody>
             </table>
+
             <!-- https://developer.mozilla.org
             https://www.php.net/manual/en/reserved.variables.get.php            
             https://www.php.net/manual/en/control-structures.if.php

@@ -1,3 +1,4 @@
+// for loading navigation bar + fixed cache issue
 function loadNavbar() {
   fetch("navbar.php", { cache: "no-store" })
     .then(response => response.text())
@@ -89,6 +90,7 @@ function filterGuestList(input) {
   });
 }
 
+// logic for double click edit functionality
 document.addEventListener('DOMContentLoaded', function () {
   const rows = document.querySelectorAll('.base-table tbody tr');
   rows.forEach(function (row) {
@@ -101,22 +103,20 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 
+// for displaying our error message
 setTimeout(() => {
     document.querySelectorAll('.alert-box').forEach(el => {
         el.style.display = 'none';
     });
-}, 5000); // closes the error message div after 5 seconds
+}, 10000); // closes the error message div after 10 seconds
 
 
 // delete popup confirmation
-
 // reference : https://developer.mozilla.org
-
 document.addEventListener("DOMContentLoaded", function () {
   const popup = document.getElementById("deletePopup");
   if (!popup) return;
 
-  // alert(1);
   const confirmBtn = popup.querySelector(".confirm-delete");
   const cancelBtn = popup.querySelector(".cancel-delete");
 

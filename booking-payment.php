@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S&M Dashboard</title>
+    <title>S&M Booking</title>
     <link rel="stylesheet" href="style.css" />
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400" rel="stylesheet" />
     <!-- using google fonts -->
@@ -27,8 +27,6 @@ $db = createDB();
 
 $action_error_message = "";
 $editingId = null;
-
-
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['payment'])) {
@@ -54,7 +52,7 @@ if (isset($_GET['bookingId'])) {
     WHERE b.BOOKING_ID = $bookingId
 ";
 
-
+// total price calculation based on room price and total number of days selected 
     $result = $db->query($sql);
     $row = $result->fetchArray(SQLITE3_ASSOC);
     $dateIn = $row['DATE_IN'];
@@ -73,26 +71,6 @@ if (isset($_GET['bookingId'])) {
 }
 
 ?>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const form = document.querySelector('.add-container form');
-        const dateIn = document.getElementById('date-in');
-        const dateOut = document.getElementById('date-out');
-        const hotelId = document.getElementById('hotel-id');
-
-        if (!form || !dateIn || !dateOut || !hotelId) return;
-
-        function refreshAvailability() {
-            form.submit();
-        }
-
-        dateIn.addEventListener('change', refreshAvailability);
-        dateOut.addEventListener('change', refreshAvailability);
-        hotelId.addEventListener('change', refreshAvailability);
-
-    });
-</script>
 
 <body onload="loadNavbar()">
     <div id="navbar-container"></div> <!-- Navbar will be loaded here -->

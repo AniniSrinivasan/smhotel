@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S&M Dashboard</title>
+    <title>S&M Booking</title>
     <link rel="stylesheet" href="style.css" />
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400" rel="stylesheet" />
     <!-- using google fonts -->
@@ -41,6 +41,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 
+<!-- https://developer.mozilla.org/ -->
+
+<!-- js for disabling the past dates in the date picker 
+        and refresh availability based on field values given by user  -->
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         const form = document.querySelector('.add-container form');
@@ -104,7 +108,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <?php RoomDropdown('room-id', null, $dateIn, $dateOut, $selectedHotelId); ?>
                 </div>
                 <br />
-                <input type="submit" class="submit-btn" name="add" value="Check Out">
+                <input type="submit" class="submit-btn" name="add" value="Payment">
             </form>
 
         </section>

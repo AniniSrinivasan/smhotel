@@ -128,8 +128,22 @@ function BookingList($editingId = null, $limit = null, $offset = null)
     $db = createDB();
     session_start();
 
-    $select_query = "SELECT * FROM BOOKING b INNER JOIN GUEST g ON (b.GUEST_ID = g.GUEST_ID) 
-    INNER JOIN ROOM r ON (b.ROOM_ID = r.ROOM_ID) INNER JOIN HOTEL h ON (r.HOTEL_ID = h.HOTEL_ID) ";
+    // $select_query = "SELECT * FROM BOOKING b INNER JOIN GUEST g ON (b.GUEST_ID = g.GUEST_ID) 
+    // INNER JOIN ROOM r ON (b.ROOM_ID = r.ROOM_ID) INNER JOIN HOTEL h ON (r.HOTEL_ID = h.HOTEL_ID) ";
+
+    $select_query = "
+    SELECT 
+        b.*,
+        g.*,
+        r.*,
+        h.*,
+        p.STATUS AS PAYMENT_STATUS
+    FROM BOOKING b
+    INNER JOIN GUEST g ON (b.GUEST_ID = g.GUEST_ID)
+    INNER JOIN ROOM r  ON (b.ROOM_ID = r.ROOM_ID)
+    INNER JOIN HOTEL h ON (r.HOTEL_ID = h.HOTEL_ID)
+    LEFT JOIN PAYMENT p ON (b.BOOKING_ID = p.BOOKING_ID)
+    ";
 
     if (isset($_SESSION['ROLE']) && $_SESSION['ROLE'] === 'Guest') {
         $email = htmlspecialchars($_SESSION['EMAIL']);
@@ -142,6 +156,15 @@ function BookingList($editingId = null, $limit = null, $offset = null)
     $result = $db->query($select_query);
 
     while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
+
+        $paymentStatus = 'Unpaid';
+            if (!is_null($row['PAYMENT_STATUS'])) {
+                if ($row['PAYMENT_STATUS'] == 1) {
+                    $paymentStatus = 'Paid';
+                } else {
+                    $paymentStatus = 'Failed';
+                }
+            }
 
         // edit mode
         if ($editingId == $row['BOOKING_ID']) {
@@ -177,6 +200,11 @@ function BookingList($editingId = null, $limit = null, $offset = null)
                   </td>";
 
             echo "<td>
+                   
+                            <label>" . htmlspecialchars($paymentStatus) . "</label>
+                    </td>";
+
+            echo "<td>
                     <input type='submit' class='submit-btn' name='save' value='Save'>
                     <input type='submit' class='delete-button-in-list' name='cancel' value='Cancel'>
                   </td>";
@@ -194,6 +222,9 @@ function BookingList($editingId = null, $limit = null, $offset = null)
             echo "<td>" . $row['DATE_IN'] . "</td>";
             echo "<td>" . $row['DATE_OUT'] . "</td>";
             echo "<td>" . $row['NO_OF_GUEST'] . "</td>";
+            
+
+            echo "<td>" . htmlspecialchars($paymentStatus) . "</td>";
 
             echo "<td>
                     <input type='hidden' name='booking-id' value='" . $row['BOOKING_ID'] . "'>
@@ -619,7 +650,7 @@ function RoomList($editingId = null, $limit = null, $offset = null)
             echo "<tr><form method='post'>";
 
             echo "<td>";
-            HotelDropdown('hotel-id', $row['HOTEL_ID']);
+            HotelDropdown($row['HOTEL_ID']);
             echo "</td>";
 
             echo "<td>" . $row['ROOM_ID'] . "</td>";
