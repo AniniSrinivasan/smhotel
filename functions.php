@@ -105,7 +105,7 @@ function PaymentInsert($payment_type, $amount, $booking_id, &$action_error_messa
 {
 
     $db = createDB();
-    $sql = "INSERT INTO PAYMENT (AMOUNT, PAYMENT_TYPE, STATUS, BOOKING_ID)  VALUES ('$amount', '$payment_type', '1', '$booking_id')";
+    $sql = "INSERT INTO PAYMENT (AMOUNT, TYPE, STATUS, BOOKING_ID)  VALUES ('$amount', '$payment_type', '1', '$booking_id')";
 
 
     echo "<script>alert('Insert query: " . addslashes($sql) . "');</script>";
@@ -311,14 +311,14 @@ function PaymentTypeDropdown($selectedId = null)
 {
     $db = createDB();
 
-    $sql = "SELECT  * FROM PAYMENT_TYPE ORDER BY PAYMENT_TYPE";
+    $sql = "SELECT  * FROM TYPE ORDER BY PAYMENT_TYPE";
     $result = $db->query($sql);
 
     echo "<select name='payment-type' id='payment-type' required>";
     echo "<option value=''>-- Select Payment Type--</option>";
 
     while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
-        $id = (int) $row['PAYMENT_TYPE'];
+        $id = (int) $row['TYPE'];
         $type = htmlspecialchars($row['DESCRIPTION']);
 
 
