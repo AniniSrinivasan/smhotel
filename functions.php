@@ -311,7 +311,7 @@ function PaymentTypeDropdown($selectedId = null)
 {
     $db = createDB();
 
-    $sql = "SELECT  * FROM TYPE ORDER BY PAYMENT_TYPE";
+    $sql = "SELECT  * FROM PAYMENT_TYPE ORDER BY TYPE";
     $result = $db->query($sql);
 
     echo "<select name='payment-type' id='payment-type' required>";
@@ -579,7 +579,8 @@ function RoomDropdown(
         $sql = "SELECT 
                 r.ROOM_ID,
                 r.PRICE,
-                rt.ROOM_TYPE_DESCRIPTION
+                rt.ROOM_TYPE_DESCRIPTION, 
+                rt.ROOM_TYPE_NAME
                 FROM ROOM r
                 INNER JOIN ROOM_TYPE rt 
                 ON r.ROOM_TYPE_ID = rt.ROOM_TYPE_ID
@@ -599,21 +600,23 @@ function RoomDropdown(
         SELECT 
             r.ROOM_ID,
             r.PRICE,
-            rt.ROOM_TYPE_DESCRIPTION
+            rt.ROOM_TYPE_DESCRIPTION, 
+            rt.ROOM_TYPE_NAME
         FROM ROOM r
         INNER JOIN ROOM_TYPE rt
             ON r.ROOM_TYPE_ID = rt.ROOM_TYPE_ID
         WHERE r.HOTEL_ID = '$hotelId'
         ORDER BY r.ROOM_ID
     ";
-    
+
     } elseif (!empty($dateIn) && !empty($dateOut)) {
         // dates selected, no hotel filter = free rooms in any hotel
         $sql = "
         SELECT 
             r.ROOM_ID,
             r.PRICE,
-            rt.ROOM_TYPE_DESCRIPTION
+            rt.ROOM_TYPE_DESCRIPTION, 
+            rt.ROOM_TYPE_NAME
         FROM ROOM r
         INNER JOIN ROOM_TYPE rt
             ON r.ROOM_TYPE_ID = rt.ROOM_TYPE_ID
@@ -626,10 +629,10 @@ function RoomDropdown(
         )
         ORDER BY r.ROOM_ID
     ";
-    
+
     } else {
         // no filters = all rooms
-        $sql = "SELECT r.ROOM_ID, r.PRICE, rt.ROOM_TYPE_DESCRIPTION FROM ROOM r
+        $sql = "SELECT r.ROOM_ID, r.PRICE, rt.ROOM_TYPE_DESCRIPTION, rt.ROOM_TYPE_NAME FROM ROOM r
         INNER JOIN ROOM_TYPE rt ON (r.ROOM_TYPE_ID = rt.ROOM_TYPE_ID) ORDER BY ROOM_ID";
     }
 
@@ -640,10 +643,10 @@ function RoomDropdown(
 
     while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
         $id = (int) $row['ROOM_ID'];
-        $room_type = $row['ROOM_TYPE_DESCRIPTION'];
+        $room_type_name = $row['ROOM_TYPE_NAME'];
         $price = $row['PRICE'];
         $selected = ($selectedId == $id) ? "selected" : "";
-        echo "<option value='{$id}' {$selected}>Room: {$id} [{$room_type} : £ {$price}]</option>";
+        echo "<option value='{$id}' {$selected}>Room: {$id} [{$room_type_name} : £ {$price}]</option>";
     }
 
     echo "</select>";
@@ -707,10 +710,10 @@ function RoomList($editingId = null, $limit = null, $offset = null)
             //2dp for price
             echo "<td>" . "£" . number_format($row['PRICE'], 2, '.', '') . "</td>";
             echo "<td>
-                    <input type='hidden' name='room-id' value='" . $row['ROOM_ID'] . "'>
-                    <input type='submit' class='edit-button-in-list' name='edit' value='Edit'>
-                    <input type='button' class='delete-button-in-list' value='Delete'>
-                </td>";
+                <input type='hidden' name='room-id' value='" . $row['ROOM_ID'] . "'>
+                <input type='submit' class='edit-button-in-list' name='edit' value='Edit'>
+                <input type='button' class='delete-button-in-list' name='delete' value='Delete'>
+            </td>";
             echo "</tr></form>";
         }
     }
