@@ -15,9 +15,10 @@ function filterBookingList(input) {
 
   tableRows.forEach(row => {
     const bookingId = row.cells[0].textContent.toLowerCase();
+    const branch = row.cells[1].textContent.toLowerCase();
     const guestID = row.cells[2].textContent.toLowerCase();
 
-    if (bookingId.includes(query) || guestID.includes(query)) {
+    if (bookingId.includes(query) || branch.includes(query) || guestID.includes(query)) {
       row.style.display = "";
     } else {
       row.style.display = "none";
