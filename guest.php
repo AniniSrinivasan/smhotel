@@ -52,7 +52,7 @@ if (isset($_POST["cancel"])) {
 }
 }
 
-//pagination
+//**** pagination logic start ****
 $records_per_page = 5;
 
 //current page
@@ -74,6 +74,8 @@ $total_pages = $total_records > 0 ? (int) ceil($total_records / $records_per_pag
 
 //offset calculation
 $offset = ($current_page - 1) * $records_per_page;
+//**** pagination logic end ****
+
 ?>
 
 <body onload="loadNavbar()">

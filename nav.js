@@ -1,4 +1,5 @@
-// for loading navigation bar + fixed cache issue
+//reference: https://developer.mozilla.org/en-US/docs/Web/API/Request/cache
+//for loading navigation bar + fixed cache issue
 function loadNavbar() {
   fetch("navbar.php", { cache: "no-store" })
     .then(response => response.text())
@@ -8,6 +9,7 @@ function loadNavbar() {
     .catch(error => console.error("Error loading navbar:", error));
 }
 
+// reference:  https://www.w3schools.com/js/js_array_iteration.asp
 // search bar filters
 function filterBookingList(input) {
   const query = input.value.toLowerCase();
@@ -91,6 +93,7 @@ function filterGuestList(input) {
   });
 }
 
+//reference: https://www.w3schools.com/js/js_htmldom_eventlistener.asp and https://developer.mozilla.org
 // logic for double click edit functionality
 document.addEventListener('DOMContentLoaded', function () {
   const rows = document.querySelectorAll('.base-table tbody tr');
@@ -111,9 +114,8 @@ setTimeout(() => {
     });
 }, 10000); // closes the error message div after 10 seconds
 
-
+// reference : https://developer.mozilla.org and https://www.w3schools.com/js/js_htmldom_eventlistener.asp
 // delete popup confirmation
-// reference : https://developer.mozilla.org
 document.addEventListener("DOMContentLoaded", function () {
   const popup = document.getElementById("deletePopup");
   if (!popup) return;
@@ -130,7 +132,6 @@ document.addEventListener("DOMContentLoaded", function () {
         popup.style.display = "flex";
     });
   });
-
 
   // if user confirms delete
   confirmBtn.addEventListener("click", function () {

@@ -1,4 +1,9 @@
 <?php
+//common reference links used for the code in this file
+// PHP manual (SQLite3, sessions, header, etc.): https://www.php.net/
+// SQLite3::prepare / SQLite3Stmt::bindValue examples: https://www.php.net/manual/en/class.sqlite3.php
+// SQLite3 queries and fetchArray(): https://www.php.net/manual/en/class.sqlite3.php
+// MDN Web Docs for general web / HTTP concepts: https://developer.mozilla.org/
 
 function createDB()
 {
@@ -7,6 +12,7 @@ function createDB()
     return $db;
 }
 
+//validating user credentials - only authorised users/admin are allowed to access - security
 function validateUser($username, $password, &$error)
 {
 
@@ -32,11 +38,11 @@ function requireLogin()
     session_start();
     $currentPage = basename($_SERVER['PHP_SELF']);
 
-    // to make sure the guest cant replace the last part of url and access other pages
+    // to make sure the guest can not replace the last part of url and access other pages or access from bookmark
     if (
         isset($_SESSION['USER_ID']) &&
         $_SESSION['ROLE'] === 'Guest' &&
-        ($currentPage !== 'booking.php' && $currentPage !== 'booking-add.php')
+        ($currentPage !== 'booking.php' && $currentPage !== 'booking-add.php' && $currentPage !== 'booking-payment.php')
     ) {
         header("Location: booking.php");
         exit;
@@ -100,7 +106,6 @@ function BookingInsert($room_id, $guest_id, $num_guest, $dateIn, $dateOut, &$act
     return $error;
 }
 
-
 function PaymentInsert($payment_type, $amount, $booking_id, &$action_error_message): void         //&: call by reference - no need for return for any modifications
 {
 
@@ -119,17 +124,11 @@ function PaymentInsert($payment_type, $amount, $booking_id, &$action_error_messa
 
 }
 
-
-
-//https://developer.mozilla.org/
-//https://developer.mozilla.org/
+// displays each booking either in edit mode or view-only (just lists it) mode
 function BookingList($editingId = null, $limit = null, $offset = null)
 {
     $db = createDB();
     session_start();
-
-    // $select_query = "SELECT * FROM BOOKING b INNER JOIN GUEST g ON (b.GUEST_ID = g.GUEST_ID) 
-    // INNER JOIN ROOM r ON (b.ROOM_ID = r.ROOM_ID) INNER JOIN HOTEL h ON (r.HOTEL_ID = h.HOTEL_ID) ";
 
     $select_query = "
     SELECT 
@@ -900,6 +899,9 @@ function GuestDelete($id)
     }
 }
 
+// inserting a new user record into the USER table with a default role of Guest.
+// if successfully account created - redirects them back to login page 
+// else shows error message
 function UserInsert($fname, $mname, $lname, $address, $city, $postcode, $email, $phone, $password, &$action_error_message)
 {
     $error = "";
@@ -920,6 +922,7 @@ function showAlertMessage($error = "")
 
 }
 
+//pagination
 function applyPagination($sql, $limit, $offset)
 {
     if ($limit !== null && $offset !== null) {

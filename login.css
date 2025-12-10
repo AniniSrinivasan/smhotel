@@ -2,6 +2,8 @@
   font-family: "Source Sans Pro", Helvetica, sans-serif;
 }
 
+/* https://colorlib.com/wp/html5-and-css3-login-forms/ used for login page styling inspiration - just visual inspiration */
+/* reference: https://www.w3schools.com/css/css3_gradients.asp */ 
 .login-body {
   font-weight: 300;
   background-image: linear-gradient(45deg, #c676e3 0%, #5f4d93 40%, #5f4d93 85%);

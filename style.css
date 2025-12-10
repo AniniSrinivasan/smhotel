@@ -138,16 +138,6 @@ label {
   margin-top: 10px;
 }
 
-/* dashboard backgroumd */
-.bg-dashboard{
-  background-image: url(./img/hotel-img2.jpeg);
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: centre;
-  min-height: 100vh;
-  opacity: 0.7;
-}
-
 /* main content */
 .main_content {
   margin-top: 60px;
@@ -522,7 +512,7 @@ label {
 .heading-row {
   display: flex;
   align-items: center;
-  justify-content: space-between; /* left + right */
+  justify-content: space-between;
   margin-bottom: 20px;
 }
 
@@ -541,7 +531,7 @@ label {
   font-size: 1rem;
   font-weight: 600;
   animation: fadeOut 1s ease forwards;
-  animation-delay: 4s; /* stays for 4s then fades */
+  animation-delay: 6s; /* stays for 6s then fades */
 }
 
 /* Error */
@@ -558,6 +548,7 @@ label {
   border-left: 5px solid #1e9e3a;
 }
 
+/* reference: https://www.w3schools.com/css/css3_animations.asp */
 /* Fade out animation */
 @keyframes fadeOut {
   to {

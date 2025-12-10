@@ -20,7 +20,7 @@ $editingId = null;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
-// add (inserts a new room)
+// add
 if (isset($_POST["add"])) {
     $room_type_id = $_POST["room-type-id"] ?? "";
     $room_number = $_POST["room-number"] ?? "";
@@ -46,12 +46,10 @@ if (isset($_POST["add"])) {
                     <div>
                         <label for="hotel-id">Hotel Branch: </label>
                         <?php HotelDropdown(); ?>
-                        <!-- <input type="number" placeholder="Room Number" name="hotel-id" required> -->
                     </div>
                     <div>
                         <label for="room-type-id">Room Type: </label>
                         <?php RoomTypeDropdown('room-type-id'); ?>
-                        <!-- <input type="number" placeholder="Room Number" name="room-type-id" required> -->
                     </div>
                     <div>
                         <label for="room-number">Room Number: </label>

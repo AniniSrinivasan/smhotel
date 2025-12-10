@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $editingId = null;
     }
 }
-  //pagination
+//**** pagination logic start ****
   $records_per_page = 5;
 
   //current page
@@ -67,6 +67,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   //offset calculation
   $offset = ($current_page - 1) * $records_per_page;
+  //**** pagination logic end ****
+
 ?>
 
 <body onload="loadNavbar()">

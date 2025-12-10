@@ -36,6 +36,7 @@ if (isset($_POST["login"])) {
 
 <body class="login-body">
     <div class="login-container">
+        <!-- used https://www.canva.com/s/templates?query=logo to make the hotel logo -->
         <img id="logo" src="./img/s&mhotel_logov2.png" alt="Logo of S&M Hotels">
         <h2>Welcome Back!</h2>
 

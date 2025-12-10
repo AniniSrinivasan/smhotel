@@ -18,7 +18,9 @@ requireLogin();
 $errormessage = "";
 $editingId = null;
 
+//initialising values from the form to get the room availability
 $availableRooms = null;
+//$_POST['...'] ?? '' : if exists and is not null - use its value, else use an empty string instead
 $dateIn = $_POST['date-in'] ?? '';
 $dateOut = $_POST['date-out'] ?? '';
 $selectedHotelId = $_POST['hotel-id'] ?? '';
@@ -29,7 +31,7 @@ $action_error_message = "";
 $editingId = null;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
+    //add
     if (isset($_POST['add'])) {
         $room_id = $_POST['room-id'] ?? '';
         $guest_id = $_POST['guest-id'] ?? '';

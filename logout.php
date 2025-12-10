@@ -1,8 +1,16 @@
 <?php
-session_start();        // start session to access session variables
+//reference: https://www.w3schools.com/php/php_sessions.asp
+//logs the user out by clearing and destroying the session
+// redirects to login page
 
-session_unset();        // remove all session variables
-session_destroy();      // destroy the session completely
+// start session to access session variables
+session_start(); 
+
+// remove all session variables
+session_unset();
+
+// destroy the session completely 
+session_destroy();
 
 // redirect to login page
 header("Location: login.php");

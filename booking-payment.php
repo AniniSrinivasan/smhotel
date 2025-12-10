@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $payment_type = $_POST['payment-type'] ?? '';
         $amount = $_POST['amount'] ?? '';
         $booking_id = $_POST['booking-id'] ?? '';
-        
+
         PaymentInsert($payment_type, $amount, $booking_id, $action_error_message);
     }
 }
@@ -52,6 +52,7 @@ if (isset($_GET['bookingId'])) {
     WHERE b.BOOKING_ID = $bookingId
 ";
 
+    // reference: https://www.w3schools.com/php/php_date.asp
 // total price calculation based on room price and total number of days selected 
     $result = $db->query($sql);
     $row = $result->fetchArray(SQLITE3_ASSOC);
@@ -75,17 +76,14 @@ if (isset($_GET['bookingId'])) {
 <body onload="loadNavbar()">
     <div id="navbar-container"></div> <!-- Navbar will be loaded here -->
     <div class="main_content">
-
         <section class="add-container">
             <?php showAlertMessage($action_error_message ?? ""); ?>
             <h2>Payment</h2>
-
             <form autocomplete="off" method="post">
-
                 <div class="group">
-                    <label style="font-size: 20px; color: green;" for="amount"> Total Amount to Pay for <?= htmlspecialchars($daysBooked) ?> Day(s) : £<?= htmlspecialchars($totalPrice) ?></label>
+                    <label style="font-size: 20px; color: green;" for="amount"> Total Amount to Pay for
+                        <?= htmlspecialchars($daysBooked) ?> Day(s) : £<?= htmlspecialchars($totalPrice) ?></label>
                 </div>
-
                 <div class="group">
                     <input hidden id="amount" name="amount" value="<?= htmlspecialchars($totalPrice) ?>"></input>
                 </div>
@@ -97,13 +95,10 @@ if (isset($_GET['bookingId'])) {
                     <label for="payment-type">Payment Type</label>
                     <?php PaymentTypeDropdown(); ?>
                 </div>
-
                 <br />
                 <input type="submit" class="submit-btn" name="payment" value="Complete Payment">
             </form>
-
         </section>
-
     </div>
 </body>
 

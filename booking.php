@@ -57,6 +57,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
+//reference used for pagination - same logic used in booking.php, guest.php, hotel.php, room-type.php, room.php and guest.php
+//https://developer.mozilla.org
+//https://www.php.net/manual/en/reserved.variables.get.php            
+//https://www.php.net/manual/en/control-structures.if.php
+//https://www.php.net/manual/en/language.basic-syntax.phpmode.php -->
+
 //**** pagination logic start ****
     $records_per_page = 5;
 
@@ -128,10 +134,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </tbody>
             </table>
 
-            <!-- https://developer.mozilla.org
-            https://www.php.net/manual/en/reserved.variables.get.php            
-            https://www.php.net/manual/en/control-structures.if.php
-            https://www.php.net/manual/en/language.basic-syntax.phpmode.php -->
             <?php if ($total_records > $records_per_page): ?>
             <ul class="pagination">
                 <!-- previous button -->
