@@ -18,11 +18,11 @@ function validateUser($username, $password, &$error)
         if ($row['USER_PASSWORD'] === $password) {
             return $row;
         } else {
-            $error = "Invalid password.";
+            $error = "<b>Invalid username or password.</b>";
             return false;
         }
     } else {
-        $error = "User not found.";
+        $error = "<b>User not found.</b>";
         return false;
     }
 }
