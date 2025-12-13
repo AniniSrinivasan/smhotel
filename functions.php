@@ -195,7 +195,8 @@ function BookingList($editingId = null, $limit = null, $offset = null)
 
             echo "<td>
                     <input type='number' name='num-guest'
-                           value='" . htmlspecialchars($row['NO_OF_GUEST']) . "' required>
+                        value='" . htmlspecialchars($row['NO_OF_GUEST']) . "' required
+                        oninput='if (this.value > 4) this.value = 4; if (this.value < 1) this.value = 1;'>
                   </td>";
 
             echo "<td>

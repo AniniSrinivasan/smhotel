@@ -21,11 +21,18 @@
     <div id="navbar-container"></div> <!-- Navbar will be loaded here -->
 
     <!-- main content -->
-    <!-- <main id="main-content" class="main_content" style="background-image: url('./img/ht2.jpeg'); background-repeat: no-repeat; background-size: cover;"> -->
     <main id="main-content" class="main_content">
         <h1>Welcome to S&M Hotels Dashboard</h1>
         <p>Select a menu option to get started.</p>
+        <div class="img-container">
+            <img class="img-facilities" src="./img/hotel-img.png" />
+            <img class="img-facilities" src="./img/hotel-bg.png" />
+        </div>
+        <div class="footer" style="text-align: center">
+        &copy; 2025 Anini Pandiyan Sathya
+        </div>
     </main>
+
 </body>
 
 </html>
