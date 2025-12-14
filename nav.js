@@ -1,3 +1,6 @@
+// Artificial Intelligence (AI) has not been used for any part of the activity.
+
+
 //reference: https://developer.mozilla.org/en-US/docs/Web/API/Request/cache
 //for loading navigation bar + fixed cache issue
 function loadNavbar() {

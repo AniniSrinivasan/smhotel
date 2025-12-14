@@ -1,3 +1,4 @@
+<!-- Artificial Intelligence (AI) has not been used for any part of the activity.  -->
 <?php
 //common reference links used for the code in this file
 // PHP manual (SQLite3, sessions, header, etc.): https://www.php.net/

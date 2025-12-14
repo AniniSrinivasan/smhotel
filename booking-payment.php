@@ -1,3 +1,4 @@
+<!-- Artificial Intelligence (AI) has not been used for any part of the activity.  -->
 <!DOCTYPE html>
 <html lang="en">
 
